@@ -1,10 +1,11 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../settings/conexion.js";
 import bcrypt from "bcrypt";
+import Instrumento from "./Instrumento.js";
 
-class Usuarios extends Model {}
+class Usuario extends Model {}
 
-Usuarios.init(
+Usuario.init(
   {
     idUsuario: {
       type: DataTypes.INTEGER,
@@ -30,7 +31,7 @@ Usuarios.init(
       allowNull: false,
     },
     descripcion: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       defaultValue: "No hay descripcion",
     },
     numero: {
@@ -56,15 +57,17 @@ Usuarios.init(
   },
   {
     sequelize,
-    tableName: "Usuario",
+    tableName: "Usuarios",
     modelName: "Usuario",
   }
 );
 
-Usuarios.belongsTo(Ciudad, { foreignKey: "idCiudad" });
-Ciudad.hasMany(Usuarios, { foreignKey: "idCiudad" });
+Usuario.belongsTo(Ciudad, { foreignKey: "idCiudad" });
+Ciudad.hasMany(Usuario, { foreignKey: "idCiudad" });
 
-Usuarios.belongsTo(Adjunto, { foreignKey: "idAdjunto" });
-Adjunto.hasOne(Usuarios, { foreignKey: "idAdjunto" });
+Usuario.belongsTo(Adjunto, { foreignKey: "idAdjunto" });
+Adjunto.hasOne(Usuario, { foreignKey: "idAdjunto" });
+
+Usuario.belongsToMany(Instrumento, { through: "InstrumentoUsuario" });
 
 export default Usuarios;
