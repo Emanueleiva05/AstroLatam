@@ -23,3 +23,4 @@ TipoAdjunto.init(
     timestamps: false,
   }
 );
+export default TipoAdjunto;

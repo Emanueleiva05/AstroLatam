@@ -1,11 +1,11 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../settings/conexion";
 
-class TipoInstrumento extends Model {}
+class Pais extends Model {}
 
-TipoInstrumento.init(
+Pais.init(
   {
-    idTipoInstrumento: {
+    idPais: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -15,17 +15,12 @@ TipoInstrumento.init(
       allowNull: false,
       unique: true,
     },
-    descripcion: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
   },
   {
     sequelize,
-    modelName: "TipoInstrumento",
-    tableName: "TipoInstrumentos",
-    timestamps: false,
+    modelName: "Pais",
+    tableName: "Paises",
   }
 );
 
-export default TipoInstrumento;
+export default Pais;

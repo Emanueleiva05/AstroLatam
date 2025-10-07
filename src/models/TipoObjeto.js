@@ -27,3 +27,5 @@ TipoObjeto.init(
     timestamps: false,
   }
 );
+
+export default TipoObjeto;

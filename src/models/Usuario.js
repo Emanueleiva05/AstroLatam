@@ -2,6 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../settings/conexion.js";
 import bcrypt from "bcrypt";
 import Instrumento from "./Instrumento.js";
+import Ciudad from "./Ciudad.js";
 
 class Usuario extends Model {}
 
@@ -70,4 +71,4 @@ Adjunto.hasOne(Usuario, { foreignKey: "idAdjunto" });
 
 Usuario.belongsToMany(Instrumento, { through: "InstrumentoUsuario" });
 
-export default Usuarios;
+export default Usuario;

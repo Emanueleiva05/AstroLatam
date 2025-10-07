@@ -27,3 +27,5 @@ TipoPublicacion.init(
     timestamps: false,
   }
 );
+
+export default TipoPublicacion;

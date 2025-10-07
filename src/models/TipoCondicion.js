@@ -23,3 +23,5 @@ TipoCondicion.init(
     timestamps: false,
   }
 );
+
+export default TipoCondicion;
