@@ -1,6 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../settings/conexion";
 import TipoObjeto from "./TipoObjeto.js";
+import Evento from "./Evento.js";
 
 class Objeto extends Model {}
 
@@ -37,4 +38,6 @@ Objeto.init(
 Objeto.belongsTo(TipoObjeto, { foreignKey: "idTipoObjeto" });
 TipoObjeto.hasMany(Objeto, { foreignKey: "idTipoObjeto" });
 
-export default Provincia;
+Objeto.belongsToMany(Evento, { through: "EventoObjeto" });
+
+export default Objeto;
