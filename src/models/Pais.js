@@ -1,6 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../settings/conexion.js";
-import Evento from "./Evento.js";
 
 class Pais extends Model {}
 
