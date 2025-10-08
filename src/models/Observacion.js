@@ -42,15 +42,4 @@ Observacion.init(
   { sequelize, tableName: "Observaciones", modelName: "Observacion" }
 );
 
-Observacion.belongsTo(Ubicacion, { foreignKey: "idUbicacion" });
-Ubicacion.hasMany(Observacion, { foreignKey: "idUbicacion" });
-
-Observacion.belongsToMany(Objeto, { through: "ObjetoObservacion" });
-
-Observacion.belongsToMany(Adjunto, { through: "ObservacionAdjunto" });
-
-Observacion.belongsToMany(Evento, { through: "ObservacionEvento" });
-
-Observacion.belongsToMany(Instrumento, { through: "ObservacionInstrumento" });
-
 export default Observacion;

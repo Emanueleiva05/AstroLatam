@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../settings/conexion";
+import sequelize from "../settings/conexion.js";
 import Ciudad from "./Ciudad.js";
 
 class Ubicacion extends Model {}
@@ -33,6 +33,7 @@ Ubicacion.init(
     },
     idCiudad: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Ciudad,
         key: "idCiudad",

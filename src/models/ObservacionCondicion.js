@@ -38,12 +38,4 @@ ObservacionCondicion.init(
   }
 );
 
-ObservacionCondicion.belongsTo(Observacion, { foreignKey: "idObservacion" });
-Observacion.hasMany(ObservacionCondicion, { foreignKey: "idObservacion" });
-
-ObservacionCondicion.belongsTo(TipoCondicion, {
-  foreignKey: "idTipoCondicion",
-});
-TipoCondicion.hasMany(ObservacionCondicion, { foreignKey: "idTipoCondicion" });
-
 export default ObservacionCondicion;

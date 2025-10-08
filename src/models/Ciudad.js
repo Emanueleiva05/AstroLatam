@@ -30,7 +30,4 @@ Ciudad.init(
   }
 );
 
-Ciudad.belongsTo(Provincia, { foreignKey: "idProvincia" });
-Provincia.hasMany(Ciudad, { foreignKey: "idProvincia" });
-
 export default Ciudad;

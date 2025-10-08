@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../settings/conexion";
+import sequelize from "../settings/conexion.js";
 
 class TipoInstrumento extends Model {}
 

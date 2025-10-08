@@ -3,6 +3,7 @@ import sequelize from "../settings/conexion.js";
 import bcrypt from "bcrypt";
 import Instrumento from "./Instrumento.js";
 import Ciudad from "./Ciudad.js";
+import Adjunto from "./Adjunto.js";
 
 class Usuario extends Model {}
 
@@ -62,13 +63,5 @@ Usuario.init(
     modelName: "Usuario",
   }
 );
-
-Usuario.belongsTo(Ciudad, { foreignKey: "idCiudad" });
-Ciudad.hasMany(Usuario, { foreignKey: "idCiudad" });
-
-Usuario.belongsTo(Adjunto, { foreignKey: "idAdjunto" });
-Adjunto.hasOne(Usuario, { foreignKey: "idAdjunto" });
-
-Usuario.belongsToMany(Instrumento, { through: "InstrumentoUsuario" });
 
 export default Usuario;

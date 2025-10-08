@@ -46,7 +46,4 @@ AccionUsuario.init(
   }
 );
 
-AccionUsuario.belongsTo(Usuario, { foreignKey: "idUsuario" });
-Usuario.hasMany(AccionUsuario, { foreignKey: "idUsuario" });
-
 export default AccionUsuario;

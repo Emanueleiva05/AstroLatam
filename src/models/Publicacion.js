@@ -26,6 +26,7 @@ Publicacion.init(
     },
     idTipoPublicacion: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: TipoPublicacion,
         key: "idTipoPublicacion",
@@ -33,6 +34,7 @@ Publicacion.init(
     },
     idUsuario: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Usuario,
         key: "idUsuario",
@@ -41,11 +43,5 @@ Publicacion.init(
   },
   { sequelize, tableName: "Publicaciones", modelName: "Publicacion" }
 );
-
-Publicacion.belongsTo(TipoPublicacion, { foreignKey: "idTipoPublicacion" });
-TipoPublicacion.hasMany(Publicacion, { foreignKey: "idTipoPublicacion" });
-
-Publicacion.belongsTo(Usuario, { foreignKey: "idUsuario" });
-Usuario.hasMany(Publicacion, { foreignKey: "idUsuario" });
 
 export default Publicacion;

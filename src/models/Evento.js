@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../settings/conexion";
+import sequelize from "../settings/conexion.js";
 import TipoEvento from "./TipoEvento.js";
 import Pais from "./Pais.js";
 import Objeto from "./Objeto.js";
@@ -54,16 +54,5 @@ Evento.init(
     timestamps: false,
   }
 );
-
-Evento.belongsTo(TipoEvento, { foreignKey: "idTipoEvento" });
-TipoEvento.hasMany(Evento, { foreignKey: "idTipoEvento" });
-
-Evento.belongsToMany(Pais, { through: "EventoPais" });
-
-Evento.belongsToMany(Objeto, { through: "EventoObjeto" });
-
-Evento.belongsToMany(Adjunto, { through: "EventoAdjunto" });
-
-Evento.belongsToMany(Observacion, { through: "ObservacionEvento" });
 
 export default Evento;

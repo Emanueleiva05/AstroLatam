@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../settings/conexion";
+import sequelize from "../settings/conexion.js";
 import Pais from "./Pais.js";
 
 class Provincia extends Model {}
@@ -29,8 +29,5 @@ Provincia.init(
     tableName: "Provincias",
   }
 );
-
-Provincia.belongsTo(Pais, { foreignKey: "idPais" });
-Pais.hasMany(Provincia, { foreignKey: "idPais" });
 
 export default Provincia;

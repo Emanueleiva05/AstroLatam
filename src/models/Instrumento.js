@@ -56,11 +56,4 @@ Instrumento.init(
   { sequelize, modelName: "Instrumento", tableName: "Instrumentos" }
 );
 
-TipoInstrumento.hasMany(Instrumento, { foreignKey: "idTipoInstrumento" });
-Instrumento.belongsTo(TipoInstrumento, { foreignKey: "idTipoInstrumento" });
-
-Instrumento.belongsToMany(Usuario, { through: "InstrumentoUsuario" });
-
-Instrumento.belongsToMany(Observacion, { through: "ObservacionInstrumento" });
-
 export default Instrumento;
