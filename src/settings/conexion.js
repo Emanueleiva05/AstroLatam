@@ -5,7 +5,7 @@ dotenv.config();
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
-  process.env.DBI_USER,
+  process.env.DB_USER,
   process.env.MYSQL_PWD,
   {
     host: process.env.MYSQL_HOST,
