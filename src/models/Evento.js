@@ -3,6 +3,8 @@ import sequelize from "../settings/conexion";
 import TipoEvento from "./TipoEvento.js";
 import Pais from "./Pais.js";
 import Objeto from "./Objeto.js";
+import Adjunto from "./Adjunto.js";
+import Observacion from "./Observacion.js";
 
 class Evento extends Model {}
 
@@ -59,5 +61,9 @@ TipoEvento.hasMany(Evento, { foreignKey: "idTipoEvento" });
 Evento.belongsToMany(Pais, { through: "EventoPais" });
 
 Evento.belongsToMany(Objeto, { through: "EventoObjeto" });
+
+Evento.belongsToMany(Adjunto, { through: "EventoAdjunto" });
+
+Evento.belongsToMany(Observacion, { through: "ObservacionEvento" });
 
 export default Evento;

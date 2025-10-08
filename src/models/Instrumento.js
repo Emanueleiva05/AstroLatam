@@ -2,6 +2,7 @@ import { Model, DataTypes } from "sequelize";
 import sequelize from "../settings/conexion.js";
 import TipoInstrumento from "./TipoInstrumento.js";
 import Usuario from "./Usuario.js";
+import Observacion from "./Observacion.js";
 
 class Instrumento extends Model {}
 
@@ -59,5 +60,7 @@ TipoInstrumento.hasMany(Instrumento, { foreignKey: "idTipoInstrumento" });
 Instrumento.belongsTo(TipoInstrumento, { foreignKey: "idTipoInstrumento" });
 
 Instrumento.belongsToMany(Usuario, { through: "InstrumentoUsuario" });
+
+Instrumento.belongsToMany(Observacion, { through: "ObservacionInstrumento" });
 
 export default Instrumento;
