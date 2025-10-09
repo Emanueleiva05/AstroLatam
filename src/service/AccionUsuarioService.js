@@ -41,11 +41,7 @@ export const EliminarAccionUsuario = async (accionUsuario) => {
 };
 
 export const ListarAccionUsuarios = async (id) => {
-  return await AccionUsuario.findAll({
-    where: {
-      idUsuario: id,
-    },
-  });
+  return await AccionUsuario.findAll();
 };
 
 export const ListarAccionUsuarioEspecifico = async (id) => {

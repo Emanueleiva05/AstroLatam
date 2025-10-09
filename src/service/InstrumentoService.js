@@ -53,7 +53,7 @@ export const EliminarInstrumento = async (instrumento) => {
 };
 
 export const ListarInstrumentos = async (id) => {
-  return await Instrumento.findAll({ where: { idTipoInstrumento: id } });
+  return await Instrumento.findAll();
 };
 
 export const ListarInstrumentoEspecifico = async (id) => {

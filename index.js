@@ -12,6 +12,10 @@ import UbicacionRouter from "./src/routes/UbicacionRouter.js";
 import PaisRouter from "./src/routes/PaisRouter.js";
 import ProvinciaRouter from "./src/routes/ProvinciaRouter.js";
 import CiudadRouter from "./src/routes/CiudadRouter.js";
+import UsuarioRouter from "./src/routes/UsuarioRouter.js";
+import AccionUsuarioRouter from "./src/routes/AccionUsuarioRouter.js";
+import InstrumentoRouter from "./src/routes/InstrumentoRouter.js";
+import AdjuntoRouter from "./src/routes/AdjuntoRouter.js";
 
 env.config();
 
@@ -30,6 +34,10 @@ app.use("/api/ubicacion", UbicacionRouter);
 app.use("/api/ciudad", CiudadRouter);
 app.use("/api/pais", PaisRouter);
 app.use("/api/provincia", ProvinciaRouter);
+app.use("/api/adjunto", AdjuntoRouter);
+app.use("/api/instrumento", InstrumentoRouter);
+app.use("/api/usuario", UsuarioRouter);
+app.use("/api/accionUsuario", AccionUsuarioRouter);
 
 await sequelize.sync({ force: true });
 
