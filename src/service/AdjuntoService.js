@@ -24,7 +24,7 @@ export const ModificarAdjunto = async (
   return await adjunto.save();
 };
 
-export const EliminarPublicacion = async (adjunto) => {
+export const EliminarAdjunto = async (adjunto) => {
   return await adjunto.destroy();
 };
 

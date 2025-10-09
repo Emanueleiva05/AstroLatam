@@ -16,7 +16,7 @@ export const AgregarPublicacion = async (
   });
 };
 
-export const ModificarObservacion = async (
+export const ModificarPublicacion = async (
   publicacion,
   titulo,
   descripcion,
