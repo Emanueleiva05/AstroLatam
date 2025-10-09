@@ -8,6 +8,10 @@ import TipoCondicionRouter from "./src/routes/TipoCondicionRouter.js";
 import TipoEventoRouter from "./src/routes/TipoEventoRouter.js";
 import TipoObjetoRouter from "./src/routes/TipoObjetoRouter.js";
 import TipoInstrumentoRouter from "./src/routes/TipoInstrumentosRouter.js";
+import UbicacionRouter from "./src/routes/UbicacionRouter.js";
+import PaisRouter from "./src/routes/PaisRouter.js";
+import ProvinciaRouter from "./src/routes/ProvinciaRouter.js";
+import CiudadRouter from "./src/routes/CiudadRouter.js";
 
 env.config();
 
@@ -22,6 +26,10 @@ app.use("/api/tipoCondicion", TipoCondicionRouter);
 app.use("/api/tipoEvento", TipoEventoRouter);
 app.use("/api/tipoObjeto", TipoObjetoRouter);
 app.use("/api/tipoInstrumento", TipoInstrumentoRouter);
+app.use("/api/ubicacion", UbicacionRouter);
+app.use("/api/ciudad", CiudadRouter);
+app.use("/api/pais", PaisRouter);
+app.use("/api/provincia", ProvinciaRouter);
 
 await sequelize.sync({ force: true });
 
