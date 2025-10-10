@@ -14,7 +14,7 @@ export const EliminarProvincia = async (provincia) => {
 };
 
 export const ListarProvincias = async () => {
-  return await Provincia.findAll({ include: ["Pais"] });
+  return await Provincia.findAll();
 };
 
 export const ListarProvinciaEspecifico = async (id) => {

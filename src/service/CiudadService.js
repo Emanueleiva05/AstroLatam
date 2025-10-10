@@ -9,12 +9,12 @@ export const ModificarCiudad = async (ciudad, nombre) => {
   return await ciudad.save();
 };
 
-export const EliminarProvincia = async (ciudad) => {
+export const EliminarCiudad = async (ciudad) => {
   return await ciudad.destroy();
 };
 
 export const ListarCiudades = async () => {
-  return await Ciudad.findAll({ include: ["Provincia"] });
+  return await Ciudad.findAll();
 };
 
 export const ListarCiudadEspecifico = async (id) => {

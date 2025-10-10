@@ -3,16 +3,16 @@ import Publicacion from "../models/Publicacion.js";
 export const AgregarPublicacion = async (
   titulo,
   descripcion,
-  horaObservacion,
-  fechaObservacion,
-  idUbicacion
+  idUsuario,
+  fechaPublicacion,
+  idTipoPublicacion
 ) => {
   return await Publicacion.create({
     titulo: titulo,
-    horaObservacion: horaObservacion,
+    idTipoPublicacion: idTipoPublicacion,
     descripcion: descripcion,
-    fechaObservacion: fechaObservacion,
-    idUbicacion: idUbicacion,
+    fechaPublicacion: fechaPublicacion,
+    idUsuario: idUsuario,
   });
 };
 
@@ -20,6 +20,7 @@ export const ModificarPublicacion = async (
   publicacion,
   titulo,
   descripcion,
+  idUsuario,
   fechaPublicacion,
   idTipoPublicacion
 ) => {
@@ -27,6 +28,7 @@ export const ModificarPublicacion = async (
   publicacion.descripcion = descripcion;
   publicacion.fechaPublicacion = fechaPublicacion;
   publicacion.idTipoPublicacion = idTipoPublicacion;
+  publicacion.idUsuario = idUsuario;
   return await publicacion.save();
 };
 
