@@ -1,15 +1,22 @@
 import Objeto from "../models/Objeto.js";
 
-export const AgregarObjeto = async (nombre, descripcion) => {
+export const AgregarObjeto = async (nombre, descripcion, idTipoObjeto) => {
   return await Objeto.create({
     nombre: nombre,
     descripcion: descripcion,
+    idTipoObjeto: idTipoObjeto,
   });
 };
 
-export const ModificarObjeto = async (objeto, nombre, descripcion) => {
+export const ModificarObjeto = async (
+  objeto,
+  nombre,
+  descripcion,
+  idTipoObjeto
+) => {
   objeto.nombre = nombre;
   objeto.descripcion = descripcion;
+  objeto.idTipoObjeto = idTipoObjeto;
   return await objeto.save();
 };
 

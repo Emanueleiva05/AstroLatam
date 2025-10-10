@@ -16,6 +16,11 @@ import UsuarioRouter from "./src/routes/UsuarioRouter.js";
 import AccionUsuarioRouter from "./src/routes/AccionUsuarioRouter.js";
 import InstrumentoRouter from "./src/routes/InstrumentoRouter.js";
 import AdjuntoRouter from "./src/routes/AdjuntoRouter.js";
+import PublicacionRouter from "./src/routes/PublicacionRouter.js";
+import ObjetoRouter from "./src/routes/ObjetoRouter.js";
+import ObservacionRouter from "./src/routes/ObservacionRouter.js";
+import ObservacionCondicionRouter from "./src/routes/ObservacionCondicionRouter.js";
+import EventoRouter from "./src/routes/EventoRouter.js";
 
 env.config();
 
@@ -38,6 +43,11 @@ app.use("/api/adjunto", AdjuntoRouter);
 app.use("/api/instrumento", InstrumentoRouter);
 app.use("/api/usuario", UsuarioRouter);
 app.use("/api/accionUsuario", AccionUsuarioRouter);
+app.use("/api/publicacion", PublicacionRouter);
+app.use("/api/observacion", ObservacionRouter);
+app.use("/api/evento", EventoRouter);
+app.use("/api/observacionCondicion", ObservacionCondicionRouter);
+app.use("/api/objeto", ObjetoRouter);
 
 await sequelize.sync({ force: true });
 
