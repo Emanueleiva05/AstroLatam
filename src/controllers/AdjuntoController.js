@@ -12,9 +12,7 @@ export const SetAdjunto = async (req, res) => {
     await AgregarAdjunto(link_archivo, descripcion, idTipoAdjunto);
     res.status(200).json({ message: "Adjunto creado con exito" });
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de crear un adjunto" });
+    next(error);
   }
 };
 
@@ -31,9 +29,7 @@ export const UpdateAdjunto = async (req, res) => {
     );
     res.status(200).json({ message: "Adjunto modificado con exito" });
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de modificar un adjunto" });
+    next(error);
   }
 };
 
@@ -43,9 +39,7 @@ export const DeleteAdjunto = async (req, res) => {
     await EliminarAdjunto(await ListarAdjuntoEspecifico(id));
     res.status(200).json({ message: "Adjunto eliminado con exito" });
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de eliminar un adjunto" });
+    next(error);
   }
 };
 
@@ -54,9 +48,7 @@ export const ReadAdjuntos = async (req, res) => {
     const adjuntos = await ListarAdjunto();
     res.status(200).json(adjuntos);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar adjuntos" });
+    next(error);
   }
 };
 
@@ -66,8 +58,6 @@ export const ReadAdjuntoEspecifico = async (req, res) => {
     const adjunto = await ListarAdjuntoEspecifico(id);
     res.status(200).json(adjunto);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar adjunto" });
+    next(error);
   }
 };

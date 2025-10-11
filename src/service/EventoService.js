@@ -1,4 +1,5 @@
 import Evento from "../models/Evento.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarEvento = async (
   nombre,
@@ -45,9 +46,17 @@ export const EliminarEvento = async (evento) => {
 };
 
 export const ListarEventos = async () => {
-  return await Evento.findAll();
+  const eventos = await Evento.findAll();
+  if (eventos.length === 0) {
+    throw new AppError("No se encontraron eventos creados", 404);
+  }
+  return eventos;
 };
 
 export const ListarEvento = async (id) => {
-  return await Evento.findByPk(id);
+  const evento = await Evento.findByPk(id);
+  if (!evento) {
+    throw new AppError("No se encontro el evento especifico", 404);
+  }
+  return evento;
 };

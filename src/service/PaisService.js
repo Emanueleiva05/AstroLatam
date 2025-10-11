@@ -1,4 +1,5 @@
 import Pais from "../models/Pais.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarPais = async (nombre) => {
   return await Pais.create({ nombre: nombre });
@@ -14,9 +15,17 @@ export const EliminarPais = async (pais) => {
 };
 
 export const ListarPaises = async () => {
-  return await Pais.findAll();
+  const paises = await Pais.findAll();
+  if (paises.length === 0) {
+    throw new AppError("No se encontraron paises creados", 404);
+  }
+  return paises;
 };
 
 export const ListarPaisEspecifico = async (id) => {
-  return await Pais.findByPk(id);
+  const pais = await Pais.findByPk(id);
+  if (!pais) {
+    throw new AppError("No se encontro el pais especifico", 404);
+  }
+  return pais;
 };

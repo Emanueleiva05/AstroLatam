@@ -1,4 +1,5 @@
 import Publicacion from "../models/Publicacion.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarPublicacion = async (
   titulo,
@@ -37,9 +38,17 @@ export const EliminarPublicacion = async (publicacion) => {
 };
 
 export const ListarPublicaciones = async (id) => {
-  return await Publicacion.findAll();
+  const publicaciones = await Publicacion.findAll();
+  if (publicaciones.length === 0) {
+    throw new AppError("No se encontraron publicacion creados", 404);
+  }
+  return publicaciones;
 };
 
 export const ListarPublicacionEspecifico = async (id) => {
-  return await Publicacion.findByPk(id);
+  const publicacion = await Publicacion.findByPk(id);
+  if (!publicacion) {
+    throw new AppError("No se encontro la publicacion especifica", 404);
+  }
+  return publicacion;
 };

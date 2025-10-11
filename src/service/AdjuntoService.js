@@ -1,4 +1,5 @@
 import Adjunto from "../models/Adjunto.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarAdjunto = async (
   link_archivo,
@@ -29,9 +30,17 @@ export const EliminarAdjunto = async (adjunto) => {
 };
 
 export const ListarAdjunto = async (id) => {
-  return await Adjunto.findAll();
+  const adjuntos = await Adjunto.findAll();
+  if (adjuntos.length === 0) {
+    throw new AppError("No se encontraron adjuntos creados", 404);
+  }
+  return adjuntos;
 };
 
 export const ListarAdjuntoEspecifico = async (id) => {
-  return await Adjunto.findByPk(id);
+  const adjunto = await Adjunto.findByPk(id);
+  if (!adjunto) {
+    throw new AppError("No se encontro el adjunto especifico", 404);
+  }
+  return adjunto;
 };

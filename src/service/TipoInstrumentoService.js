@@ -1,4 +1,5 @@
 import TipoInstrumento from "../models/TipoInstrumento.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoInstrumento = async (nombre, descripcion) => {
   return await TipoInstrumento.create({
@@ -22,9 +23,17 @@ export const EliminarTipoInstrumento = async (tipoInstrumento) => {
 };
 
 export const ListarTipoInstrumentos = async () => {
-  return await TipoInstrumento.findAll();
+  const tipoInstrumentos = await TipoInstrumento.findAll();
+  if (tipoInstrumentos.length === 0) {
+    throw new AppError("No se encontraron tipoEventos creados", 404);
+  }
+  return tipoInstrumentos;
 };
 
 export const ListarTipoInstrumentoEspecifico = async (id) => {
-  return await TipoInstrumento.findByPk(id);
+  const tipoInstrumento = await TipoInstrumento.findByPk(id);
+  if (!tipoInstrumento) {
+    throw new AppError("No se encontro el tipoInstrumento especifico", 404);
+  }
+  return tipoInstrumento;
 };

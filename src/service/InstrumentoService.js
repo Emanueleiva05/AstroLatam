@@ -1,4 +1,5 @@
 import Instrumento from "../models/Instrumento.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarInstrumento = async (
   nombre,
@@ -53,9 +54,17 @@ export const EliminarInstrumento = async (instrumento) => {
 };
 
 export const ListarInstrumentos = async (id) => {
-  return await Instrumento.findAll();
+  const instrumentos = await Instrumento.findAll();
+  if (instrumentos.length === 0) {
+    throw new AppError("No se encontraron instrumentos creados", 404);
+  }
+  return instrumentos;
 };
 
 export const ListarInstrumentoEspecifico = async (id) => {
-  return await Instrumento.findByPk(id);
+  const instrumento = await Instrumento.findByPk(id);
+  if (!instrumento) {
+    throw new AppError("No se encontro el instrumento especifico", 404);
+  }
+  return instrumento;
 };

@@ -30,9 +30,7 @@ export const SetUsuario = async (req, res) => {
     );
     res.status(200).json({ message: "Usuario creado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de crear un Usuario",
-    });
+    next(error);
   }
 };
 
@@ -63,9 +61,7 @@ export const UpdateUsuario = async (req, res) => {
     );
     res.status(200).json({ message: "Usuario modificado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de modificar un Usuario",
-    });
+    next(error);
   }
 };
 
@@ -75,9 +71,7 @@ export const DeleteUsuario = async (req, res) => {
     await EliminarUsuario(await ListarUsuarioEspecifico(id));
     res.status(200).json({ message: "Usuario eliminado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de eliminar un Usuario",
-    });
+    next(error);
   }
 };
 
@@ -86,9 +80,7 @@ export const ReadUsuario = async (req, res) => {
     const usuarios = await ListarUsuario();
     res.status(200).json(usuarios);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Usuario" });
+    next(error);
   }
 };
 
@@ -98,8 +90,6 @@ export const ReadUsuarioEspecifico = async (req, res) => {
     const usuario = await ListarUsuarioEspecifico(id);
     res.status(200).json(usuario);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Usuario" });
+    next(error);
   }
 };

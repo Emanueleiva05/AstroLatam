@@ -14,9 +14,7 @@ export const SetTipoCondicion = async (req, res) => {
       message: "Se agrego el TipoCondicion con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de agregar un TipoCondicion",
-    });
+    next(error);
   }
 };
 
@@ -32,9 +30,7 @@ export const UpdateTipoCondicion = async (req, res) => {
       message: "Se modifico el TipoCondicion con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de modificar un TipoCondicion",
-    });
+    next(error);
   }
 };
 
@@ -46,9 +42,7 @@ export const DeleteTipoCondicion = async (req, res) => {
       message: "Se elimino el TipoCondicion con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoCondicion",
-    });
+    next(error);
   }
 };
 
@@ -57,9 +51,7 @@ export const ReadTiposCondiciones = async (req, res) => {
     const TiposAdjuntos = await ListarTipoCondiciones();
     res.status(200).json(TiposAdjuntos);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoCondicion",
-    });
+    next(error);
   }
 };
 
@@ -69,8 +61,6 @@ export const ReadTipoCondicion = async (req, res) => {
     const TiposAdjuntos = await ListarTipoCondicionEspecifico(id);
     res.status(200).json(TiposAdjuntos);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoCondicion",
-    });
+    next(error);
   }
 };

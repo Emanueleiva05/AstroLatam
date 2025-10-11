@@ -1,4 +1,5 @@
 import TipoAdjunto from "../models/TipoAdjunto.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoAdjunto = async (nombre) => {
   return await TipoAdjunto.create({ nombre: nombre });
@@ -14,9 +15,17 @@ export const EliminarTipoAdjunto = async (tipoAdjunto) => {
 };
 
 export const ListarTipoAdjuntos = async () => {
-  return await TipoAdjunto.findAll();
+  const tipoAdjuntos = await TipoAdjunto.findAll();
+  if (tipoAdjuntos.length === 0) {
+    throw new AppError("No se encontraron tipoAdjuntos creados", 404);
+  }
+  return tipoAdjuntos;
 };
 
 export const ListarTipoAdjuntoEspecifico = async (id) => {
-  return await TipoAdjunto.findByPk(id);
+  const tipoAdjunto = await TipoAdjunto.findByPk(id);
+  if (!tipoAdjunto) {
+    throw new AppError("No se encontro el tipoAdjunto especifico", 404);
+  }
+  return tipoAdjunto;
 };

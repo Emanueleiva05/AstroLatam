@@ -14,9 +14,7 @@ export const SetCiudad = async (req, res) => {
       message: "Se agrego el Ciudad con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de agregar un Ciudad",
-    });
+    next(error);
   }
 };
 
@@ -33,9 +31,7 @@ export const UpdateCiudad = async (req, res) => {
       message: "Se modifico el Ciudad con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de modificar un Ciudad",
-    });
+    next(error);
   }
 };
 
@@ -47,9 +43,7 @@ export const DeleteCiudad = async (req, res) => {
       message: "Se elimino el Ciudad con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Ciudad",
-    });
+    next(error);
   }
 };
 
@@ -58,9 +52,7 @@ export const ReadCiudades = async (req, res) => {
     const ciudades = await ListarCiudades();
     res.status(200).json(ciudades);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Ciudad",
-    });
+    next(error);
   }
 };
 
@@ -70,8 +62,6 @@ export const ReadCiudadEspecifico = async (req, res) => {
     const ciudad = await ListarCiudadEspecifico(id);
     res.status(200).json(ciudad);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Ciudad",
-    });
+    next(error);
   }
 };

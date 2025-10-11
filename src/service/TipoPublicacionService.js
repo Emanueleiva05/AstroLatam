@@ -1,4 +1,5 @@
 import TipoPublicacion from "../models/TipoPublicacion.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoPublicacion = async (nombre, descripcion) => {
   return await TipoPublicacion.create({
@@ -22,9 +23,17 @@ export const EliminarTipoPublicacion = async (tipoPublicacion) => {
 };
 
 export const ListarTipoPublicaciones = async () => {
-  return await TipoPublicacion.findAll();
+  const tipoPublicaciones = await TipoPublicacion.findAll();
+  if (tipoPublicaciones.length === 0) {
+    throw new AppError("No se encontraron tipoPublicaciones creados", 404);
+  }
+  return tipoPublicaciones;
 };
 
 export const ListarTipoPublicacionEspecifico = async (id) => {
-  return await TipoPublicacion.findByPk(id);
+  const tipoPublicacion = await TipoPublicacion.findByPk(id);
+  if (!tipoPublicacion) {
+    throw new AppError("No se encontro el tipoPublicacion especifico", 404);
+  }
+  return tipoPublicacion;
 };

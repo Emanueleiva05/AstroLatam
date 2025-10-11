@@ -12,9 +12,7 @@ export const SetTipoPublicacion = async (req, res) => {
     await AgregarTipoPublicacion(nombre, descripcion);
     res.status(200).json({ message: "Se creo el Tipo Publicacion con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la hora de crear el Tipo Publicacion",
-    });
+    next(error);
   }
 };
 
@@ -31,9 +29,7 @@ export const UpdateTipoPublicacion = async (req, res) => {
       .status(200)
       .json({ message: "Se modifico el Tipo Publicacion con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la hora de modificar el Tipo Publicacion",
-    });
+    next(error);
   }
 };
 
@@ -45,9 +41,7 @@ export const DeleteTipoPublicacion = async (req, res) => {
       .status(200)
       .json({ message: "Se elimino el Tipo Publicacion con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la hora de eliminar el Tipo Publicacion",
-    });
+    next(error);
   }
 };
 
@@ -57,9 +51,7 @@ export const ReadTipoPublicacionEspecifico = async (req, res) => {
     const tipoPublicacion = await ListarTipoPublicacionEspecifico(id);
     res.status(200).json(tipoPublicacion);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la listar el Tipo Publicacion",
-    });
+    next(error);
   }
 };
 
@@ -68,8 +60,6 @@ export const ReadTipoPublicacion = async (req, res) => {
     const tipoPublicaciones = await ListarTipoPublicaciones();
     res.status(200).json(tipoPublicaciones);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la listar el Tipo Publicacion",
-    });
+    next(error);
   }
 };

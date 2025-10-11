@@ -14,9 +14,7 @@ export const SetPais = async (req, res) => {
       message: "Se agrego el Pais con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de agregar un Pais",
-    });
+    next(error);
   }
 };
 
@@ -29,9 +27,7 @@ export const UpdatePais = async (req, res) => {
       message: "Se modifico el Pais con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de modificar un Pais",
-    });
+    next(error);
   }
 };
 
@@ -43,9 +39,7 @@ export const DeletePais = async (req, res) => {
       message: "Se elimino el Pais con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Pais",
-    });
+    next(error);
   }
 };
 
@@ -54,9 +48,7 @@ export const ReadPaises = async (req, res) => {
     const paises = await ListarPaises();
     res.status(200).json(paises);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Pais",
-    });
+    next(error);
   }
 };
 
@@ -66,8 +58,6 @@ export const ReadPaisEspecifico = async (req, res) => {
     const pais = await ListarPaisEspecifico(id);
     res.status(200).json(pais);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Pais",
-    });
+    next(error);
   }
 };

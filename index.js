@@ -21,6 +21,7 @@ import ObjetoRouter from "./src/routes/ObjetoRouter.js";
 import ObservacionRouter from "./src/routes/ObservacionRouter.js";
 import ObservacionCondicionRouter from "./src/routes/ObservacionCondicionRouter.js";
 import EventoRouter from "./src/routes/EventoRouter.js";
+import HandleError from "./src/middlewares/HandleError.js";
 
 env.config();
 
@@ -48,6 +49,8 @@ app.use("/api/observacion", ObservacionRouter);
 app.use("/api/evento", EventoRouter);
 app.use("/api/observacionCondicion", ObservacionCondicionRouter);
 app.use("/api/objeto", ObjetoRouter);
+
+app.use(HandleError);
 
 await sequelize.sync({ force: true });
 

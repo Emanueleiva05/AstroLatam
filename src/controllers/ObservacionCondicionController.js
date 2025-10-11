@@ -14,9 +14,7 @@ export const SetObservacionCondiciones = async (req, res) => {
       .status(200)
       .json({ message: "ObservacionCondiciones creado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de crear un ObservacionCondiciones",
-    });
+    next(error);
   }
 };
 
@@ -35,10 +33,7 @@ export const UpdateObservacionCondiciones = async (req, res) => {
       .status(200)
       .json({ message: "ObservacionCondiciones modificado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message:
-        "Ocurrio un error a la hora de modificar un ObservacionCondiciones",
-    });
+    next(error);
   }
 };
 
@@ -52,10 +47,7 @@ export const DeleteObservacionCondiciones = async (req, res) => {
       .status(200)
       .json({ message: "ObservacionCondiciones eliminado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message:
-        "Ocurrio un error a la hora de eliminar un ObservacionCondiciones",
-    });
+    next(error);
   }
 };
 
@@ -64,9 +56,7 @@ export const ReadObservacionCondiciones = async (req, res) => {
     const publicaciones = await ListarObservacionCondiciones();
     res.status(200).json(publicaciones);
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de listar ObservacionCondiciones",
-    });
+    next(error);
   }
 };
 
@@ -76,8 +66,6 @@ export const ReadObservacionCondicionesEspecifico = async (req, res) => {
     const publicacion = await ListarObservacionCondicionEspecifico(id);
     res.status(200).json(publicacion);
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de listar ObservacionCondiciones",
-    });
+    next(error);
   }
 };

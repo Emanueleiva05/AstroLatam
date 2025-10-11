@@ -24,9 +24,7 @@ export const SetPublicacion = async (req, res) => {
     );
     res.status(200).json({ message: "Publicacion creado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de crear un Publicacion",
-    });
+    next(error);
   }
 };
 
@@ -51,9 +49,7 @@ export const UpdatePublicacion = async (req, res) => {
     );
     res.status(200).json({ message: "Publicacion modificado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de modificar un Publicacion",
-    });
+    next(error);
   }
 };
 
@@ -63,9 +59,7 @@ export const DeletePublicacion = async (req, res) => {
     await EliminarPublicacion(await ListarPublicacionEspecifico(id));
     res.status(200).json({ message: "Publicacion eliminado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de eliminar un Publicacion",
-    });
+    next(error);
   }
 };
 
@@ -74,9 +68,7 @@ export const ReadPublicacion = async (req, res) => {
     const publicaciones = await ListarPublicaciones();
     res.status(200).json(publicaciones);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Publicacion" });
+    next(error);
   }
 };
 
@@ -86,8 +78,6 @@ export const ReadPublicacionEspecifico = async (req, res) => {
     const publicacion = await ListarPublicacionEspecifico(id);
     res.status(200).json(publicacion);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Publicacion" });
+    next(error);
   }
 };

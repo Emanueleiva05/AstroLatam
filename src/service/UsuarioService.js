@@ -1,4 +1,5 @@
 import Usuario from "../models/Usuario.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarUsuario = async (
   username,
@@ -49,9 +50,17 @@ export const EliminarUsuario = async (usuario) => {
 };
 
 export const ListarUsuario = async () => {
+  const usuarios = await Usuario.findAll();
+  if (usuarios.length === 0) {
+    throw new AppError("No se encontraron usuarios creados", 404);
+  }
   return await Usuario.findAll();
 };
 
 export const ListarUsuarioEspecifico = async (id) => {
-  return await Usuario.findByPk(id);
+  const usuario = await Usuario.findByPk(id);
+  if (!usuario) {
+    throw new AppError("No se encontro el usuario especifico", 404);
+  }
+  return usuario;
 };
