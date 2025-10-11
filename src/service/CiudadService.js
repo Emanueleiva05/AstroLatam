@@ -1,4 +1,5 @@
 import Ciudad from "../models/Ciudad.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarCiudad = async (nombre, idProvincia) => {
   return await Ciudad.create({ nombre: nombre, idProvincia: idProvincia });
@@ -14,9 +15,17 @@ export const EliminarCiudad = async (ciudad) => {
 };
 
 export const ListarCiudades = async () => {
-  return await Ciudad.findAll();
+  const ciudades = await Ciudad.findAll();
+  if (ciudades.length === 0) {
+    throw new AppError("No se encontraron ciudades creadas", 404);
+  }
+  return ciudades;
 };
 
 export const ListarCiudadEspecifico = async (id) => {
-  return await Ciudad.findByPk(id);
+  const ciudad = await Ciudad.findByPk(id);
+  if (!ciudad) {
+    throw new AppError("No se encontro la ciudad especifica", 404);
+  }
+  return ciudad;
 };

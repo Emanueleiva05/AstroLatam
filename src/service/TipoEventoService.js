@@ -1,4 +1,5 @@
 import TipoEvento from "../models/TipoEvento.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoEvento = async (nombre) => {
   return await TipoEvento.create({ nombre: nombre });
@@ -14,9 +15,17 @@ export const EliminarTipoEvento = async (tipoEvento) => {
 };
 
 export const ListarTipoEventos = async () => {
-  return await TipoEvento.findAll();
+  const tipoEventos = await TipoEvento.findAll();
+  if (tipoEventos.length === 0) {
+    throw new AppError("No se encontraron tipoEventos creados", 404);
+  }
+  return tipoEventos;
 };
 
 export const ListarTipoEventoEspecifico = async (id) => {
-  return await TipoEvento.findByPk(id);
+  const tipoEvento = await TipoEvento.findByPk(id);
+  if (!tipoEvento) {
+    throw new AppError("No se encontro el tipoEvento especifico", 404);
+  }
+  return tipoEvento;
 };

@@ -1,4 +1,5 @@
 import Objeto from "../models/Objeto.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarObjeto = async (nombre, descripcion, idTipoObjeto) => {
   return await Objeto.create({
@@ -25,9 +26,17 @@ export const EliminarObjeto = async (objeto) => {
 };
 
 export const ListarObjetos = async () => {
-  return await Objeto.findAll();
+  const objetos = await Objeto.findAll();
+  if (objetos.length === 0) {
+    throw new AppError("No se encontraron objetos creados", 404);
+  }
+  return objetos;
 };
 
 export const ListarObjetoEspecifico = async (id) => {
-  return await Objeto.findByPk(id);
+  const objeto = await Objeto.findByPk(id);
+  if (!objeto) {
+    throw new AppError("No se encontro el objeto especifico", 404);
+  }
+  return objeto;
 };

@@ -1,4 +1,5 @@
 import ObservacionCondicion from "../models/ObservacionCondicion.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarObservacionCondicion = async (
   valor,
@@ -29,9 +30,17 @@ export const EliminarObservacionCondicion = async (observacionCondicion) => {
 };
 
 export const ListarObservacionCondiciones = async () => {
-  return await ObservacionCondicion.findAll();
+  const observacionCondiciones = await ObservacionCondicion.findAll();
+  if (observacionCondiciones.length === 0) {
+    throw new AppError("No se encontraron objetos condiciones creados", 404);
+  }
+  return observacionCondiciones;
 };
 
 export const ListarObservacionCondicionEspecifico = async (id) => {
-  return await ObservacionCondicion.findByPk(id);
+  const observacionCondicion = await ObservacionCondicion.findByPk(id);
+  if (!observacionCondicion) {
+    throw new AppError("No se encontro el objeto condicion especifico", 404);
+  }
+  return observacionCondicion;
 };

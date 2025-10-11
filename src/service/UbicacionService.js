@@ -39,9 +39,17 @@ export const EliminarUbicacion = async (ubicacion) => {
 };
 
 export const ListarUbicaciones = async () => {
-  return await Ubicacion.findAll();
+  const ubicaciones = await Ubicacion.findAll();
+  if (ubicaciones.length === 0) {
+    throw new AppError("No se encontraron ubicaciones creadas", 404);
+  }
+  return ubicaciones;
 };
 
 export const ListarUbicacionEspecifico = async (id) => {
-  return await Ubicacion.findByPk(id);
+  const ubicacion = await Ubicacion.findByPk(id);
+  if (!ubicacion) {
+    throw new AppError("No se encontro la ubicacion especifica", 404);
+  }
+  return ubicacion;
 };

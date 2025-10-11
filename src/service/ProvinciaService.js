@@ -1,4 +1,5 @@
 import Provincia from "../models/Provincia.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarProvincia = async (nombre, idPais) => {
   return await Provincia.create({ nombre: nombre, idPais: idPais });
@@ -14,9 +15,17 @@ export const EliminarProvincia = async (provincia) => {
 };
 
 export const ListarProvincias = async () => {
-  return await Provincia.findAll();
+  const provincias = await Provincia.findAll();
+  if (provincias.length === 0) {
+    throw new AppError("No se encontraron provincias creados", 404);
+  }
+  return provincias;
 };
 
 export const ListarProvinciaEspecifico = async (id) => {
-  return await Provincia.findByPk(id);
+  const provincia = await Provincia.findByPk(id);
+  if (!provincia) {
+    throw new AppError("No se encontro la provincia especifico", 404);
+  }
+  return provincia;
 };

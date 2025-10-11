@@ -1,4 +1,5 @@
 import AccionUsuario from "../models/AccionUsuario.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarAccionUsuario = async (
   tipo,
@@ -40,10 +41,18 @@ export const EliminarAccionUsuario = async (accionUsuario) => {
   return await accionUsuario.destroy();
 };
 
-export const ListarAccionUsuarios = async (id) => {
-  return await AccionUsuario.findAll();
+export const ListarAccionUsuarios = async () => {
+  const acciones = await AccionUsuario.findAll();
+  if (acciones.length === 0) {
+    throw new AppError("No se encontraron acciones de usuarios creados", 404);
+  }
+  return acciones;
 };
 
 export const ListarAccionUsuarioEspecifico = async (id) => {
-  return await AccionUsuario.findByPk(id);
+  const accion = await AccionUsuario.findByPk(id);
+  if (!accion) {
+    throw new AppError("No se encontro la accion del usuario especifico", 404);
+  }
+  return accion;
 };

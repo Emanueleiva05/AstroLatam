@@ -1,4 +1,5 @@
 import Observacion from "../models/Observacion.js";
+import { AppError } from "../utils/AppError.js";
 
 export const AgregarObservacion = async (
   titulo,
@@ -37,9 +38,19 @@ export const EliminarObservacion = async (observacion) => {
 };
 
 export const ListarObservaciones = async (id) => {
-  return await Observacion.findAll({ where: { idUbicacion: id } });
+  const observaciones = await Observacion.findAll({
+    where: { idUbicacion: id },
+  });
+  if (observaciones.length === 0) {
+    throw new AppError("No se encontraron observacion creados", 404);
+  }
+  return observaciones;
 };
 
 export const ListarObservacionEspecifico = async (id) => {
-  return await Observacion.findByPk(id);
+  const observacion = await Observacion.findByPk(id);
+  if (!observacion) {
+    throw new AppError("No se encontro la observacion especifico", 404);
+  }
+  return observacion;
 };
