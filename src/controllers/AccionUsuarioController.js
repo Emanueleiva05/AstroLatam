@@ -19,9 +19,7 @@ export const SetAccionUsuario = async (req, res) => {
     );
     res.status(200).json({ message: "AccionUsuario creado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de crear un AccionUsuario",
-    });
+    next(error);
   }
 };
 
@@ -41,9 +39,7 @@ export const UpdateAccionUsuario = async (req, res) => {
     );
     res.status(200).json({ message: "AccionUsuario modificado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de modificar un AccionUsuario",
-    });
+    next(error);
   }
 };
 
@@ -53,9 +49,7 @@ export const DeleteAccionUsuario = async (req, res) => {
     await EliminarAccionUsuario(await ListarAccionUsuarioEspecifico(id));
     res.status(200).json({ message: "AccionUsuario eliminado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de eliminar un AccionUsuario",
-    });
+    next(error);
   }
 };
 
@@ -64,9 +58,7 @@ export const ReadAccionUsuario = async (req, res) => {
     const accionusuarios = await ListarAccionUsuarios();
     res.status(200).json(accionusuarios);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar AccionUsuario" });
+    next(error);
   }
 };
 
@@ -76,8 +68,6 @@ export const ReadAccionUsuarioEspecifico = async (req, res) => {
     const accionusuario = await ListarAccionUsuarioEspecifico(id);
     res.status(200).json(accionusuario);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar AccionUsuario" });
+    next(error);
   }
 };

@@ -12,9 +12,7 @@ export const SetObjeto = async (req, res) => {
     await AgregarObjeto(nombre, descripcion, idTipoObjeto);
     res.status(200).json({ message: "Objeto creado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de crear un Objeto",
-    });
+    next(error);
   }
 };
 
@@ -31,9 +29,7 @@ export const UpdateObjeto = async (req, res) => {
     );
     res.status(200).json({ message: "Objeto modificado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de modificar un Objeto",
-    });
+    next(error);
   }
 };
 
@@ -43,9 +39,7 @@ export const DeleteObjeto = async (req, res) => {
     await EliminarObjeto(await ListarObjetoEspecifico(id));
     res.status(200).json({ message: "Objeto eliminado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de eliminar un Objeto",
-    });
+    next(error);
   }
 };
 
@@ -54,9 +48,7 @@ export const ReadObjeto = async (req, res) => {
     const objetos = await ListarObjetos();
     res.status(200).json(objetos);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Objeto" });
+    next(error);
   }
 };
 
@@ -66,8 +58,6 @@ export const ReadObjetoEspecifico = async (req, res) => {
     const objeto = await ListarObjetoEspecifico(id);
     res.status(200).json(objeto);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Objeto" });
+    next(error);
   }
 };

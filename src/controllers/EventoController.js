@@ -28,9 +28,7 @@ export const SetEvento = async (req, res) => {
     );
     res.status(200).json({ message: "Evento creado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de crear un Evento",
-    });
+    next(error);
   }
 };
 
@@ -59,9 +57,7 @@ export const UpdateEvento = async (req, res) => {
     );
     res.status(200).json({ message: "Evento modificado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de modificar un Evento",
-    });
+    next(error);
   }
 };
 
@@ -71,9 +67,7 @@ export const DeleteEvento = async (req, res) => {
     await EliminarEvento(await ListarEvento(id));
     res.status(200).json({ message: "Evento eliminado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de eliminar un Evento",
-    });
+    next(error);
   }
 };
 
@@ -82,9 +76,7 @@ export const ReadEvento = async (req, res) => {
     const eventos = await ListarEventos();
     res.status(200).json(eventos);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Evento" });
+    next(error);
   }
 };
 
@@ -94,8 +86,6 @@ export const ReadEventoEspecifico = async (req, res) => {
     const evento = await ListarEvento(id);
     res.status(200).json(evento);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Evento" });
+    next(error);
   }
 };

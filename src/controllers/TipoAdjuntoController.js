@@ -14,9 +14,7 @@ export const SetTipoAdjunto = async (req, res) => {
       message: "Se agrego el TipoAdjunto con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de agregar un TipoAdjunto",
-    });
+    next(error);
   }
 };
 
@@ -29,9 +27,7 @@ export const UpdateTipoAdjunto = async (req, res) => {
       message: "Se modifico el TipoAdjunto con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de modificar un TipoAdjunto",
-    });
+    next(error);
   }
 };
 
@@ -43,9 +39,7 @@ export const DeleteTipoAdjunto = async (req, res) => {
       message: "Se elimino el TipoAdjunto con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoAdjunto",
-    });
+    next(error);
   }
 };
 
@@ -54,9 +48,7 @@ export const ReadTiposAdjuntos = async (req, res) => {
     const TiposAdjuntos = await ListarTipoAdjuntos();
     res.status(200).json(TiposAdjuntos);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoAdjunto",
-    });
+    next(error);
   }
 };
 
@@ -66,8 +58,6 @@ export const ReadTipoAdjunto = async (req, res) => {
     const TiposAdjuntos = await ListarTipoAdjuntoEspecifico(id);
     res.status(200).json(TiposAdjuntos);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoAdjunto",
-    });
+    next(error);
   }
 };

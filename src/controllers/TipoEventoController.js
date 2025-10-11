@@ -14,9 +14,7 @@ export const SetTipoEvento = async (req, res) => {
       message: "Se agrego el TipoEvento con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de agregar un TipoEvento",
-    });
+    next(error);
   }
 };
 
@@ -29,9 +27,7 @@ export const UpdateTipoEvento = async (req, res) => {
       message: "Se modifico el TipoEvento con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de modificar un TipoEvento",
-    });
+    next(error);
   }
 };
 
@@ -43,9 +39,7 @@ export const DeleteTipoEvento = async (req, res) => {
       message: "Se elimino el TipoEvento con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoEvento",
-    });
+    next(error);
   }
 };
 
@@ -54,9 +48,7 @@ export const ReadTiposEvento = async (req, res) => {
     const TiposEventos = await ListarTipoEventos();
     res.status(200).json(TiposEventos);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoEvento",
-    });
+    next(error);
   }
 };
 
@@ -66,8 +58,6 @@ export const ReadTipoEvento = async (req, res) => {
     const TiposEvento = await ListarTipoEventoEspecifico(id);
     res.status(200).json(TiposEvento);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un TipoEvento",
-    });
+    next(error);
   }
 };

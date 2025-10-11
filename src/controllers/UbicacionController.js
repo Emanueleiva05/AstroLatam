@@ -22,9 +22,7 @@ export const SetUbicacion = async (req, res) => {
       message: "Se agrego el Ubicacion con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de agregar un Ubicacion",
-    });
+    next(error);
   }
 };
 
@@ -46,9 +44,7 @@ export const UpdateUbicacion = async (req, res) => {
       message: "Se modifico el Ubicacion con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de modificar un Ubicacion",
-    });
+    next(error);
   }
 };
 
@@ -60,9 +56,7 @@ export const DeleteUbicacion = async (req, res) => {
       message: "Se elimino el Ubicacion con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Ubicacion",
-    });
+    next(error);
   }
 };
 
@@ -71,9 +65,7 @@ export const ReadUbicacion = async (req, res) => {
     const ubicaciones = await ListarUbicaciones();
     res.status(200).json(ubicaciones);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Ubicacion",
-    });
+    next(error);
   }
 };
 
@@ -83,8 +75,6 @@ export const ReadUbicacionEspecifico = async (req, res) => {
     const ubicacion = await ListarUbicacionEspecifico(id);
     res.status(200).json(ubicacion);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Ubicacion",
-    });
+    next(error);
   }
 };

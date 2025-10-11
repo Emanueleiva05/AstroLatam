@@ -14,9 +14,7 @@ export const SetProvincia = async (req, res) => {
       message: "Se agrego el Provincia con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de agregar un Provincia",
-    });
+    next(error);
   }
 };
 
@@ -33,9 +31,7 @@ export const UpdateProvincia = async (req, res) => {
       message: "Se modifico el Provincia con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de modificar un Provincia",
-    });
+    next(error);
   }
 };
 
@@ -47,9 +43,7 @@ export const DeleteProvincia = async (req, res) => {
       message: "Se elimino el Provincia con exito",
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de eliminar un Provincia",
-    });
+    next(error);
   }
 };
 
@@ -58,9 +52,7 @@ export const ReadProvincias = async (req, res) => {
     const provincias = await ListarProvincias();
     res.status(200).json(provincias);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de listar un Provincia",
-    });
+    next(error);
   }
 };
 
@@ -70,8 +62,6 @@ export const ReadProvinciaEspecifico = async (req, res) => {
     const provincia = await ListarProvinciaEspecifico(id);
     res.status(200).json(provincia);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un error a la hora de listar un Provincia",
-    });
+    next(error);
   }
 };

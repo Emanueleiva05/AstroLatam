@@ -32,9 +32,7 @@ export const SetInstrumento = async (req, res) => {
     );
     res.status(200).json({ message: "Instrumento creado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de crear un Instrumento",
-    });
+    next(error);
   }
 };
 
@@ -67,9 +65,7 @@ export const UpdateInstrumento = async (req, res) => {
     );
     res.status(200).json({ message: "Instrumento modificado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de modificar un Instrumento",
-    });
+    next(error);
   }
 };
 
@@ -79,9 +75,7 @@ export const DeleteInstrumento = async (req, res) => {
     await EliminarInstrumento(await ListarInstrumentoEspecifico(id));
     res.status(200).json({ message: "Instrumento eliminado con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Ocurrio un error a la hora de eliminar un Instrumento",
-    });
+    next(error);
   }
 };
 
@@ -90,9 +84,7 @@ export const ReadInstrumento = async (req, res) => {
     const instrumentos = await ListarInstrumentos();
     res.status(200).json(instrumentos);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Instrumento" });
+    next(error);
   }
 };
 
@@ -102,8 +94,6 @@ export const ReadInstrumentoEspecifico = async (req, res) => {
     const instrumento = await ListarInstrumentoEspecifico(id);
     res.status(200).json(instrumento);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ocurrio un error a la hora de listar Instrumento" });
+    next(error);
   }
 };

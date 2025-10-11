@@ -12,9 +12,7 @@ export const SetTipoInstrumento = async (req, res) => {
     await AgregarTipoInstrumento(nombre, descripcion);
     res.status(200).json({ message: "Se creo el Tipo Instrumento con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la hora de crear el Tipo Instrumento",
-    });
+    next(error);
   }
 };
 
@@ -31,9 +29,7 @@ export const UpdateTipoInstrumento = async (req, res) => {
       .status(200)
       .json({ message: "Se modifico el Tipo Instrumento con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la hora de modificar el Tipo Instrumento",
-    });
+    next(error);
   }
 };
 
@@ -45,9 +41,7 @@ export const DeleteTipoInstrumento = async (req, res) => {
       .status(200)
       .json({ message: "Se elimino el Tipo Instrumento con exito" });
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la hora de eliminar el Tipo Instrumento",
-    });
+    next(error);
   }
 };
 
@@ -57,9 +51,7 @@ export const ReadTipoInstrumentoEspecifico = async (req, res) => {
     const tipoPublicacion = await ListarTipoInstrumentoEspecifico(id);
     res.status(200).json(tipoPublicacion);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la listar el Tipo Instrumento",
-    });
+    next(error);
   }
 };
 
@@ -68,8 +60,6 @@ export const ReadTipoInstrumento = async (req, res) => {
     const tipoPublicaciones = await ListarTipoInstrumentos();
     res.status(200).json(tipoPublicaciones);
   } catch (error) {
-    res.status(400).json({
-      message: "Hubo un problema a la listar el Tipo Instrumento",
-    });
+    next(error);
   }
 };
