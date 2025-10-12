@@ -24,8 +24,5 @@ export const ListarTipoAdjuntos = async () => {
 
 export const ListarTipoAdjuntoEspecifico = async (id) => {
   const tipoAdjunto = await TipoAdjunto.findByPk(id);
-  if (!tipoAdjunto) {
-    throw new AppError("No se encontro el tipoAdjunto especifico", 404);
-  }
   return tipoAdjunto;
 };

@@ -6,17 +6,26 @@ import {
   ReadTipoInstrumento,
   ReadTipoInstrumentoEspecifico,
 } from "../controllers/TipoInstrumentoController.js";
+import {
+  EncontrarTipoInstrumento,
+  ValidarDatosTiposInstrumento,
+} from "../middlewares/TipoInstrumentoMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetTipoInstrumento);
+router.post("/", ValidarDatosTiposInstrumento, SetTipoInstrumento);
 
-router.put("/:id", UpdateTipoInstrumento);
+router.put(
+  "/:id",
+  EncontrarTipoInstrumento,
+  ValidarDatosTiposInstrumento,
+  UpdateTipoInstrumento
+);
 
-router.delete("/:id", DeleteTipoInstrumento);
+router.delete("/:id", EncontrarTipoInstrumento, DeleteTipoInstrumento);
 
 router.get("/", ReadTipoInstrumento);
 
-router.get("/:id", ReadTipoInstrumentoEspecifico);
+router.get("/:id", EncontrarTipoInstrumento, ReadTipoInstrumentoEspecifico);
 
 export default router;

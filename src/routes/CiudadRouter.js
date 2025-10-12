@@ -6,17 +6,28 @@ import {
   ReadCiudadEspecifico,
   ReadCiudades,
 } from "../controllers/CiudadController.js";
+import {
+  ValidarDatosCiudad,
+  VerificarExistenciaProvincia,
+  EncontrarCiudad,
+} from "../middlewares/CiudadMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetCiudad);
+router.post("/", ValidarDatosCiudad, VerificarExistenciaProvincia, SetCiudad);
 
-router.put("/:id", UpdateCiudad);
+router.put(
+  "/:id",
+  EncontrarCiudad,
+  ValidarDatosCiudad,
+  VerificarExistenciaProvincia,
+  UpdateCiudad
+);
 
-router.delete("/:id", DeleteCiudad);
+router.delete("/:id", EncontrarCiudad, DeleteCiudad);
 
 router.get("/", ReadCiudades);
 
-router.get("/:id", ReadCiudadEspecifico);
+router.get("/:id", EncontrarCiudad, ReadCiudadEspecifico);
 
 export default router;

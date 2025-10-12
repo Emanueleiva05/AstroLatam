@@ -6,17 +6,26 @@ import {
   ReadTipoCondicion,
   ReadTiposCondiciones,
 } from "../controllers/TipoCondicionController.js";
+import {
+  ValidarDatosTiposCondicion,
+  EncontrarTipoCondicion,
+} from "../middlewares/TipoCondicionMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetTipoCondicion);
+router.post("/", ValidarDatosTiposCondicion, SetTipoCondicion);
 
-router.put("/:id", UpdateTipoCondicion);
+router.put(
+  "/:id",
+  EncontrarTipoCondicion,
+  ValidarDatosTiposCondicion,
+  UpdateTipoCondicion
+);
 
-router.delete("/:id", DeleteTipoCondicion);
+router.delete("/:id", EncontrarTipoCondicion, DeleteTipoCondicion);
 
 router.get("/", ReadTiposCondiciones);
 
-router.get("/:id", ReadTipoCondicion);
+router.get("/:id", EncontrarTipoCondicion, ReadTipoCondicion);
 
 export default router;
