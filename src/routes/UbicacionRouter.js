@@ -6,17 +6,33 @@ import {
   ReadUbicacion,
   ReadUbicacionEspecifico,
 } from "../controllers/UbicacionController.js";
+import {
+  EncontrarUbicacion,
+  ValidarDatosUbicacion,
+  VerificarExistenciaCiudad,
+} from "../middlewares/UbicacionMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetUbicacion);
+router.post(
+  "/",
+  ValidarDatosUbicacion,
+  VerificarExistenciaCiudad,
+  SetUbicacion
+);
 
-router.put("/:id", UpdateUbicacion);
+router.put(
+  "/:id",
+  EncontrarUbicacion,
+  ValidarDatosUbicacion,
+  VerificarExistenciaCiudad,
+  UpdateUbicacion
+);
 
-router.delete("/:id", DeleteUbicacion);
+router.delete("/:id", EncontrarUbicacion, DeleteUbicacion);
 
 router.get("/", ReadUbicacion);
 
-router.get("/:id", ReadUbicacionEspecifico);
+router.get("/:id", EncontrarUbicacion, ReadUbicacionEspecifico);
 
 export default router;

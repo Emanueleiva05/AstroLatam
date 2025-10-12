@@ -7,16 +7,28 @@ import {
   ReadProvincias,
 } from "../controllers/ProvinciaController.js";
 
+import {
+  EncontrarProvincia,
+  ValidarDatosProvincia,
+  VerificarExistenciaPais,
+} from "../middlewares/ProvinciaMiddleware.js";
+
 const router = Router();
 
-router.post("/", SetProvincia);
+router.post("/", ValidarDatosProvincia, VerificarExistenciaPais, SetProvincia);
 
-router.put("/:id", UpdateProvincia);
+router.put(
+  "/:id",
+  EncontrarProvincia,
+  ValidarDatosProvincia,
+  VerificarExistenciaPais,
+  UpdateProvincia
+);
 
-router.delete("/:id", DeleteProvincia);
+router.delete("/:id", EncontrarProvincia, DeleteProvincia);
 
 router.get("/", ReadProvincias);
 
-router.get("/:id", ReadProvinciaEspecifico);
+router.get("/:id", EncontrarProvincia, ReadProvinciaEspecifico);
 
 export default router;
