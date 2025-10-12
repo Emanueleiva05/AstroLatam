@@ -6,17 +6,28 @@ import {
   ReadEvento,
   ReadEventoEspecifico,
 } from "../controllers/EventoController.js";
+import {
+  EncontrarEvento,
+  ValidarDatosEvento,
+  VerificarExistenciaTipoEvento,
+} from "../middlewares/EventoMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetEvento);
+router.post("/", ValidarDatosEvento, VerificarExistenciaTipoEvento, SetEvento);
 
-router.put("/:id", UpdateEvento);
+router.put(
+  "/:id",
+  EncontrarEvento,
+  ValidarDatosEvento,
+  VerificarExistenciaTipoEvento,
+  UpdateEvento
+);
 
-router.delete("/:id", DeleteEvento);
+router.delete("/:id", EncontrarEvento, DeleteEvento);
 
 router.get("/", ReadEvento);
 
-router.get("/:id", ReadEventoEspecifico);
+router.get("/:id", EncontrarEvento, ReadEventoEspecifico);
 
 export default router;

@@ -6,17 +6,33 @@ import {
   ReadPublicacion,
   ReadPublicacionEspecifico,
 } from "../controllers/PublicacionController.js";
+import {
+  EncontrarPublicacion,
+  ValidarDatosPublicacion,
+  VerificarExistenciaTipoPublicacion,
+} from "../middlewares/PublicacionMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetPublicacion);
+router.post(
+  "/",
+  ValidarDatosPublicacion,
+  VerificarExistenciaTipoPublicacion,
+  SetPublicacion
+);
 
-router.put("/:id", UpdatePublicacion);
+router.put(
+  "/:id",
+  EncontrarPublicacion,
+  ValidarDatosPublicacion,
+  VerificarExistenciaTipoPublicacion,
+  UpdatePublicacion
+);
 
-router.delete("/:id", DeletePublicacion);
+router.delete("/:id", EncontrarPublicacion, DeletePublicacion);
 
 router.get("/", ReadPublicacion);
 
-router.get("/:id", ReadPublicacionEspecifico);
+router.get("/:id", EncontrarPublicacion, ReadPublicacionEspecifico);
 
 export default router;

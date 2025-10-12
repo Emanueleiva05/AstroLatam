@@ -6,17 +6,28 @@ import {
   ReadObjeto,
   ReadObjetoEspecifico,
 } from "../controllers/ObjetoController.js";
+import {
+  EncontrarObjeto,
+  ValidarDatosObjeto,
+  VerificarExistenciaTipoObjeto,
+} from "../middlewares/ObjetoMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetObjeto);
+router.post("/", ValidarDatosObjeto, VerificarExistenciaTipoObjeto, SetObjeto);
 
-router.put("/:id", UpdateObjeto);
+router.put(
+  "/:id",
+  EncontrarObjeto,
+  ValidarDatosObjeto,
+  VerificarExistenciaTipoObjeto,
+  UpdateObjeto
+);
 
-router.delete("/:id", DeleteObjeto);
+router.delete("/:id", EncontrarObjeto, DeleteObjeto);
 
 router.get("/", ReadObjeto);
 
-router.get("/:id", ReadObjetoEspecifico);
+router.get("/:id", EncontrarObjeto, ReadObjetoEspecifico);
 
 export default router;
