@@ -6,17 +6,26 @@ import {
   SetTipoAdjunto,
   UpdateTipoAdjunto,
 } from "../controllers/TipoAdjuntoController.js";
+import {
+  EncontrarTipoAdjunto,
+  ValidarDatosTiposAdjunto,
+} from "../middlewares/TipoAdjuntoMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetTipoAdjunto);
+router.post("/", ValidarDatosTiposAdjunto, SetTipoAdjunto);
 
-router.put("/:id", UpdateTipoAdjunto);
+router.put(
+  "/:id",
+  EncontrarTipoAdjunto,
+  ValidarDatosTiposAdjunto,
+  UpdateTipoAdjunto
+);
 
-router.delete("/:id", DeleteTipoAdjunto);
+router.delete("/:id", EncontrarTipoAdjunto, DeleteTipoAdjunto);
 
 router.get("/", ReadTiposAdjuntos);
 
-router.get("/:id", ReadTipoAdjunto);
+router.get("/:id", EncontrarTipoAdjunto, ReadTipoAdjunto);
 
 export default router;

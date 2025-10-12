@@ -6,17 +6,26 @@ import {
   ReadTipoEvento,
   ReadTiposEvento,
 } from "../controllers/TipoEventoController.js";
+import {
+  ValidarDatosTiposEvento,
+  EncontrarTipoEvento,
+} from "../middlewares/TipoEventoMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetTipoEvento);
+router.post("/", ValidarDatosTiposEvento, SetTipoEvento);
 
-router.put("/:id", UpdateTipoEvento);
+router.put(
+  "/:id",
+  EncontrarTipoEvento,
+  ValidarDatosTiposEvento,
+  UpdateTipoEvento
+);
 
-router.delete("/:id", DeleteTipoEvento);
+router.delete("/:id", EncontrarTipoEvento, DeleteTipoEvento);
 
 router.get("/", ReadTiposEvento);
 
-router.get("/:id", ReadTipoEvento);
+router.get("/:id", EncontrarTipoEvento, ReadTipoEvento);
 
 export default router;

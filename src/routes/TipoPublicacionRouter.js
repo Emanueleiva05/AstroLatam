@@ -6,17 +6,26 @@ import {
   ReadTipoPublicacionEspecifico,
   DeleteTipoPublicacion,
 } from "../controllers/TipoPublicacioController.js";
+import {
+  EncontrarTipoPublicacion,
+  ValidarDatosTiposPublicacion,
+} from "../middlewares/TipoPublicacionMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetTipoPublicacion);
+router.post("/", ValidarDatosTiposPublicacion, SetTipoPublicacion);
 
-router.put("/:id", UpdateTipoPublicacion);
+router.put(
+  "/:id",
+  EncontrarTipoPublicacion,
+  ValidarDatosTiposPublicacion,
+  UpdateTipoPublicacion
+);
 
-router.delete("/:id", DeleteTipoPublicacion);
+router.delete("/:id", EncontrarTipoPublicacion, DeleteTipoPublicacion);
 
 router.get("/", ReadTipoPublicacion);
 
-router.get("/:id", ReadTipoPublicacionEspecifico);
+router.get("/:id", EncontrarTipoPublicacion, ReadTipoPublicacionEspecifico);
 
 export default router;
