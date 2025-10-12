@@ -6,17 +6,36 @@ import {
   ReadUsuario,
   ReadUsuarioEspecifico,
 } from "../controllers/UsuarioController.js";
+import {
+  ValidarDatosUsuario,
+  VerificarExistenciaAdjunto,
+  VerificarExistenciaCiudad,
+  EncontrarUsuario,
+} from "../middlewares/UsuarioMiddleware.js";
 
 const router = Router();
 
-router.post("/", SetUsuario);
+router.post(
+  "/",
+  ValidarDatosUsuario,
+  VerificarExistenciaAdjunto,
+  VerificarExistenciaCiudad,
+  SetUsuario
+);
 
-router.put("/:id", UpdateUsuario);
+router.put(
+  "/:id",
+  EncontrarUsuario,
+  ValidarDatosUsuario,
+  VerificarExistenciaAdjunto,
+  VerificarExistenciaCiudad,
+  UpdateUsuario
+);
 
-router.delete("/:id", DeleteUsuario);
+router.delete("/:id", EncontrarUsuario, DeleteUsuario);
 
 router.get("/", ReadUsuario);
 
-router.get("/:id", ReadUsuarioEspecifico);
+router.get("/:id", EncontrarUsuario, ReadUsuarioEspecifico);
 
 export default router;
