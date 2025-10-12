@@ -1,7 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../settings/conexion.js";
-import bcrypt from "bcrypt";
-import Instrumento from "./Instrumento.js";
 import Ciudad from "./Ciudad.js";
 import Adjunto from "./Adjunto.js";
 

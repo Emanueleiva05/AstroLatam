@@ -1,8 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../settings/conexion.js";
 import TipoInstrumento from "./TipoInstrumento.js";
-import Usuario from "./Usuario.js";
-import Observacion from "./Observacion.js";
 
 class Instrumento extends Model {}
 

@@ -1,9 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../settings/conexion.js";
 import TipoAdjunto from "./TipoAdjunto.js";
-import Objeto from "./Objeto.js";
-import Evento from "./Evento.js";
-import Observacion from "./Observacion.js";
 
 class Adjunto extends Model {}
 
