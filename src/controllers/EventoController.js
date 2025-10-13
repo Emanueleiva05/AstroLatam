@@ -2,11 +2,10 @@ import {
   AgregarEvento,
   EliminarEvento,
   ModificarEvento,
-  ListarEvento,
   ListarEventos,
 } from "../service/EventoService.js";
 
-export const SetEvento = async (req, res) => {
+export const SetEvento = async (req, res, next) => {
   const {
     nombre,
     descripcion,
@@ -32,8 +31,8 @@ export const SetEvento = async (req, res) => {
   }
 };
 
-export const UpdateEvento = async (req, res) => {
-  const { id } = req.params;
+export const UpdateEvento = async (req, res, next) => {
+  const evento = req.evento;
   const {
     nombre,
     descripcion,
@@ -46,7 +45,7 @@ export const UpdateEvento = async (req, res) => {
 
   try {
     await ModificarEvento(
-      await ListarEvento(id),
+      evento,
       nombre,
       descripcion,
       horaInicio,
@@ -61,17 +60,17 @@ export const UpdateEvento = async (req, res) => {
   }
 };
 
-export const DeleteEvento = async (req, res) => {
-  const { id } = req.params;
+export const DeleteEvento = async (req, res, next) => {
+  const evento = req.evento;
   try {
-    await EliminarEvento(await ListarEvento(id));
+    await EliminarEvento(evento);
     res.status(200).json({ message: "Evento eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadEvento = async (req, res) => {
+export const ReadEvento = async (req, res, next) => {
   try {
     const eventos = await ListarEventos();
     res.status(200).json(eventos);
@@ -80,11 +79,11 @@ export const ReadEvento = async (req, res) => {
   }
 };
 
-export const ReadEventoEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadEventoEspecifico = async (req, res, next) => {
+  const evento = req.evento;
   try {
-    const evento = await ListarEvento(id);
-    res.status(200).json(evento);
+    const eve = evento;
+    res.status(200).json(eve);
   } catch (error) {
     next(error);
   }

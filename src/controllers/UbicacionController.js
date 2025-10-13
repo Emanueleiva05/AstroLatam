@@ -1,12 +1,11 @@
 import {
   AgregarUbicacion,
-  ListarUbicacionEspecifico,
   ListarUbicaciones,
   ModificarUbicacion,
   EliminarUbicacion,
 } from "../service/UbicacionService.js";
 
-export const SetUbicacion = async (req, res) => {
+export const SetUbicacion = async (req, res, next) => {
   const { latitud, longitud, tz_original, timestamp_utc, geohash, idCiudad } =
     req.body;
   try {
@@ -26,13 +25,13 @@ export const SetUbicacion = async (req, res) => {
   }
 };
 
-export const UpdateUbicacion = async (req, res) => {
-  const { id } = req.params;
+export const UpdateUbicacion = async (req, res, next) => {
+  const ubicacion = req.ubicacion;
   const { latitud, longitud, tz_original, timestamp_utc, geohash, idCiudad } =
     req.body;
   try {
     await ModificarUbicacion(
-      await ListarUbicacionEspecifico(id),
+      ubicacion,
       latitud,
       longitud,
       tz_original,
@@ -48,10 +47,10 @@ export const UpdateUbicacion = async (req, res) => {
   }
 };
 
-export const DeleteUbicacion = async (req, res) => {
-  const { id } = req.params;
+export const DeleteUbicacion = async (req, res, next) => {
+  const ubicacion = req.ubicacion;
   try {
-    await EliminarUbicacion(await ListarUbicacionEspecifico(id));
+    await EliminarUbicacion(ubicacion);
     res.status(200).json({
       message: "Se elimino el Ubicacion con exito",
     });
@@ -60,7 +59,7 @@ export const DeleteUbicacion = async (req, res) => {
   }
 };
 
-export const ReadUbicacion = async (req, res) => {
+export const ReadUbicacion = async (req, res, next) => {
   try {
     const ubicaciones = await ListarUbicaciones();
     res.status(200).json(ubicaciones);
@@ -69,11 +68,11 @@ export const ReadUbicacion = async (req, res) => {
   }
 };
 
-export const ReadUbicacionEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadUbicacionEspecifico = async (req, res, next) => {
+  const ubicacion = req.ubicacion;
   try {
-    const ubicacion = await ListarUbicacionEspecifico(id);
-    res.status(200).json(ubicacion);
+    const ubi = ubicacion;
+    res.status(200).json(ubi);
   } catch (error) {
     next(error);
   }

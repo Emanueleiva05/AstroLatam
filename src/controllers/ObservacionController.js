@@ -2,11 +2,10 @@ import {
   AgregarObservacion,
   EliminarObservacion,
   ModificarObservacion,
-  ListarObservacionEspecifico,
   ListarObservaciones,
 } from "../service/ObservacionService.js";
 
-export const SetObservacion = async (req, res) => {
+export const SetObservacion = async (req, res, next) => {
   const {
     titulo,
     descripcion,
@@ -28,8 +27,8 @@ export const SetObservacion = async (req, res) => {
   }
 };
 
-export const UpdateObservacion = async (req, res) => {
-  const { id } = req.params;
+export const UpdateObservacion = async (req, res, next) => {
+  const observacion = req.observacion;
   const {
     titulo,
     descripcion,
@@ -40,7 +39,7 @@ export const UpdateObservacion = async (req, res) => {
 
   try {
     await ModificarObservacion(
-      await ListarObservacionEspecifico(id),
+      observacion,
       titulo,
       descripcion,
       horaObservacion,
@@ -53,17 +52,17 @@ export const UpdateObservacion = async (req, res) => {
   }
 };
 
-export const DeleteObservacion = async (req, res) => {
-  const { id } = req.params;
+export const DeleteObservacion = async (req, res, next) => {
+  const observacion = req.observacion;
   try {
-    await EliminarObservacion(await ListarObservacionEspecifico(id));
+    await EliminarObservacion(observacion);
     res.status(200).json({ message: "Observacion eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObservacion = async (req, res) => {
+export const ReadObservacion = async (req, res, next) => {
   try {
     const observaciones = await ListarObservaciones();
     res.status(200).json(observaciones);
@@ -72,11 +71,11 @@ export const ReadObservacion = async (req, res) => {
   }
 };
 
-export const ReadObservacionEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadObservacionEspecifico = async (req, res, next) => {
+  const observacion = req.observacion;
   try {
-    const observacion = await ListarObservacionEspecifico(id);
-    res.status(200).json(observacion);
+    const obs = observacion;
+    res.status(200).json(obs);
   } catch (error) {
     next(error);
   }

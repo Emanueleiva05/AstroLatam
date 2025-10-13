@@ -1,12 +1,11 @@
 import {
   AgregarCiudad,
-  ListarCiudadEspecifico,
   ListarCiudades,
   ModificarCiudad,
   EliminarCiudad,
 } from "../service/CiudadService.js";
 
-export const SetCiudad = async (req, res) => {
+export const SetCiudad = async (req, res, next) => {
   const { nombre, idProvincia } = req.body;
   try {
     await AgregarCiudad(nombre, idProvincia);
@@ -18,15 +17,11 @@ export const SetCiudad = async (req, res) => {
   }
 };
 
-export const UpdateCiudad = async (req, res) => {
-  const { id } = req.params;
+export const UpdateCiudad = async (req, res, next) => {
+  const ciudad = req.ciudad;
   const { nombre, idProvincia } = req.body;
   try {
-    await ModificarCiudad(
-      await ListarCiudadEspecifico(id),
-      nombre,
-      idProvincia
-    );
+    await ModificarCiudad(ciudad, nombre, idProvincia);
     res.status(200).json({
       message: "Se modifico el Ciudad con exito",
     });
@@ -35,10 +30,10 @@ export const UpdateCiudad = async (req, res) => {
   }
 };
 
-export const DeleteCiudad = async (req, res) => {
-  const { id } = req.params;
+export const DeleteCiudad = async (req, res, next) => {
+  const ciudad = req.ciudad;
   try {
-    await EliminarCiudad(await ListarCiudadEspecifico(id));
+    await EliminarCiudad(ciudad);
     res.status(200).json({
       message: "Se elimino el Ciudad con exito",
     });
@@ -47,7 +42,7 @@ export const DeleteCiudad = async (req, res) => {
   }
 };
 
-export const ReadCiudades = async (req, res) => {
+export const ReadCiudades = async (req, res, next) => {
   try {
     const ciudades = await ListarCiudades();
     res.status(200).json(ciudades);
@@ -56,11 +51,11 @@ export const ReadCiudades = async (req, res) => {
   }
 };
 
-export const ReadCiudadEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadCiudadEspecifico = async (req, res, next) => {
+  const ciudad = req.ciudad;
   try {
-    const ciudad = await ListarCiudadEspecifico(id);
-    res.status(200).json(ciudad);
+    const ciu = ciudad;
+    res.status(200).json(ciu);
   } catch (error) {
     next(error);
   }

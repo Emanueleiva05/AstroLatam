@@ -2,11 +2,10 @@ import {
   AgregarTipoObjeto,
   ModificarTipoObjeto,
   EliminarTipoObjeto,
-  ListarTipoObjetoEspecifico,
   ListarTipoObjetos,
 } from "../service/TipoObjetoService.js";
 
-export const SetTipoObjeto = async (req, res) => {
+export const SetTipoObjeto = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
     await AgregarTipoObjeto(nombre, descripcion);
@@ -16,45 +15,41 @@ export const SetTipoObjeto = async (req, res) => {
   }
 };
 
-export const UpdateTipoObjeto = async (req, res) => {
-  const { id } = req.params;
+export const UpdateTipoObjeto = async (req, res, next) => {
+  const tipoObjeto = req.tipoObjeto;
   const { nombre, descripcion } = req.body;
   try {
-    await ModificarTipoObjeto(
-      await ListarTipoObjetoEspecifico(id),
-      nombre,
-      descripcion
-    );
+    await ModificarTipoObjeto(tipoObjeto, nombre, descripcion);
     res.status(200).json({ message: "Se modifico el Tipo Objeto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const DeleteTipoObjeto = async (req, res) => {
-  const { id } = req.params;
+export const DeleteTipoObjeto = async (req, res, next) => {
+  const tipoObjeto = req.tipoObjeto;
   try {
-    await EliminarTipoObjeto(await ListarTipoObjetoEspecifico(id));
+    await EliminarTipoObjeto(tipoObjeto);
     res.status(200).json({ message: "Se elimino el Tipo Objeto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoObjetoEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadTipoObjetoEspecifico = async (req, res, next) => {
+  const tipoObjeto = req.tipoObjeto;
   try {
-    const tipoPublicacion = await ListarTipoObjetoEspecifico(id);
-    res.status(200).json(tipoPublicacion);
+    const tipoOb = tipoObjeto;
+    res.status(200).json(tipoOb);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoObjeto = async (req, res) => {
+export const ReadTipoObjeto = async (req, res, next) => {
   try {
-    const tipoPublicaciones = await ListarTipoObjetos();
-    res.status(200).json(tipoPublicaciones);
+    const tipoObjeto = await ListarTipoObjetos();
+    res.status(200).json(tipoObjeto);
   } catch (error) {
     next(error);
   }

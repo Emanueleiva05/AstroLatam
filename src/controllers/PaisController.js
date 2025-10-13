@@ -2,11 +2,10 @@ import {
   AgregarPais,
   EliminarPais,
   ModificarPais,
-  ListarPaisEspecifico,
   ListarPaises,
 } from "../service/PaisService.js";
 
-export const SetPais = async (req, res) => {
+export const SetPais = async (req, res, next) => {
   const { nombre } = req.body;
   try {
     await AgregarPais(nombre);
@@ -18,11 +17,11 @@ export const SetPais = async (req, res) => {
   }
 };
 
-export const UpdatePais = async (req, res) => {
-  const { id } = req.params;
+export const UpdatePais = async (req, res, next) => {
+  const pais = req.pais;
   const { nombre } = req.body;
   try {
-    await ModificarPais(await ListarPaisEspecifico(id), nombre);
+    await ModificarPais(pais, nombre);
     res.status(200).json({
       message: "Se modifico el Pais con exito",
     });
@@ -31,10 +30,10 @@ export const UpdatePais = async (req, res) => {
   }
 };
 
-export const DeletePais = async (req, res) => {
-  const { id } = req.params;
+export const DeletePais = async (req, res, next) => {
+  const pais = req.params;
   try {
-    await EliminarPais(await ListarPaisEspecifico(id));
+    await EliminarPais(pais);
     res.status(200).json({
       message: "Se elimino el Pais con exito",
     });
@@ -43,7 +42,7 @@ export const DeletePais = async (req, res) => {
   }
 };
 
-export const ReadPaises = async (req, res) => {
+export const ReadPaises = async (req, res, next) => {
   try {
     const paises = await ListarPaises();
     res.status(200).json(paises);
@@ -52,11 +51,11 @@ export const ReadPaises = async (req, res) => {
   }
 };
 
-export const ReadPaisEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadPaisEspecifico = async (req, res, next) => {
+  const pais = req.params;
   try {
-    const pais = await ListarPaisEspecifico(id);
-    res.status(200).json(pais);
+    const pa = pais;
+    res.status(200).json(pa);
   } catch (error) {
     next(error);
   }

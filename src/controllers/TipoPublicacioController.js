@@ -2,11 +2,10 @@ import {
   AgregarTipoPublicacion,
   EliminarTipoPublicacion,
   ModificarTipoPublicacion,
-  ListarTipoPublicacionEspecifico,
   ListarTipoPublicaciones,
 } from "../service/TipoPublicacionService.js";
 
-export const SetTipoPublicacion = async (req, res) => {
+export const SetTipoPublicacion = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
     await AgregarTipoPublicacion(nombre, descripcion);
@@ -16,15 +15,11 @@ export const SetTipoPublicacion = async (req, res) => {
   }
 };
 
-export const UpdateTipoPublicacion = async (req, res) => {
-  const { id } = req.params;
+export const UpdateTipoPublicacion = async (req, res, next) => {
+  const tipoPublicacion = req.tipoPublicacion;
   const { nombre, descripcion } = req.body;
   try {
-    await ModificarTipoPublicacion(
-      await ListarTipoPublicacionEspecifico(id),
-      nombre,
-      descripcion
-    );
+    await ModificarTipoPublicacion(tipoPublicacion, nombre, descripcion);
     res
       .status(200)
       .json({ message: "Se modifico el Tipo Publicacion con exito" });
@@ -33,10 +28,10 @@ export const UpdateTipoPublicacion = async (req, res) => {
   }
 };
 
-export const DeleteTipoPublicacion = async (req, res) => {
-  const { id } = req.params;
+export const DeleteTipoPublicacion = async (req, res, next) => {
+  const tipoPublicacion = req.tipoPublicacion;
   try {
-    await EliminarTipoPublicacion(await ListarTipoPublicacionEspecifico(id));
+    await EliminarTipoPublicacion(tipoPublicacion);
     res
       .status(200)
       .json({ message: "Se elimino el Tipo Publicacion con exito" });
@@ -45,17 +40,17 @@ export const DeleteTipoPublicacion = async (req, res) => {
   }
 };
 
-export const ReadTipoPublicacionEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadTipoPublicacionEspecifico = async (req, res, next) => {
+  const tipoPublicacion = req.tipoPublicacion;
   try {
-    const tipoPublicacion = await ListarTipoPublicacionEspecifico(id);
-    res.status(200).json(tipoPublicacion);
+    const tipoPu = tipoPublicacion;
+    res.status(200).json(tipoPu);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoPublicacion = async (req, res) => {
+export const ReadTipoPublicacion = async (req, res, next) => {
   try {
     const tipoPublicaciones = await ListarTipoPublicaciones();
     res.status(200).json(tipoPublicaciones);

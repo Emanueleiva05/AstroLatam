@@ -2,11 +2,10 @@ import {
   AgregarPublicacion,
   EliminarPublicacion,
   ModificarPublicacion,
-  ListarPublicacionEspecifico,
   ListarPublicaciones,
 } from "../service/PublicacionService.js";
 
-export const SetPublicacion = async (req, res) => {
+export const SetPublicacion = async (req, res, next) => {
   const {
     titulo,
     descripcion,
@@ -28,8 +27,8 @@ export const SetPublicacion = async (req, res) => {
   }
 };
 
-export const UpdatePublicacion = async (req, res) => {
-  const { id } = req.params;
+export const UpdatePublicacion = async (req, res, next) => {
+  const publicacion = req.publicacion;
   const {
     titulo,
     descripcion,
@@ -40,7 +39,7 @@ export const UpdatePublicacion = async (req, res) => {
 
   try {
     await ModificarPublicacion(
-      await ListarPublicacionEspecifico(id),
+      publicacion,
       titulo,
       descripcion,
       idUsuario,
@@ -54,9 +53,9 @@ export const UpdatePublicacion = async (req, res) => {
 };
 
 export const DeletePublicacion = async (req, res) => {
-  const { id } = req.params;
+  const publicacion = req.publicacion;
   try {
-    await EliminarPublicacion(await ListarPublicacionEspecifico(id));
+    await EliminarPublicacion(publicacion);
     res.status(200).json({ message: "Publicacion eliminado con exito" });
   } catch (error) {
     next(error);
@@ -73,10 +72,10 @@ export const ReadPublicacion = async (req, res) => {
 };
 
 export const ReadPublicacionEspecifico = async (req, res) => {
-  const { id } = req.params;
+  const publicacion = req.publicacion;
   try {
-    const publicacion = await ListarPublicacionEspecifico(id);
-    res.status(200).json(publicacion);
+    const pub = publicacion;
+    res.status(200).json(pub);
   } catch (error) {
     next(error);
   }

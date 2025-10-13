@@ -1,12 +1,11 @@
 import {
   AgregarTipoCondicion,
-  ListarTipoCondicionEspecifico,
   ListarTipoCondiciones,
   EliminarTipoCondicion,
   ModificarTipoCondicion,
 } from "../service/TipoCondicionService.js";
 
-export const SetTipoCondicion = async (req, res) => {
+export const SetTipoCondicion = async (req, res, next) => {
   const { nombre } = req.body;
   try {
     await AgregarTipoCondicion(nombre);
@@ -18,14 +17,11 @@ export const SetTipoCondicion = async (req, res) => {
   }
 };
 
-export const UpdateTipoCondicion = async (req, res) => {
-  const { id } = req.params;
+export const UpdateTipoCondicion = async (req, res, next) => {
   const { nombre } = req.body;
+  const tipoCondicion = req.tipoCondicion;
   try {
-    await ModificarTipoCondicion(
-      await ListarTipoCondicionEspecifico(id),
-      nombre
-    );
+    await ModificarTipoCondicion(tipoCondicion, nombre);
     res.status(200).json({
       message: "Se modifico el TipoCondicion con exito",
     });
@@ -34,10 +30,10 @@ export const UpdateTipoCondicion = async (req, res) => {
   }
 };
 
-export const DeleteTipoCondicion = async (req, res) => {
-  const { id } = req.params;
+export const DeleteTipoCondicion = async (req, res, next) => {
+  const tipoCondicion = req.tipoCondicion;
   try {
-    await EliminarTipoCondicion(await ListarTipoCondicionEspecifico(id));
+    await EliminarTipoCondicion(tipoCondicion);
     res.status(200).json({
       message: "Se elimino el TipoCondicion con exito",
     });
@@ -46,20 +42,20 @@ export const DeleteTipoCondicion = async (req, res) => {
   }
 };
 
-export const ReadTiposCondiciones = async (req, res) => {
+export const ReadTiposCondiciones = async (req, res, next) => {
   try {
-    const TiposAdjuntos = await ListarTipoCondiciones();
-    res.status(200).json(TiposAdjuntos);
+    const tiposCondiciones = await ListarTipoCondiciones();
+    res.status(200).json(tiposCondiciones);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoCondicion = async (req, res) => {
-  const { id } = req.params;
+export const ReadTipoCondicion = async (req, res, next) => {
+  const tipoCondicion = req.tipoCondicion;
   try {
-    const TiposAdjuntos = await ListarTipoCondicionEspecifico(id);
-    res.status(200).json(TiposAdjuntos);
+    const tipoC = tipoCondicion;
+    res.status(200).json(tipoC);
   } catch (error) {
     next(error);
   }

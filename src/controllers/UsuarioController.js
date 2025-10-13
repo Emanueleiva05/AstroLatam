@@ -3,10 +3,9 @@ import {
   EliminarUsuario,
   ModificarUsuario,
   ListarUsuario,
-  ListarUsuarioEspecifico,
 } from "../service/UsuarioService.js";
 
-export const SetUsuario = async (req, res) => {
+export const SetUsuario = async (req, res, next) => {
   const {
     username,
     nombre,
@@ -34,8 +33,8 @@ export const SetUsuario = async (req, res) => {
   }
 };
 
-export const UpdateUsuario = async (req, res) => {
-  const { id } = req.params;
+export const UpdateUsuario = async (req, res, next) => {
+  const usuario = req.usuario;
   const {
     username,
     nombre,
@@ -49,7 +48,7 @@ export const UpdateUsuario = async (req, res) => {
 
   try {
     await ModificarUsuario(
-      await ListarUsuarioEspecifico(id),
+      usuario,
       username,
       nombre,
       email,
@@ -65,17 +64,17 @@ export const UpdateUsuario = async (req, res) => {
   }
 };
 
-export const DeleteUsuario = async (req, res) => {
-  const { id } = req.params;
+export const DeleteUsuario = async (req, res, next) => {
+  const usuario = req.usuario;
   try {
-    await EliminarUsuario(await ListarUsuarioEspecifico(id));
+    await EliminarUsuario(usuario);
     res.status(200).json({ message: "Usuario eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadUsuario = async (req, res) => {
+export const ReadUsuario = async (req, res, next) => {
   try {
     const usuarios = await ListarUsuario();
     res.status(200).json(usuarios);
@@ -84,11 +83,11 @@ export const ReadUsuario = async (req, res) => {
   }
 };
 
-export const ReadUsuarioEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadUsuarioEspecifico = async (req, res, next) => {
+  const usuario = req.usuario;
   try {
-    const usuario = await ListarUsuarioEspecifico(id);
-    res.status(200).json(usuario);
+    const usu = usuario;
+    res.status(200).json(usu);
   } catch (error) {
     next(error);
   }

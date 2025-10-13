@@ -1,12 +1,11 @@
 import {
   AgregarTipoEvento,
-  ListarTipoEventoEspecifico,
   ListarTipoEventos,
   ModificarTipoEvento,
   EliminarTipoEvento,
 } from "../service/TipoEventoService.js";
 
-export const SetTipoEvento = async (req, res) => {
+export const SetTipoEvento = async (req, res, next) => {
   const { nombre } = req.body;
   try {
     await AgregarTipoEvento(nombre);
@@ -18,11 +17,11 @@ export const SetTipoEvento = async (req, res) => {
   }
 };
 
-export const UpdateTipoEvento = async (req, res) => {
-  const { id } = req.params;
+export const UpdateTipoEvento = async (req, res, next) => {
   const { nombre } = req.body;
+  const tipoEvento = req.evento;
   try {
-    await ModificarTipoEvento(await ListarTipoEventoEspecifico(id), nombre);
+    await ModificarTipoEvento(tipoEvento, nombre);
     res.status(200).json({
       message: "Se modifico el TipoEvento con exito",
     });
@@ -31,10 +30,10 @@ export const UpdateTipoEvento = async (req, res) => {
   }
 };
 
-export const DeleteTipoEvento = async (req, res) => {
-  const { id } = req.params;
+export const DeleteTipoEvento = async (req, res, next) => {
+  const tipoEvento = req.evento;
   try {
-    await EliminarTipoEvento(await ListarTipoEventoEspecifico(id));
+    await EliminarTipoEvento(tipoEvento);
     res.status(200).json({
       message: "Se elimino el TipoEvento con exito",
     });
@@ -43,20 +42,20 @@ export const DeleteTipoEvento = async (req, res) => {
   }
 };
 
-export const ReadTiposEvento = async (req, res) => {
+export const ReadTiposEvento = async (req, res, next) => {
   try {
-    const TiposEventos = await ListarTipoEventos();
-    res.status(200).json(TiposEventos);
+    const tiposEventos = await ListarTipoEventos();
+    res.status(200).json(tiposEventos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoEvento = async (req, res) => {
-  const { id } = req.params;
+export const ReadTipoEvento = async (req, res, next) => {
+  const tipoEvento = req.evento;
   try {
-    const TiposEvento = await ListarTipoEventoEspecifico(id);
-    res.status(200).json(TiposEvento);
+    const TipoE = tipoEvento;
+    res.status(200).json(TipoE);
   } catch (error) {
     next(error);
   }

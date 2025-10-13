@@ -1,12 +1,11 @@
 import {
   AgregarProvincia,
-  ListarProvinciaEspecifico,
   ListarProvincias,
   EliminarProvincia,
   ModificarProvincia,
 } from "../service/ProvinciaService.js";
 
-export const SetProvincia = async (req, res) => {
+export const SetProvincia = async (req, res, next) => {
   const { nombre, idPais } = req.body;
   try {
     await AgregarProvincia(nombre, idPais);
@@ -18,15 +17,11 @@ export const SetProvincia = async (req, res) => {
   }
 };
 
-export const UpdateProvincia = async (req, res) => {
-  const { id } = req.params;
+export const UpdateProvincia = async (req, res, next) => {
+  const provincia = req.provincia;
   const { nombre, idPais } = req.body;
   try {
-    await ModificarProvincia(
-      await ListarProvinciaEspecifico(id),
-      nombre,
-      idPais
-    );
+    await ModificarProvincia(provincia, nombre, idPais);
     res.status(200).json({
       message: "Se modifico el Provincia con exito",
     });
@@ -35,10 +30,10 @@ export const UpdateProvincia = async (req, res) => {
   }
 };
 
-export const DeleteProvincia = async (req, res) => {
-  const { id } = req.params;
+export const DeleteProvincia = async (req, res, next) => {
+  const provincia = req.provincia;
   try {
-    await EliminarProvincia(await ListarProvinciaEspecifico(id));
+    await EliminarProvincia(provincia);
     res.status(200).json({
       message: "Se elimino el Provincia con exito",
     });
@@ -47,7 +42,7 @@ export const DeleteProvincia = async (req, res) => {
   }
 };
 
-export const ReadProvincias = async (req, res) => {
+export const ReadProvincias = async (req, res, next) => {
   try {
     const provincias = await ListarProvincias();
     res.status(200).json(provincias);
@@ -56,11 +51,11 @@ export const ReadProvincias = async (req, res) => {
   }
 };
 
-export const ReadProvinciaEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadProvinciaEspecifico = async (req, res, next) => {
+  const provincia = req.provincia;
   try {
-    const provincia = await ListarProvinciaEspecifico(id);
-    res.status(200).json(provincia);
+    const pro = provincia;
+    res.status(200).json(pro);
   } catch (error) {
     next(error);
   }

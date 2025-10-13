@@ -2,11 +2,10 @@ import {
   AgregarTipoInstrumento,
   ModificarTipoInstrumento,
   EliminarTipoInstrumento,
-  ListarTipoInstrumentoEspecifico,
   ListarTipoInstrumentos,
 } from "../service/TipoInstrumentoService.js";
 
-export const SetTipoInstrumento = async (req, res) => {
+export const SetTipoInstrumento = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
     await AgregarTipoInstrumento(nombre, descripcion);
@@ -16,15 +15,11 @@ export const SetTipoInstrumento = async (req, res) => {
   }
 };
 
-export const UpdateTipoInstrumento = async (req, res) => {
-  const { id } = req.params;
+export const UpdateTipoInstrumento = async (req, res, next) => {
+  const tipoInstrumento = req.tipoInstrumento;
   const { nombre, descripcion } = req.body;
   try {
-    await ModificarTipoInstrumento(
-      await ListarTipoInstrumentoEspecifico(id),
-      nombre,
-      descripcion
-    );
+    await ModificarTipoInstrumento(tipoInstrumento, nombre, descripcion);
     res
       .status(200)
       .json({ message: "Se modifico el Tipo Instrumento con exito" });
@@ -33,10 +28,10 @@ export const UpdateTipoInstrumento = async (req, res) => {
   }
 };
 
-export const DeleteTipoInstrumento = async (req, res) => {
-  const { id } = req.params;
+export const DeleteTipoInstrumento = async (req, res, next) => {
+  const tipoInstrumento = req.tipoInstrumento;
   try {
-    await EliminarTipoInstrumento(await ListarTipoInstrumentoEspecifico(id));
+    await EliminarTipoInstrumento(tipoInstrumento);
     res
       .status(200)
       .json({ message: "Se elimino el Tipo Instrumento con exito" });
@@ -45,17 +40,17 @@ export const DeleteTipoInstrumento = async (req, res) => {
   }
 };
 
-export const ReadTipoInstrumentoEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadTipoInstrumentoEspecifico = async (req, res, next) => {
+  const tipoInstrumento = req.tipoInstrumento;
   try {
-    const tipoPublicacion = await ListarTipoInstrumentoEspecifico(id);
-    res.status(200).json(tipoPublicacion);
+    const tipoIn = tipoInstrumento;
+    res.status(200).json(tipoIn);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoInstrumento = async (req, res) => {
+export const ReadTipoInstrumento = async (req, res, next) => {
   try {
     const tipoPublicaciones = await ListarTipoInstrumentos();
     res.status(200).json(tipoPublicaciones);

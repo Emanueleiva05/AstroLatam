@@ -1,12 +1,11 @@
 import {
   AgregarInstrumento,
-  ListarInstrumentoEspecifico,
   ListarInstrumentos,
   EliminarInstrumento,
   ModificarInstrumento,
 } from "../service/InstrumentoService.js";
 
-export const SetInstrumento = async (req, res) => {
+export const SetInstrumento = async (req, res, next) => {
   const {
     nombre,
     descripcion,
@@ -36,8 +35,8 @@ export const SetInstrumento = async (req, res) => {
   }
 };
 
-export const UpdateInstrumento = async (req, res) => {
-  const { id } = req.params;
+export const UpdateInstrumento = async (req, res, next) => {
+  const instrumento = req.instrumento;
   const {
     nombre,
     descripcion,
@@ -52,7 +51,7 @@ export const UpdateInstrumento = async (req, res) => {
 
   try {
     await ModificarInstrumento(
-      await ListarInstrumentoEspecifico(id),
+      instrumento,
       nombre,
       descripcion,
       apertura,
@@ -69,17 +68,17 @@ export const UpdateInstrumento = async (req, res) => {
   }
 };
 
-export const DeleteInstrumento = async (req, res) => {
-  const { id } = req.params;
+export const DeleteInstrumento = async (req, res, next) => {
+  const instrumento = req.instrumento;
   try {
-    await EliminarInstrumento(await ListarInstrumentoEspecifico(id));
+    await EliminarInstrumento(instrumento);
     res.status(200).json({ message: "Instrumento eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadInstrumento = async (req, res) => {
+export const ReadInstrumento = async (req, res, next) => {
   try {
     const instrumentos = await ListarInstrumentos();
     res.status(200).json(instrumentos);
@@ -88,11 +87,11 @@ export const ReadInstrumento = async (req, res) => {
   }
 };
 
-export const ReadInstrumentoEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadInstrumentoEspecifico = async (req, res, next) => {
+  const instrumento = req.instrumento;
   try {
-    const instrumento = await ListarInstrumentoEspecifico(id);
-    res.status(200).json(instrumento);
+    const ins = instrumento;
+    res.status(200).json(ins);
   } catch (error) {
     next(error);
   }

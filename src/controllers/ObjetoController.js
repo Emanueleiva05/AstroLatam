@@ -2,11 +2,10 @@ import {
   AgregarObjeto,
   EliminarObjeto,
   ModificarObjeto,
-  ListarObjetoEspecifico,
   ListarObjetos,
 } from "../service/ObjetoService.js";
 
-export const SetObjeto = async (req, res) => {
+export const SetObjeto = async (req, res, next) => {
   const { nombre, descripcion, idTipoObjeto } = req.body;
   try {
     await AgregarObjeto(nombre, descripcion, idTipoObjeto);
@@ -16,34 +15,29 @@ export const SetObjeto = async (req, res) => {
   }
 };
 
-export const UpdateObjeto = async (req, res) => {
-  const { id } = req.params;
+export const UpdateObjeto = async (req, res, next) => {
+  const objeto = req.objeto;
   const { nombre, descripcion, idTipoObjeto } = req.body;
 
   try {
-    await ModificarObjeto(
-      await ListarObjetoEspecifico(id),
-      nombre,
-      descripcion,
-      idTipoObjeto
-    );
+    await ModificarObjeto(objeto, nombre, descripcion, idTipoObjeto);
     res.status(200).json({ message: "Objeto modificado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const DeleteObjeto = async (req, res) => {
-  const { id } = req.params;
+export const DeleteObjeto = async (req, res, next) => {
+  const objeto = req.objeto;
   try {
-    await EliminarObjeto(await ListarObjetoEspecifico(id));
+    await EliminarObjeto(objeto);
     res.status(200).json({ message: "Objeto eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObjeto = async (req, res) => {
+export const ReadObjeto = async (req, res, next) => {
   try {
     const objetos = await ListarObjetos();
     res.status(200).json(objetos);
@@ -52,11 +46,11 @@ export const ReadObjeto = async (req, res) => {
   }
 };
 
-export const ReadObjetoEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadObjetoEspecifico = async (req, res, next) => {
+  const objeto = req.objeto;
   try {
-    const objeto = await ListarObjetoEspecifico(id);
-    res.status(200).json(objeto);
+    const obj = objeto;
+    res.status(200).json(obj);
   } catch (error) {
     next(error);
   }

@@ -2,11 +2,10 @@ import {
   AgregarObservacionCondicion,
   EliminarObservacionCondicion,
   ModificarObservacionCondicion,
-  ListarObservacionCondicionEspecifico,
   ListarObservacionCondiciones,
 } from "../service/ObservacionCondicionService.js";
 
-export const SetObservacionCondiciones = async (req, res) => {
+export const SetObservacionCondiciones = async (req, res, next) => {
   const { valor, idTipoCondicion, idObservacion } = req.body;
   try {
     await AgregarObservacionCondicion(valor, idTipoCondicion, idObservacion);
@@ -18,13 +17,13 @@ export const SetObservacionCondiciones = async (req, res) => {
   }
 };
 
-export const UpdateObservacionCondiciones = async (req, res) => {
-  const { id } = req.params;
+export const UpdateObservacionCondiciones = async (req, res, next) => {
+  const condicion = req.condicion;
   const { valor, idTipoCondicion, idObservacion } = req.body;
 
   try {
     await ModificarObservacionCondicion(
-      await ListarObservacionCondicionEspecifico(id),
+      condicion,
       valor,
       idTipoCondicion,
       idObservacion
@@ -37,12 +36,10 @@ export const UpdateObservacionCondiciones = async (req, res) => {
   }
 };
 
-export const DeleteObservacionCondiciones = async (req, res) => {
-  const { id } = req.params;
+export const DeleteObservacionCondiciones = async (req, res, next) => {
+  const condicion = req.condicion;
   try {
-    await EliminarObservacionCondicion(
-      await ListarObservacionCondicionEspecifico(id)
-    );
+    await EliminarObservacionCondicion(condicion);
     res
       .status(200)
       .json({ message: "ObservacionCondiciones eliminado con exito" });
@@ -51,20 +48,20 @@ export const DeleteObservacionCondiciones = async (req, res) => {
   }
 };
 
-export const ReadObservacionCondiciones = async (req, res) => {
+export const ReadObservacionCondiciones = async (req, res, next) => {
   try {
-    const publicaciones = await ListarObservacionCondiciones();
-    res.status(200).json(publicaciones);
+    const condiciones = await ListarObservacionCondiciones();
+    res.status(200).json(condiciones);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObservacionCondicionesEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadObservacionCondicionesEspecifico = async (req, res, next) => {
+  const condicion = req.condicion;
   try {
-    const publicacion = await ListarObservacionCondicionEspecifico(id);
-    res.status(200).json(publicacion);
+    const cond = condicion;
+    res.status(200).json(cond);
   } catch (error) {
     next(error);
   }

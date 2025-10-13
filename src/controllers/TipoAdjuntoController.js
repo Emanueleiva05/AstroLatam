@@ -1,12 +1,11 @@
 import {
   AgregarTipoAdjunto,
-  ListarTipoAdjuntoEspecifico,
   ListarTipoAdjuntos,
   EliminarTipoAdjunto,
   ModificarTipoAdjunto,
 } from "../service/TipoAdjuntoService.js";
 
-export const SetTipoAdjunto = async (req, res) => {
+export const SetTipoAdjunto = async (req, res, next) => {
   const { nombre } = req.body;
   try {
     await AgregarTipoAdjunto(nombre);
@@ -18,11 +17,11 @@ export const SetTipoAdjunto = async (req, res) => {
   }
 };
 
-export const UpdateTipoAdjunto = async (req, res) => {
-  const { id } = req.params;
+export const UpdateTipoAdjunto = async (req, res, next) => {
   const { nombre } = req.body;
+  const tipoAdjunto = req.tipoAdjunto;
   try {
-    await ModificarTipoAdjunto(await ListarTipoAdjuntoEspecifico(id), nombre);
+    await ModificarTipoAdjunto(tipoAdjunto, nombre);
     res.status(200).json({
       message: "Se modifico el TipoAdjunto con exito",
     });
@@ -31,10 +30,11 @@ export const UpdateTipoAdjunto = async (req, res) => {
   }
 };
 
-export const DeleteTipoAdjunto = async (req, res) => {
-  const { id } = req.params;
+export const DeleteTipoAdjunto = async (req, res, next) => {
+  const tipoAdjunto = req.tipoAdjunto;
+
   try {
-    await EliminarTipoAdjunto(await ListarTipoAdjuntoEspecifico(id));
+    await EliminarTipoAdjunto(tipoAdjunto);
     res.status(200).json({
       message: "Se elimino el TipoAdjunto con exito",
     });
@@ -43,7 +43,7 @@ export const DeleteTipoAdjunto = async (req, res) => {
   }
 };
 
-export const ReadTiposAdjuntos = async (req, res) => {
+export const ReadTiposAdjuntos = async (req, res, next) => {
   try {
     const TiposAdjuntos = await ListarTipoAdjuntos();
     res.status(200).json(TiposAdjuntos);
@@ -52,11 +52,11 @@ export const ReadTiposAdjuntos = async (req, res) => {
   }
 };
 
-export const ReadTipoAdjunto = async (req, res) => {
-  const { id } = req.params;
+export const ReadTipoAdjunto = async (req, res, next) => {
+  const tipoAdjunto = req.tipoAdjunto;
   try {
-    const TiposAdjuntos = await ListarTipoAdjuntoEspecifico(id);
-    res.status(200).json(TiposAdjuntos);
+    const tipoAd = tipoAdjunto;
+    res.status(200).json(tipoAd);
   } catch (error) {
     next(error);
   }

@@ -2,11 +2,10 @@ import {
   AgregarAccionUsuario,
   ModificarAccionUsuario,
   EliminarAccionUsuario,
-  ListarAccionUsuarioEspecifico,
   ListarAccionUsuarios,
 } from "../service/AccionUsuarioService.js";
 
-export const SetAccionUsuario = async (req, res) => {
+export const SetAccionUsuario = async (req, res, next) => {
   const { tipo, contenido, targetType, targetId, fecha, idUsuario } = req.body;
   try {
     await AgregarAccionUsuario(
@@ -23,13 +22,12 @@ export const SetAccionUsuario = async (req, res) => {
   }
 };
 
-export const UpdateAccionUsuario = async (req, res) => {
-  const { id } = req.params;
+export const UpdateAccionUsuario = async (req, res, next) => {
   const { tipo, contenido, targetType, targetId, fecha, idUsuario } = req.body;
-
+  const accion = req.accion;
   try {
     await ModificarAccionUsuario(
-      await ListarAccionUsuarioEspecifico(id),
+      accion,
       tipo,
       contenido,
       targetType,
@@ -43,17 +41,17 @@ export const UpdateAccionUsuario = async (req, res) => {
   }
 };
 
-export const DeleteAccionUsuario = async (req, res) => {
-  const { id } = req.params;
+export const DeleteAccionUsuario = async (req, res, next) => {
   try {
-    await EliminarAccionUsuario(await ListarAccionUsuarioEspecifico(id));
+    const accion = req.accion;
+    await EliminarAccionUsuario(accion);
     res.status(200).json({ message: "AccionUsuario eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadAccionUsuario = async (req, res) => {
+export const ReadAccionUsuario = async (req, res, next) => {
   try {
     const accionusuarios = await ListarAccionUsuarios();
     res.status(200).json(accionusuarios);
@@ -62,10 +60,9 @@ export const ReadAccionUsuario = async (req, res) => {
   }
 };
 
-export const ReadAccionUsuarioEspecifico = async (req, res) => {
-  const { id } = req.params;
+export const ReadAccionUsuarioEspecifico = async (req, res, next) => {
   try {
-    const accionusuario = await ListarAccionUsuarioEspecifico(id);
+    const accionusuario = req.accion;
     res.status(200).json(accionusuario);
   } catch (error) {
     next(error);
