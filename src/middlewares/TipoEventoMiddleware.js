@@ -1,4 +1,4 @@
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 import { ListarTipoEventoEspecifico } from "../service/TipoEventoService.js";
 
 export const ValidarDatosTiposEvento = (req, res, next) => {

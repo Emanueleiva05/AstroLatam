@@ -1,5 +1,5 @@
 import Ciudad from "../models/Ciudad.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarCiudad = async (nombre, idProvincia) => {
   return await Ciudad.create({ nombre, idProvincia });

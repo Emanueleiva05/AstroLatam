@@ -1,5 +1,5 @@
 import TipoEvento from "../models/TipoEvento.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarTipoEvento = async (nombre) => {
   return await TipoEvento.create({ nombre });

@@ -1,5 +1,5 @@
 import Instrumento from "../models/Instrumento.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarInstrumento = async (
   nombre,

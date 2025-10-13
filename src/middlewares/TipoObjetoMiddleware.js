@@ -1,4 +1,4 @@
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 import { ListarTipoObjetoEspecifico } from "../service/TipoObjetoService.js";
 
 export const ValidarDatosTiposObjeto = (req, res, next) => {

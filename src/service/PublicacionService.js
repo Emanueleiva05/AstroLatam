@@ -1,5 +1,5 @@
 import Publicacion from "../models/Publicacion.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarPublicacion = async (
   titulo,

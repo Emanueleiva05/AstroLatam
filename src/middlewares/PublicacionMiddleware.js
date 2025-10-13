@@ -1,4 +1,4 @@
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 import { ListarPublicacionEspecifico } from "../service/PublicacionService.js";
 import { ListarTipoPublicacionEspecifico } from "../service/TipoPublicacionService.js";
 

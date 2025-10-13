@@ -1,5 +1,5 @@
 import AccionUsuario from "../models/AccionUsuario.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarAccionUsuario = async (
   tipo,

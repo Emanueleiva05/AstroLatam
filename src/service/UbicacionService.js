@@ -1,4 +1,5 @@
 import Ubicacion from "../models/Ubicacion.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarUbicacion = async (
   latitud,

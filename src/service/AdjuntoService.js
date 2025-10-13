@@ -1,5 +1,5 @@
 import Adjunto from "../models/Adjunto.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarAdjunto = async (
   link_archivo,

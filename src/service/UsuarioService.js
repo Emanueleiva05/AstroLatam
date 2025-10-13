@@ -1,5 +1,5 @@
 import Usuario from "../models/Usuario.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarUsuario = async (
   username,

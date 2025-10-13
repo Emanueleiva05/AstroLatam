@@ -1,5 +1,5 @@
 import TipoAdjunto from "../models/TipoAdjunto.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarTipoAdjunto = async (nombre) => {
   return await TipoAdjunto.create({ nombre });

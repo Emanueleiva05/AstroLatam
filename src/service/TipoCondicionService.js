@@ -1,5 +1,5 @@
 import TipoCondicion from "../models/TipoCondicion.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarTipoCondicion = async (nombre) => {
   return await TipoCondicion.create({ nombre });

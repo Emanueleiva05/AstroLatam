@@ -1,5 +1,5 @@
 import Provincia from "../models/Provincia.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarProvincia = async (nombre, idPais) => {
   return await Provincia.create({ nombre, idPais });

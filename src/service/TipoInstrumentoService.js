@@ -1,5 +1,5 @@
 import TipoInstrumento from "../models/TipoInstrumento.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarTipoInstrumento = async (nombre, descripcion) => {
   return await TipoInstrumento.create({

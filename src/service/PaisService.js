@@ -1,5 +1,5 @@
 import Pais from "../models/Pais.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarPais = async (nombre) => {
   return await Pais.create({ nombre });

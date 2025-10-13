@@ -1,5 +1,5 @@
 import TipoPublicacion from "../models/TipoPublicacion.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarTipoPublicacion = async (nombre, descripcion) => {
   return await TipoPublicacion.create({

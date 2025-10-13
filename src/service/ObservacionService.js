@@ -1,5 +1,5 @@
 import Observacion from "../models/Observacion.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarObservacion = async (
   titulo,

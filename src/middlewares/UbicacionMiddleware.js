@@ -1,4 +1,4 @@
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 import { ListarUbicacionEspecifico } from "../service/UbicacionService.js";
 import { ListarCiudadEspecifico } from "../service/CiudadService.js";
 

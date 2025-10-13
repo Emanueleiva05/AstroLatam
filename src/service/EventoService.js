@@ -1,5 +1,5 @@
 import Evento from "../models/Evento.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarEvento = async (
   nombre,

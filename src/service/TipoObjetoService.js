@@ -1,5 +1,5 @@
 import TipoObjeto from "../models/TipoObjeto.js";
-import { AppError } from "../utils/AppError.js";
+import AppError from "../utils/AppError.js";
 
 export const AgregarTipoObjeto = async (nombre, descripcion) => {
   return await TipoObjeto.create({ nombre, descripcion });
