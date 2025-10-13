@@ -9,11 +9,11 @@ export const AgregarPublicacion = async (
   idTipoPublicacion
 ) => {
   return await Publicacion.create({
-    titulo: titulo,
-    idTipoPublicacion: idTipoPublicacion,
-    descripcion: descripcion,
-    fechaPublicacion: fechaPublicacion,
-    idUsuario: idUsuario,
+    titulo,
+    idTipoPublicacion,
+    descripcion,
+    fechaPublicacion,
+    idUsuario,
   });
 };
 
@@ -47,8 +47,5 @@ export const ListarPublicaciones = async (id) => {
 
 export const ListarPublicacionEspecifico = async (id) => {
   const publicacion = await Publicacion.findByPk(id);
-  if (!publicacion) {
-    throw new AppError("No se encontro la publicacion especifica", 404);
-  }
   return publicacion;
 };

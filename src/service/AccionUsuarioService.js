@@ -10,12 +10,12 @@ export const AgregarAccionUsuario = async (
   idUsuario
 ) => {
   return await AccionUsuario.create({
-    tipo: tipo,
-    contenido: contenido,
-    targetType: targetType,
-    targetId: targetId,
-    fecha: fecha,
-    idUsuario: idUsuario,
+    tipo,
+    contenido,
+    targetType,
+    targetId,
+    fecha,
+    idUsuario,
   });
 };
 
@@ -51,8 +51,5 @@ export const ListarAccionUsuarios = async () => {
 
 export const ListarAccionUsuarioEspecifico = async (id) => {
   const accion = await AccionUsuario.findByPk(id);
-  if (!accion) {
-    throw new AppError("No se encontro la accion del usuario especifico", 404);
-  }
   return accion;
 };

@@ -7,9 +7,9 @@ export const AgregarAdjunto = async (
   idTipoAdjunto
 ) => {
   return await Adjunto.create({
-    link_archivo: link_archivo,
-    idTipoAdjunto: idTipoAdjunto,
-    descripcion: descripcion,
+    link_archivo,
+    idTipoAdjunto,
+    descripcion,
   });
 };
 
@@ -39,8 +39,5 @@ export const ListarAdjunto = async (id) => {
 
 export const ListarAdjuntoEspecifico = async (id) => {
   const adjunto = await Adjunto.findByPk(id);
-  if (!adjunto) {
-    throw new AppError("No se encontro el adjunto especifico", 404);
-  }
   return adjunto;
 };

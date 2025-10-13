@@ -7,9 +7,9 @@ export const AgregarObservacionCondicion = async (
   idObservacion
 ) => {
   return await ObservacionCondicion.create({
-    valor: valor,
-    idTipoCondicion: idTipoCondicion,
-    idObservacion: idObservacion,
+    valor,
+    idTipoCondicion,
+    idObservacion,
   });
 };
 
@@ -39,8 +39,5 @@ export const ListarObservacionCondiciones = async () => {
 
 export const ListarObservacionCondicionEspecifico = async (id) => {
   const observacionCondicion = await ObservacionCondicion.findByPk(id);
-  if (!observacionCondicion) {
-    throw new AppError("No se encontro el objeto condicion especifico", 404);
-  }
   return observacionCondicion;
 };

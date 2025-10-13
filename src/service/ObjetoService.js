@@ -3,9 +3,9 @@ import { AppError } from "../utils/AppError.js";
 
 export const AgregarObjeto = async (nombre, descripcion, idTipoObjeto) => {
   return await Objeto.create({
-    nombre: nombre,
-    descripcion: descripcion,
-    idTipoObjeto: idTipoObjeto,
+    nombre,
+    descripcion,
+    idTipoObjeto,
   });
 };
 
@@ -35,8 +35,5 @@ export const ListarObjetos = async () => {
 
 export const ListarObjetoEspecifico = async (id) => {
   const objeto = await Objeto.findByPk(id);
-  if (!objeto) {
-    throw new AppError("No se encontro el objeto especifico", 404);
-  }
   return objeto;
 };

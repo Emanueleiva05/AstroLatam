@@ -2,7 +2,7 @@ import TipoEvento from "../models/TipoEvento.js";
 import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoEvento = async (nombre) => {
-  return await TipoEvento.create({ nombre: nombre });
+  return await TipoEvento.create({ nombre });
 };
 
 export const ModificarTipoEvento = async (tipoEvento, nombre) => {
@@ -24,8 +24,5 @@ export const ListarTipoEventos = async () => {
 
 export const ListarTipoEventoEspecifico = async (id) => {
   const tipoEvento = await TipoEvento.findByPk(id);
-  if (!tipoEvento) {
-    throw new AppError("No se encontro el tipoEvento especifico", 404);
-  }
   return tipoEvento;
 };

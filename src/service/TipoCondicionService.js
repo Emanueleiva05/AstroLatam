@@ -2,7 +2,7 @@ import TipoCondicion from "../models/TipoCondicion.js";
 import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoCondicion = async (nombre) => {
-  return await TipoCondicion.create({ nombre: nombre });
+  return await TipoCondicion.create({ nombre });
 };
 
 export const ModificarTipoCondicion = async (tipoCondicion, nombre) => {
@@ -24,8 +24,5 @@ export const ListarTipoCondiciones = async () => {
 
 export const ListarTipoCondicionEspecifico = async (id) => {
   const tipoCondicion = await TipoCondicion.findByPk(id);
-  if (!tipoCondicion) {
-    throw new AppError("No se encontro el tipoCondicion especifico", 404);
-  }
   return tipoCondicion;
 };

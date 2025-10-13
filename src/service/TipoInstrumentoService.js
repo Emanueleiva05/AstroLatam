@@ -3,8 +3,8 @@ import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoInstrumento = async (nombre, descripcion) => {
   return await TipoInstrumento.create({
-    nombre: nombre,
-    descripcion: descripcion,
+    nombre,
+    descripcion,
   });
 };
 
@@ -32,8 +32,5 @@ export const ListarTipoInstrumentos = async () => {
 
 export const ListarTipoInstrumentoEspecifico = async (id) => {
   const tipoInstrumento = await TipoInstrumento.findByPk(id);
-  if (!tipoInstrumento) {
-    throw new AppError("No se encontro el tipoInstrumento especifico", 404);
-  }
   return tipoInstrumento;
 };

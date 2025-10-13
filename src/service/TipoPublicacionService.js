@@ -3,8 +3,8 @@ import { AppError } from "../utils/AppError.js";
 
 export const AgregarTipoPublicacion = async (nombre, descripcion) => {
   return await TipoPublicacion.create({
-    nombre: nombre,
-    descripcion: descripcion,
+    nombre,
+    descripcion,
   });
 };
 
@@ -32,8 +32,5 @@ export const ListarTipoPublicaciones = async () => {
 
 export const ListarTipoPublicacionEspecifico = async (id) => {
   const tipoPublicacion = await TipoPublicacion.findByPk(id);
-  if (!tipoPublicacion) {
-    throw new AppError("No se encontro el tipoPublicacion especifico", 404);
-  }
   return tipoPublicacion;
 };

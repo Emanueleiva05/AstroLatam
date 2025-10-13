@@ -9,12 +9,12 @@ export const AgregarUbicacion = async (
   idCiudad
 ) => {
   return await Ubicacion.create({
-    latitud: latitud,
-    longitud: longitud,
-    tz_original: tz_original,
-    timestamp_utc: timestamp_utc,
-    geohash: geohash,
-    idCiudad: idCiudad,
+    latitud,
+    longitud,
+    tz_original,
+    timestamp_utc,
+    geohash,
+    idCiudad,
   });
 };
 
@@ -48,8 +48,5 @@ export const ListarUbicaciones = async () => {
 
 export const ListarUbicacionEspecifico = async (id) => {
   const ubicacion = await Ubicacion.findByPk(id);
-  if (!ubicacion) {
-    throw new AppError("No se encontro la ubicacion especifica", 404);
-  }
   return ubicacion;
 };

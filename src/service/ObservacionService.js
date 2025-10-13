@@ -9,11 +9,11 @@ export const AgregarObservacion = async (
   idUbicacion
 ) => {
   return await Observacion.create({
-    titulo: titulo,
-    horaObservacion: horaObservacion,
-    descripcion: descripcion,
-    fechaObservacion: fechaObservacion,
-    idUbicacion: idUbicacion,
+    titulo,
+    horaObservacion,
+    descripcion,
+    fechaObservacion,
+    idUbicacion,
   });
 };
 
@@ -49,8 +49,5 @@ export const ListarObservaciones = async (id) => {
 
 export const ListarObservacionEspecifico = async (id) => {
   const observacion = await Observacion.findByPk(id);
-  if (!observacion) {
-    throw new AppError("No se encontro la observacion especifico", 404);
-  }
   return observacion;
 };

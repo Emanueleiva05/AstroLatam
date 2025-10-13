@@ -12,14 +12,14 @@ export const AgregarUsuario = async (
   idCiudad
 ) => {
   return await Usuario.create({
-    username: username,
-    nombre: nombre,
-    email: email,
-    password: password,
-    descripcion: descripcion,
-    numero: numero,
-    idAdjunto: idAdjunto,
-    idCiudad: idCiudad,
+    username,
+    nombre,
+    email,
+    password,
+    descripcion,
+    numero,
+    idAdjunto,
+    idCiudad,
   });
 };
 
@@ -54,13 +54,10 @@ export const ListarUsuario = async () => {
   if (usuarios.length === 0) {
     throw new AppError("No se encontraron usuarios creados", 404);
   }
-  return await Usuario.findAll();
+  return usuarios;
 };
 
 export const ListarUsuarioEspecifico = async (id) => {
   const usuario = await Usuario.findByPk(id);
-  if (!usuario) {
-    throw new AppError("No se encontro el usuario especifico", 404);
-  }
   return usuario;
 };

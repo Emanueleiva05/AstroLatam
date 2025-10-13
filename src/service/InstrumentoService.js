@@ -13,15 +13,15 @@ export const AgregarInstrumento = async (
   idTipoInstrumento
 ) => {
   return await Instrumento.create({
-    nombre: nombre,
-    apertura: apertura,
-    descripcion: descripcion,
-    distancia_focal: distancia_focal,
-    tipo_telescopio: tipo_telescopio,
-    aumento: aumento,
-    diametro: diametro,
-    tipo_prisma: tipo_prisma,
-    idTipoInstrumento: idTipoInstrumento,
+    nombre,
+    apertura,
+    descripcion,
+    distancia_focal,
+    tipo_telescopio,
+    aumento,
+    diametro,
+    tipo_prisma,
+    idTipoInstrumento,
   });
 };
 
@@ -63,8 +63,5 @@ export const ListarInstrumentos = async (id) => {
 
 export const ListarInstrumentoEspecifico = async (id) => {
   const instrumento = await Instrumento.findByPk(id);
-  if (!instrumento) {
-    throw new AppError("No se encontro el instrumento especifico", 404);
-  }
   return instrumento;
 };

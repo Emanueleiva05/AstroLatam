@@ -11,13 +11,13 @@ export const AgregarEvento = async (
   idTipoEvento
 ) => {
   return await Evento.create({
-    nombre: nombre,
-    horaInicio: horaInicio,
-    descripcion: descripcion,
-    horaFin: horaFin,
-    fechaInicio: fechaInicio,
-    fechaFin: fechaFin,
-    idTipoEvento: idTipoEvento,
+    nombre,
+    horaInicio,
+    descripcion,
+    horaFin,
+    fechaInicio,
+    fechaFin,
+    idTipoEvento,
   });
 };
 
@@ -55,8 +55,5 @@ export const ListarEventos = async () => {
 
 export const ListarEvento = async (id) => {
   const evento = await Evento.findByPk(id);
-  if (!evento) {
-    throw new AppError("No se encontro el evento especifico", 404);
-  }
   return evento;
 };
