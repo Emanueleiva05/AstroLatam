@@ -10,19 +10,31 @@ import {
   EncontrarTipoPublicacion,
   ValidarDatosTiposPublicacion,
 } from "../middlewares/TipoPublicacionMiddleware.js";
+import { esAdministrador } from "../utils/RoleUser.js";
 
 const router = Router();
 
-router.post("/", ValidarDatosTiposPublicacion, SetTipoPublicacion);
+router.post(
+  "/",
+  esAdministrador,
+  ValidarDatosTiposPublicacion,
+  SetTipoPublicacion
+);
 
 router.put(
   "/:id",
+  esAdministrador,
   EncontrarTipoPublicacion,
   ValidarDatosTiposPublicacion,
   UpdateTipoPublicacion
 );
 
-router.delete("/:id", EncontrarTipoPublicacion, DeleteTipoPublicacion);
+router.delete(
+  "/:id",
+  esAdministrador,
+  EncontrarTipoPublicacion,
+  DeleteTipoPublicacion
+);
 
 router.get("/", ReadTipoPublicacion);
 

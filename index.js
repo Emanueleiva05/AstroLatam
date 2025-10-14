@@ -52,7 +52,7 @@ app.use("/api/objeto", ObjetoRouter);
 
 app.use(HandleError);
 
-await sequelize.sync({ force: true });
+await sequelize.sync();
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en ${PORT}`);

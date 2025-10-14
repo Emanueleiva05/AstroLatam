@@ -10,19 +10,21 @@ import {
   EncontrarTipoObjeto,
   ValidarDatosTiposObjeto,
 } from "../middlewares/TipoObjetoMiddleware.js";
+import { esAdministrador } from "../utils/RoleUser.js";
 
 const router = Router();
 
-router.post("/", ValidarDatosTiposObjeto, SetTipoObjeto);
+router.post("/", esAdministrador, ValidarDatosTiposObjeto, SetTipoObjeto);
 
 router.put(
   "/:id",
+  esAdministrador,
   EncontrarTipoObjeto,
   ValidarDatosTiposObjeto,
   UpdateTipoObjeto
 );
 
-router.delete("/:id", EncontrarTipoObjeto, DeleteTipoObjeto);
+router.delete("/:id", esAdministrador, EncontrarTipoObjeto, DeleteTipoObjeto);
 
 router.get("/", ReadTipoObjeto);
 

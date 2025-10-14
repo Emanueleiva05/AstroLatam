@@ -19,6 +19,10 @@ AccionUsuario.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    estado: {
+      type: DataTypes.ENUM("enviada", "en_revision", "rechazada", "aceptada"),
+      defaultValue: "enviada",
+    },
     targetType: {
       type: DataTypes.ENUM("publicacion", "observacion"),
       allowNull: false,

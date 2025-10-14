@@ -10,19 +10,26 @@ import {
   ValidarDatosTiposCondicion,
   EncontrarTipoCondicion,
 } from "../middlewares/TipoCondicionMiddleware.js";
+import { esAdministrador } from "../utils/RoleUser.js";
 
 const router = Router();
 
-router.post("/", ValidarDatosTiposCondicion, SetTipoCondicion);
+router.post("/", esAdministrador, ValidarDatosTiposCondicion, SetTipoCondicion);
 
 router.put(
   "/:id",
+  esAdministrador,
   EncontrarTipoCondicion,
   ValidarDatosTiposCondicion,
   UpdateTipoCondicion
 );
 
-router.delete("/:id", EncontrarTipoCondicion, DeleteTipoCondicion);
+router.delete(
+  "/:id",
+  esAdministrador,
+  EncontrarTipoCondicion,
+  DeleteTipoCondicion
+);
 
 router.get("/", ReadTiposCondiciones);
 

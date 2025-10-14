@@ -10,19 +10,21 @@ import {
   ValidarDatosTiposEvento,
   EncontrarTipoEvento,
 } from "../middlewares/TipoEventoMiddleware.js";
+import { esAdministrador } from "../utils/RoleUser.js";
 
 const router = Router();
 
-router.post("/", ValidarDatosTiposEvento, SetTipoEvento);
+router.post("/", esAdministrador, ValidarDatosTiposEvento, SetTipoEvento);
 
 router.put(
   "/:id",
+  esAdministrador,
   EncontrarTipoEvento,
   ValidarDatosTiposEvento,
   UpdateTipoEvento
 );
 
-router.delete("/:id", EncontrarTipoEvento, DeleteTipoEvento);
+router.delete("/:id", esAdministrador, EncontrarTipoEvento, DeleteTipoEvento);
 
 router.get("/", ReadTiposEvento);
 

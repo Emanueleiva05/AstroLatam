@@ -64,3 +64,15 @@ export const VerificarExistenciaUsuario = async (req, res, next) => {
     next(error);
   }
 };
+
+export const validarContenido = (req, res, next) => {
+  if (req.accion.tipo === "comentario" || req.accion.tipo === "reporte") {
+    if (!contenido) {
+      throw new AppError(
+        "Necesitas agregar un contenido a un comentario o reporte",
+        400
+      );
+    }
+  }
+  next();
+};
