@@ -18,6 +18,7 @@ export const AgregarUsuario = async (
     password,
     descripcion,
     numero,
+    rol,
     idAdjunto,
     idCiudad,
   });
@@ -31,6 +32,7 @@ export const ModificarUsuario = async (
   password,
   descripcion,
   numero,
+  rol,
   idAdjunto,
   idCiudad
 ) => {
@@ -40,6 +42,7 @@ export const ModificarUsuario = async (
   usuario.password = password;
   usuario.descripcion = descripcion;
   usuario.numero = numero;
+  usuario.rol = rol;
   usuario.idAdjunto = idAdjunto;
   usuario.idCiudad = idCiudad;
   return await usuario.save();

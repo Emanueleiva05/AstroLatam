@@ -15,6 +15,10 @@ Observacion.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    visibilidad: {
+      type: DataTypes.ENUM("privada", "miembros", "publica"),
+      defaultValue: "publica",
+    },
     descripcion: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -29,6 +33,7 @@ Observacion.init(
     },
     idUbicacion: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Ubicacion,
         key: "idUbicacion",

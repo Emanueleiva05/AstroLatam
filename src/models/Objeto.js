@@ -17,10 +17,11 @@ Objeto.init(
     },
     descripcion: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     idTipoObjeto: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: TipoObjeto,
         key: "idTipoObjeto",

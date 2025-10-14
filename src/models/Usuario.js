@@ -38,6 +38,15 @@ Usuario.init(
       type: DataTypes.STRING,
       defaultValue: "No hay numero de contacto",
     },
+    rol: {
+      type: DataTypes.ENUM(
+        "administrador",
+        "moderador",
+        "astronomo",
+        "aficionado"
+      ),
+      allowNull: false,
+    },
     idAdjunto: {
       type: DataTypes.INTEGER,
       allowNull: true,

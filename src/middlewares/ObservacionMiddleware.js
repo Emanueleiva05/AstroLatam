@@ -6,6 +6,7 @@ export const ValidarDatosObservacion = (req, res, next) => {
   const {
     titulo,
     descripcion,
+    visibilidad,
     horaObservacion,
     fechaObservacion,
     idUbicacion,
@@ -31,6 +32,9 @@ export const ValidarDatosObservacion = (req, res, next) => {
     throw new AppError("idUbicacion no valido", 400);
   }
 
+  if (!["privada", "miembros", "publica"].includes(visibilidad)) {
+    throw new AppError("Visibilidad no valida", 400);
+  }
   next();
 };
 

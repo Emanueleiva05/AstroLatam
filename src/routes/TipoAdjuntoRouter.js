@@ -10,19 +10,20 @@ import {
   EncontrarTipoAdjunto,
   ValidarDatosTiposAdjunto,
 } from "../middlewares/TipoAdjuntoMiddleware.js";
-
+import { esAdministrador } from "../utils/RoleUser.js";
 const router = Router();
 
-router.post("/", ValidarDatosTiposAdjunto, SetTipoAdjunto);
+router.post("/", esAdministrador, ValidarDatosTiposAdjunto, SetTipoAdjunto);
 
 router.put(
   "/:id",
+  esAdministrador,
   EncontrarTipoAdjunto,
   ValidarDatosTiposAdjunto,
   UpdateTipoAdjunto
 );
 
-router.delete("/:id", EncontrarTipoAdjunto, DeleteTipoAdjunto);
+router.delete("/:id", esAdministrador, EncontrarTipoAdjunto, DeleteTipoAdjunto);
 
 router.get("/", ReadTiposAdjuntos);
 

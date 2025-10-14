@@ -21,6 +21,7 @@ Adjunto.init(
     },
     idTipoAdjunto: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: TipoAdjunto,
         key: "idTipoAdjunto",

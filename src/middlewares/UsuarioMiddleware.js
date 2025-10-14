@@ -11,6 +11,7 @@ export const ValidarDatosUsuario = (req, res, next) => {
     password,
     descripcion,
     numero,
+    rol,
     idAdjunto,
     idCiudad,
   } = req.body;
@@ -45,6 +46,13 @@ export const ValidarDatosUsuario = (req, res, next) => {
 
   if (!idCiudad || isNaN(Number(idCiudad))) {
     throw new AppError("idCiudad no válido", 400);
+  }
+
+  if (
+    !rol ||
+    ["administrador", "moderador", "astronomo", "aficionado"].includes(rol)
+  ) {
+    throw new AppError("Rol no válido", 400);
   }
 
   next();

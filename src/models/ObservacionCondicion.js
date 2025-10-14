@@ -18,6 +18,7 @@ ObservacionCondicion.init(
     },
     idTipoCondicion: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: TipoCondicion,
         key: "idTipoCondicion",
@@ -25,6 +26,7 @@ ObservacionCondicion.init(
     },
     idObservacion: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Observacion,
         key: "idObservacion",

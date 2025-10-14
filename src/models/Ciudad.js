@@ -17,6 +17,7 @@ Ciudad.init(
     },
     idPais: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Provincia,
         key: "idProvincia",

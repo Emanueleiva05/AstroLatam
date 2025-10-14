@@ -13,6 +13,7 @@ export const SetUsuario = async (req, res, next) => {
     password,
     descripcion,
     numero,
+    rol,
     idAdjunto,
     idCiudad,
   } = req.body;
@@ -24,6 +25,7 @@ export const SetUsuario = async (req, res, next) => {
       password,
       descripcion,
       numero,
+      rol,
       idAdjunto,
       idCiudad
     );
@@ -42,6 +44,7 @@ export const UpdateUsuario = async (req, res, next) => {
     password,
     descripcion,
     numero,
+    rol,
     idAdjunto,
     idCiudad,
   } = req.body;
@@ -55,6 +58,7 @@ export const UpdateUsuario = async (req, res, next) => {
       password,
       descripcion,
       numero,
+      rol,
       idAdjunto,
       idCiudad
     );

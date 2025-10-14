@@ -45,6 +45,7 @@ Instrumento.init(
     },
     idTipoInstrumento: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: TipoInstrumento,
         key: "idTipoInstrumento",
