@@ -1,6 +1,5 @@
 import express, { json } from "express";
 import env from "dotenv";
-import sequelize from "./src/settings/conexion.js";
 import "./src/models/index.js";
 import TipoAdjuntoRouter from "./src/routes/TipoAdjuntoRouter.js";
 import TipoPublicacionRouter from "./src/routes/TipoPublicacionRouter.js";
@@ -51,8 +50,6 @@ app.use("/api/observacionCondicion", ObservacionCondicionRouter);
 app.use("/api/objeto", ObjetoRouter);
 
 app.use(HandleError);
-
-await sequelize.sync();
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en ${PORT}`);
