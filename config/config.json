@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Emajael12.",
+    "database": "AstroLatam",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}

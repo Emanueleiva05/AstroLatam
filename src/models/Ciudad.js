@@ -15,7 +15,7 @@ Ciudad.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    idPais: {
+    idProvincia: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
