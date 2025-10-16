@@ -10,7 +10,7 @@ export const ValidarDatosEvento = (req, res, next) => {
     horaFin,
     fechaInicio,
     fechaFin,
-    idTipoEVento,
+    idTipoEvento,
   } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -37,7 +37,7 @@ export const ValidarDatosEvento = (req, res, next) => {
     throw new AppError("fechaFin no valido para el evento", 400);
   }
 
-  if (!idTipoEVento || isNaN(Number(idTipoEvento))) {
+  if (!idTipoEvento || isNaN(Number(idTipoEvento))) {
     throw new AppError("idTipoEVento no valido", 400);
   }
 
