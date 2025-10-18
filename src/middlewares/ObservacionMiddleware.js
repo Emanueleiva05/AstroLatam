@@ -1,6 +1,10 @@
 import AppError from "../utils/AppError.js";
 import { ListarObservacionEspecifico } from "../service/ObservacionService.js";
 import { ListarUbicacionEspecifico } from "../service/UbicacionService.js";
+import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
+import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
+import { ListarEvento } from "../service/EventoService.js";
+import { ListarObjetoEspecifico } from "../service/ObjetoService.js";
 
 export const ValidarDatosObservacion = (req, res, next) => {
   const {
@@ -38,6 +42,21 @@ export const ValidarDatosObservacion = (req, res, next) => {
   next();
 };
 
+export const VerificarExistenciaUbicacion = async (req, res, next) => {
+  try {
+    const { idUbicacion } = req.body;
+
+    const ubicacion = await ListarUbicacionEspecifico(idUbicacion);
+    if (!ubicacion) {
+      throw new AppError("No se encontro la ubicacion especifica", 404);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const EncontrarObservacion = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -54,14 +73,63 @@ export const EncontrarObservacion = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaUbicacion = async (req, res, next) => {
+export const EncontrarAdjunto = async (req, res, next) => {
   try {
-    const { idUbicacion } = req.body;
+    const { idAdjunto } = req.params;
 
-    const ubicacion = await ListarUbicacionEspecifico(idUbicacion);
-    if (!ubicacion) {
-      throw new AppError("No se encontro la ubicacion especifica", 404);
+    const adjunto = await ListarInstrumentoEspecifico(idAdjunto);
+    if (!adjunto) {
+      throw new AppError("No se encontro el adjunto especifica", 404);
     }
+    req.adjunto = adjunto;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarObjeto = async (req, res, next) => {
+  try {
+    const { idObjeto } = req.params;
+
+    const objeto = await ListarObjetoEspecifico(idObjeto);
+    if (!objeto) {
+      throw new AppError("No se encontro el objeto especifica", 404);
+    }
+    req.objeto = objeto;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarEvento = async (req, res, next) => {
+  try {
+    const { idEvento } = req.params;
+
+    const evento = await ListarEvento(idEvento);
+    if (!evento) {
+      throw new AppError("No se encontro el evento especifica", 404);
+    }
+    req.evento = evento;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarInstrumento = async (req, res, next) => {
+  try {
+    const { idInstrumento } = req.params;
+
+    const instrumento = await ListarInstrumentoEspecifico(idInstrumento);
+    if (!instrumento) {
+      throw new AppError("No se encontro el adjunto especifica", 404);
+    }
+    req.instrumento = instrumento;
 
     next();
   } catch (error) {

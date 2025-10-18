@@ -1,6 +1,7 @@
 import AppError from "../utils/AppError.js";
 import { ListarObjetoEspecifico } from "../service/ObjetoService.js";
 import { ListarTipoObjetoEspecifico } from "../service/TipoObjetoService.js";
+import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
 
 export const ValidarDatosObjeto = (req, res, next) => {
   const { nombre, descripcion, idTipoObjeto } = req.body;
@@ -20,6 +21,21 @@ export const ValidarDatosObjeto = (req, res, next) => {
   next();
 };
 
+export const VerificarExistenciaTipoObjeto = async (req, res, next) => {
+  try {
+    const { idTipoObjeto } = req.body;
+
+    const tipoObjeto = await ListarTipoObjetoEspecifico(idTipoObjeto);
+    if (!tipoObjeto) {
+      throw new AppError("No se encontro el tipo objeto especifico", 404);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const EncontrarObjeto = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -36,14 +52,15 @@ export const EncontrarObjeto = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaTipoObjeto = async (req, res, next) => {
+export const EncontrarAdjunto = async (req, res, next) => {
   try {
-    const { idTipoObjeto } = req.body;
+    const { idAdjunto } = req.params;
 
-    const tipoObjeto = await ListarTipoObjetoEspecifico(idTipoObjeto);
-    if (!tipoObjeto) {
-      throw new AppError("No se encontro el tipo objeto especifico", 404);
+    const adjunto = await ListarAdjuntoEspecifico(idAdjunto);
+    if (!adjunto) {
+      throw new AppError("No se encontro el adjunto especifico", 404);
     }
+    req.adjunto = adjunto;
 
     next();
   } catch (error) {

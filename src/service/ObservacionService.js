@@ -51,3 +51,35 @@ export const ListarObservacionEspecifico = async (id) => {
   const observacion = await Observacion.findByPk(id);
   return observacion;
 };
+
+export const AgregarAdjunto = async (observacion, adjunto) => {
+  await observacion.addAdjunto(adjunto);
+};
+
+export const EliminarAdjunto = async (observacion, adjunto) => {
+  await observacion.removeAdjunto(adjunto);
+};
+
+export const AgregarEvento = async (observacion, evento) => {
+  await observacion.addEvento(evento);
+};
+
+export const EliminarEvento = async (observacion, evento) => {
+  await observacion.removeEvento(evento);
+};
+
+export const AgregarInstrumento = async (observacion, instrumento) => {
+  await observacion.addInstrumento(instrumento);
+};
+
+export const EliminarInstrumento = async (observacion, instrumento) => {
+  await observacion.removeInstrumento(instrumento);
+};
+
+export const AgregarObjeto = async (observacion, objeto) => {
+  await observacion.addObjeto(objeto);
+};
+
+export const EliminarObjeto = async (observacion, objeto) => {
+  await observacion.removeObjeto(objeto);
+};

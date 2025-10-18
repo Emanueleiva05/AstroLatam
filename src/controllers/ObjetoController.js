@@ -3,6 +3,8 @@ import {
   EliminarObjeto,
   ModificarObjeto,
   ListarObjetos,
+  AgregarAdjunto,
+  EliminarAdjunto,
 } from "../service/ObjetoService.js";
 
 export const SetObjeto = async (req, res, next) => {
@@ -51,6 +53,24 @@ export const ReadObjetoEspecifico = async (req, res, next) => {
   try {
     const obj = objeto;
     res.status(200).json(obj);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const SetAdjunto = async (req, res, next) => {
+  try {
+    await AgregarAdjunto(req.objeto, req.adjunto);
+    res.status(200).json({ message: "Se agrego el adjunto con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const RemoveAdjunto = async (req, res, next) => {
+  try {
+    await EliminarAdjunto(req.objeto, req.adjunto);
+    res.status(200).json({ message: "Se elimino el adjunto con exito" });
   } catch (error) {
     next(error);
   }

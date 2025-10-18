@@ -3,6 +3,12 @@ import {
   EliminarEvento,
   ModificarEvento,
   ListarEventos,
+  AgregarAdjunto,
+  EliminarAdjunto,
+  AgregarObjeto,
+  EliminarObjeto,
+  AgregarPais,
+  EliminarPais,
 } from "../service/EventoService.js";
 
 export const SetEvento = async (req, res, next) => {
@@ -84,6 +90,60 @@ export const ReadEventoEspecifico = async (req, res, next) => {
   try {
     const eve = evento;
     res.status(200).json(eve);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const SetAdjunto = async (req, res, next) => {
+  try {
+    await AgregarAdjunto(req.evento, req.adjunto);
+    res.status(200).json({ message: "Se agrego el adjunto con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const RemoveAdjunto = async (req, res, next) => {
+  try {
+    await EliminarAdjunto(req.evento, req.adjunto);
+    res.status(200).json({ message: "Se elimino el adjunto con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const SetPais = async (req, res, next) => {
+  try {
+    await AgregarPais(req.evento, req.pais);
+    res.status(200).json({ message: "Se agrego el pais con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const RemovePais = async (req, res, next) => {
+  try {
+    await EliminarPais(req.evento, req.pais);
+    res.status(200).json({ message: "Se elimino el pais con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const SetObjeto = async (req, res, next) => {
+  try {
+    await AgregarObjeto(req.evento, req.objeto);
+    res.status(200).json({ message: "Se agrego el objeto con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const RemoveObjeto = async (req, res, next) => {
+  try {
+    await EliminarObjeto(req.evento, req.objeto);
+    res.status(200).json({ message: "Se elimino el objeto con exito" });
   } catch (error) {
     next(error);
   }

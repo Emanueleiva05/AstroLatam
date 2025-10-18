@@ -37,3 +37,11 @@ export const ListarObjetoEspecifico = async (id) => {
   const objeto = await Objeto.findByPk(id);
   return objeto;
 };
+
+export const AgregarAdjunto = async (objeto, adjunto) => {
+  return await objeto.addAdjunto(adjunto);
+};
+
+export const EliminarAdjunto = async (objeto, adjunto) => {
+  return await objeto.removeAdjunto(adjunto);
+};

@@ -57,3 +57,27 @@ export const ListarEvento = async (id) => {
   const evento = await Evento.findByPk(id);
   return evento;
 };
+
+export const AgregarAdjunto = async (evento, adjunto) => {
+  return await evento.addAdjunto(adjunto);
+};
+
+export const EliminarAdjunto = async (evento, adjunto) => {
+  return await evento.removeAdjunto(adjunto);
+};
+
+export const AgregarPais = async (evento, pais) => {
+  return await evento.addPais(pais);
+};
+
+export const EliminarPais = async (evento, pais) => {
+  return await evento.removePais(pais);
+};
+
+export const AgregarObjeto = async (evento, objeto) => {
+  return await evento.addObjeto(objeto);
+};
+
+export const EliminarObjeto = async (evento, objeto) => {
+  return await evento.removeObjeto(objeto);
+};

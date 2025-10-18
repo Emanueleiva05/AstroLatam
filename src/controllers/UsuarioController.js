@@ -3,6 +3,8 @@ import {
   EliminarUsuario,
   ModificarUsuario,
   ListarUsuario,
+  AgregarInstrumento,
+  ELiminarInstrumento,
 } from "../service/UsuarioService.js";
 
 export const SetUsuario = async (req, res, next) => {
@@ -92,6 +94,24 @@ export const ReadUsuarioEspecifico = async (req, res, next) => {
   try {
     const usu = usuario;
     res.status(200).json(usu);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const SetInstrumento = async (req, res, next) => {
+  try {
+    await AgregarInstrumento(req.usuario, req.instrumento);
+    res.status(200).json({ message: "Se agrego el instrumento con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const DeleteInstrumento = async (req, res, next) => {
+  try {
+    await ELiminarInstrumento(req.usuario, req.instrumento);
+    res.status(200).json({ message: "Se elimino el instrumento con exito" });
   } catch (error) {
     next(error);
   }

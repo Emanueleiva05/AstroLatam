@@ -5,11 +5,20 @@ import {
   UpdateEvento,
   ReadEvento,
   ReadEventoEspecifico,
+  SetAdjunto,
+  RemoveAdjunto,
+  SetObjeto,
+  RemoveObjeto,
+  SetPais,
+  RemovePais,
 } from "../controllers/EventoController.js";
 import {
   EncontrarEvento,
+  EncontrarAdjunto,
   ValidarDatosEvento,
   VerificarExistenciaTipoEvento,
+  EncontrarObjeto,
+  EncontrarPais,
 } from "../middlewares/EventoMiddleware.js";
 import { esAdministrador } from "../utils/RoleUser.js";
 
@@ -37,5 +46,47 @@ router.delete("/:id", esAdministrador, EncontrarEvento, DeleteEvento);
 router.get("/", ReadEvento);
 
 router.get("/:id", EncontrarEvento, ReadEventoEspecifico);
+
+router.post(
+  "/agregarAdjunto/:id/:idAdjunto",
+  EncontrarEvento,
+  EncontrarAdjunto,
+  SetAdjunto
+);
+
+router.delete(
+  "/eliminarAdjunto/:id/:idAdjunto",
+  EncontrarEvento,
+  EncontrarAdjunto,
+  RemoveAdjunto
+);
+
+router.post(
+  "/agregarPais/:id/:idPais",
+  EncontrarEvento,
+  EncontrarPais,
+  SetPais
+);
+
+router.delete(
+  "/eliminarPais/:id/:idPais",
+  EncontrarEvento,
+  EncontrarPais,
+  RemovePais
+);
+
+router.post(
+  "/agregarObjeto/:id/:idObjeto",
+  EncontrarEvento,
+  EncontrarObjeto,
+  SetObjeto
+);
+
+router.delete(
+  "/eliminarObjeto/:id/:idObjeto",
+  EncontrarEvento,
+  EncontrarObjeto,
+  RemoveObjeto
+);
 
 export default router;

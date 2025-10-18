@@ -2,6 +2,7 @@ import AppError from "../utils/AppError.js";
 import { ListarUsuarioEspecifico } from "../service/UsuarioService.js";
 import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
 import { ListarCiudadEspecifico } from "../service/CiudadService.js";
+import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
 
 export const ValidarDatosUsuario = (req, res, next) => {
   const {
@@ -58,20 +59,6 @@ export const ValidarDatosUsuario = (req, res, next) => {
   next();
 };
 
-export const EncontrarUsuario = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const usuario = await ListarUsuarioEspecifico(id);
-    if (!usuario) {
-      throw new AppError("No se encontró el usuario especificado", 404);
-    }
-    req.usuario = usuario;
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const VerificarExistenciaAdjunto = async (req, res, next) => {
   try {
     const { idAdjunto } = req.body;
@@ -93,6 +80,34 @@ export const VerificarExistenciaCiudad = async (req, res, next) => {
     if (!ciudad) {
       throw new AppError("No se encontró la ciudad especificado", 404);
     }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarUsuario = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const usuario = await ListarUsuarioEspecifico(id);
+    if (!usuario) {
+      throw new AppError("No se encontró el usuario especificado", 404);
+    }
+    req.usuario = usuario;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarInstrumento = async (req, res, next) => {
+  try {
+    const { idInstrumento } = req.params;
+    const instrumento = await ListarInstrumentoEspecifico(idInstrumento);
+    if (!instrumento) {
+      throw new AppError("No se encontró el instrumento especificado", 404);
+    }
+    req.instrumento = instrumento;
     next();
   } catch (error) {
     next(error);

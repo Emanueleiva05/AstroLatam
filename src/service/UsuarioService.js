@@ -64,3 +64,11 @@ export const ListarUsuarioEspecifico = async (id) => {
   const usuario = await Usuario.findByPk(id);
   return usuario;
 };
+
+export const AgregarInstrumento = async (usuario, instrumento) => {
+  return await usuario.addInstrumento(instrumento);
+};
+
+export const ELiminarInstrumento = async (usuario, instrumento) => {
+  return await usuario.removeInstrumento(instrumento);
+};

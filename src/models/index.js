@@ -28,12 +28,21 @@ Usuario.hasMany(AccionUsuario, { foreignKey: "idUsuario" });
 Adjunto.belongsTo(TipoAdjunto, { foreignKey: "idTipoAdjunto" });
 TipoAdjunto.hasMany(Adjunto, { foreignKey: "idTipoAdjunto" });
 
-Adjunto.belongsToMany(Evento, { through: "EventoAdjunto", timestamps: false });
+Adjunto.belongsToMany(Evento, {
+  through: "EventoAdjunto",
+  foreignKey: "idAdjunto",
+  timestamps: false,
+});
 
-Adjunto.belongsToMany(Objeto, { through: "ObjetoAdjunto", timestamps: false });
+Adjunto.belongsToMany(Objeto, {
+  through: "ObjetoAdjunto",
+  foreignKey: "idAdjunto",
+  timestamps: false,
+});
 
 Adjunto.belongsToMany(Observacion, {
   through: "ObservacionAdjunto",
+  foreignKey: "idAdjunto",
   timestamps: false,
 });
 
@@ -47,11 +56,13 @@ Instrumento.belongsTo(TipoInstrumento, { foreignKey: "idTipoInstrumento" });
 
 Instrumento.belongsToMany(Usuario, {
   through: "InstrumentoUsuario",
+  foreignKey: "idInstrumento",
   timestamps: false,
 });
 
 Instrumento.belongsToMany(Observacion, {
   through: "ObservacionInstrumento",
+  foreignKey: "idInstrumento",
   timestamps: false,
 });
 
@@ -59,12 +70,21 @@ Instrumento.belongsToMany(Observacion, {
 Objeto.belongsTo(TipoObjeto, { foreignKey: "idTipoObjeto" });
 TipoObjeto.hasMany(Objeto, { foreignKey: "idTipoObjeto" });
 
-Objeto.belongsToMany(Evento, { through: "EventoObjeto", timestamps: false });
+Objeto.belongsToMany(Evento, {
+  through: "EventoObjeto",
+  foreignKey: "idObjeto",
+  timestamps: false,
+});
 
-Objeto.belongsToMany(Adjunto, { through: "ObjetoAdjunto", timestamps: false });
+Objeto.belongsToMany(Adjunto, {
+  through: "ObjetoAdjunto",
+  foreignKey: "idObjeto",
+  timestamps: false,
+});
 
 Objeto.belongsToMany(Observacion, {
   through: "ObjetoObservacion",
+  foreignKey: "idObjeto",
   timestamps: false,
 });
 
@@ -74,21 +94,25 @@ Ubicacion.hasMany(Observacion, { foreignKey: "idUbicacion" });
 
 Observacion.belongsToMany(Objeto, {
   through: "ObjetoObservacion",
+  foreignKey: "idObservacion",
   timestamps: false,
 });
 
 Observacion.belongsToMany(Adjunto, {
   through: "ObservacionAdjunto",
+  foreignKey: "idObservacion",
   timestamps: false,
 });
 
 Observacion.belongsToMany(Evento, {
   through: "ObservacionEvento",
+  foreignKey: "idObservacion",
   timestamps: false,
 });
 
 Observacion.belongsToMany(Instrumento, {
   through: "ObservacionInstrumento",
+  foreignKey: "idObservacion",
   timestamps: false,
 });
 
@@ -102,7 +126,11 @@ ObservacionCondicion.belongsTo(TipoCondicion, {
 TipoCondicion.hasMany(ObservacionCondicion, { foreignKey: "idTipoCondicion" });
 
 //Pais
-Pais.belongsToMany(Evento, { through: "EventoPais", timestamps: false });
+Pais.belongsToMany(Evento, {
+  through: "EventoPais",
+  foreignKey: "idPais",
+  timestamps: false,
+});
 
 //Provincia
 Provincia.belongsTo(Pais, { foreignKey: "idPais" });
@@ -126,20 +154,37 @@ Ciudad.hasMany(Usuario, { foreignKey: "idCiudad" });
 Usuario.belongsTo(Adjunto, { foreignKey: "idAdjunto" });
 Adjunto.hasOne(Usuario, { foreignKey: "idAdjunto" });
 
-Usuario.belongsToMany(Instrumento, { through: "InstrumentoUsuario" });
+Usuario.belongsToMany(Instrumento, {
+  through: "InstrumentoUsuario",
+  timestamps: false,
+  foreignKey: "idUsuario",
+});
 
 //Evento
 Evento.belongsTo(TipoEvento, { foreignKey: "idTipoEvento" });
 TipoEvento.hasMany(Evento, { foreignKey: "idTipoEvento" });
 
-Evento.belongsToMany(Pais, { through: "EventoPais", timestamps: false });
+Evento.belongsToMany(Pais, {
+  through: "EventoPais",
+  foreignKey: "idEvento",
+  timestamps: false,
+});
 
-Evento.belongsToMany(Objeto, { through: "EventoObjeto", timestamps: false });
+Evento.belongsToMany(Objeto, {
+  through: "EventoObjeto",
+  foreignKey: "idEvento",
+  timestamps: false,
+});
 
-Evento.belongsToMany(Adjunto, { through: "EventoAdjunto", timestamps: false });
+Evento.belongsToMany(Adjunto, {
+  through: "EventoAdjunto",
+  foreignKey: "idEvento",
+  timestamps: false,
+});
 
 Evento.belongsToMany(Observacion, {
   through: "ObservacionEvento",
+  foreignKey: "idEvento",
   timestamps: false,
 });
 
