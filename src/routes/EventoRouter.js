@@ -11,6 +11,8 @@ import {
   RemoveObjeto,
   SetPais,
   RemovePais,
+  ReadAdjuntoEspecifico,
+  ReadAdjuntos,
 } from "../controllers/EventoController.js";
 import {
   EncontrarEvento,
@@ -19,6 +21,7 @@ import {
   VerificarExistenciaTipoEvento,
   EncontrarObjeto,
   EncontrarPais,
+  EncontrarAdjuntoEvento,
 } from "../middlewares/EventoMiddleware.js";
 import { esAdministrador } from "../utils/RoleUser.js";
 
@@ -87,6 +90,15 @@ router.delete(
   EncontrarEvento,
   EncontrarObjeto,
   RemoveObjeto
+);
+
+router.get("/listarInstrumentos/:id", EncontrarEvento, ReadAdjuntos);
+
+router.get(
+  "/listarInstrumentosEspecifico/:id/:idAdjunto",
+  EncontrarEvento,
+  EncontrarAdjuntoEvento,
+  ReadAdjuntoEspecifico
 );
 
 export default router;

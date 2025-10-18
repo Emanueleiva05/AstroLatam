@@ -9,6 +9,7 @@ import {
   EliminarObjeto,
   AgregarPais,
   EliminarPais,
+  ListarAdjuntos,
 } from "../service/EventoService.js";
 
 export const SetEvento = async (req, res, next) => {
@@ -144,6 +145,23 @@ export const RemoveObjeto = async (req, res, next) => {
   try {
     await EliminarObjeto(req.evento, req.objeto);
     res.status(200).json({ message: "Se elimino el objeto con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadAdjuntos = async (req, res, next) => {
+  try {
+    const adjuntos = await ListarAdjuntos(req.evento);
+    res.status(200).json(adjuntos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadAdjuntoEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.adjunto);
   } catch (error) {
     next(error);
   }

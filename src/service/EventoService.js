@@ -66,6 +66,18 @@ export const EliminarAdjunto = async (evento, adjunto) => {
   return await evento.removeAdjunto(adjunto);
 };
 
+export const ListarAdjuntos = async (usuario) => {
+  return await usuario.getAdjuntos();
+};
+
+export const ListarAdjuntosEspecificoEvento = async (evento, idAdjunto) => {
+  return await evento.getAdjuntos({
+    where: {
+      idAdjunto: idAdjunto,
+    },
+  });
+};
+
 export const AgregarPais = async (evento, pais) => {
   return await evento.addPais(pais);
 };
