@@ -1,5 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarUsuarioEspecifico } from "../service/UsuarioService.js";
+import {
+  ListarUsuarioEspecifico,
+  ListarInstrumentosEspecificoUsuario,
+} from "../service/UsuarioService.js";
 import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
 import { ListarCiudadEspecifico } from "../service/CiudadService.js";
 import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
@@ -108,6 +111,22 @@ export const EncontrarInstrumento = async (req, res, next) => {
       throw new AppError("No se encontró el instrumento especificado", 404);
     }
     req.instrumento = instrumento;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarInstrumentoUsuario = async (req, res, next) => {
+  try {
+    const instrumento = await ListarInstrumentosEspecificoUsuario(
+      req.usuario,
+      req.params.idInstrumento
+    );
+    if (instrumento.length === 0) {
+      throw new AppError("No se encontro el instrumento del usuario");
+    }
+    req.instrumento = instrumento[0];
     next();
   } catch (error) {
     next(error);

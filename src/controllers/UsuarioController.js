@@ -5,7 +5,10 @@ import {
   ListarUsuario,
   AgregarInstrumento,
   ELiminarInstrumento,
+  ListarInstrumentos,
+  ListarInstrumentosEspecificoUsuario,
 } from "../service/UsuarioService.js";
+import AppError from "../utils/AppError.js";
 
 export const SetUsuario = async (req, res, next) => {
   const {
@@ -112,6 +115,23 @@ export const DeleteInstrumento = async (req, res, next) => {
   try {
     await ELiminarInstrumento(req.usuario, req.instrumento);
     res.status(200).json({ message: "Se elimino el instrumento con exito" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadInstrumentos = async (req, res, next) => {
+  try {
+    const instrumentos = await ListarInstrumentos(req.usuario);
+    res.status(200).json(instrumentos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadInstrumentoEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.instrumento);
   } catch (error) {
     next(error);
   }

@@ -1,3 +1,4 @@
+import { where } from "sequelize";
 import Usuario from "../models/Usuario.js";
 import AppError from "../utils/AppError.js";
 
@@ -71,4 +72,19 @@ export const AgregarInstrumento = async (usuario, instrumento) => {
 
 export const ELiminarInstrumento = async (usuario, instrumento) => {
   return await usuario.removeInstrumento(instrumento);
+};
+
+export const ListarInstrumentos = async (usuario) => {
+  return await usuario.getInstrumentos();
+};
+
+export const ListarInstrumentosEspecificoUsuario = async (
+  usuario,
+  idInstrumento
+) => {
+  return await usuario.getInstrumentos({
+    where: {
+      idInstrumento: idInstrumento,
+    },
+  });
 };

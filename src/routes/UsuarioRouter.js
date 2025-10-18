@@ -7,6 +7,8 @@ import {
   ReadUsuarioEspecifico,
   SetInstrumento,
   DeleteInstrumento,
+  ReadInstrumentos,
+  ReadInstrumentoEspecifico,
 } from "../controllers/UsuarioController.js";
 import {
   ValidarDatosUsuario,
@@ -14,6 +16,7 @@ import {
   VerificarExistenciaCiudad,
   EncontrarUsuario,
   EncontrarInstrumento,
+  EncontrarInstrumentoUsuario,
 } from "../middlewares/UsuarioMiddleware.js";
 
 const router = Router();
@@ -53,6 +56,15 @@ router.delete(
   EncontrarInstrumento,
   EncontrarUsuario,
   DeleteInstrumento
+);
+
+router.get("/listarInstrumentos/:id", EncontrarUsuario, ReadInstrumentos);
+
+router.get(
+  "/listarInstrumentosEspecifico/:id/:idInstrumento",
+  EncontrarUsuario,
+  EncontrarInstrumentoUsuario,
+  ReadInstrumentoEspecifico
 );
 
 export default router;
