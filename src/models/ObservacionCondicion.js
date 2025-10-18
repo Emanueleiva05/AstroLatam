@@ -35,6 +35,7 @@ ObservacionCondicion.init(
   },
   {
     sequelize,
+    timestamps: false,
     modelName: "ObservacionCondicion",
     tableName: "ObservacionCondiciones",
   }

@@ -30,6 +30,7 @@ Adjunto.init(
   },
   {
     sequelize,
+    timestamps: false,
     modelName: "Adjunto",
     tableName: "Adjuntos",
   }

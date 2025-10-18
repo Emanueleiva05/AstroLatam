@@ -42,6 +42,7 @@ Ubicacion.init(
   },
   {
     sequelize,
+    timestamps: false,
     modelName: "Ubicacion",
     tableName: "Ubicaciones",
   }

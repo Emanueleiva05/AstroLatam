@@ -18,6 +18,7 @@ Pais.init(
   },
   {
     sequelize,
+    timestamps: false,
     modelName: "Pais",
     tableName: "Paises",
   }

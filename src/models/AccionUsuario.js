@@ -45,6 +45,7 @@ AccionUsuario.init(
   },
   {
     sequelize,
+    timestamps: false,
     modelName: "AccionUsuario",
     tableName: "AccionUsuarios",
   }

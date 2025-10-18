@@ -30,6 +30,7 @@ Objeto.init(
   },
   {
     sequelize,
+    timestamps: false,
     modelName: "Objeto",
     tableName: "Objetos",
   }

@@ -26,6 +26,7 @@ Ciudad.init(
   },
   {
     sequelize,
+    timestamps: false,
     modelName: "Ciudad",
     tableName: "Ciudades",
   }

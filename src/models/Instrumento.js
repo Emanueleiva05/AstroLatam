@@ -52,7 +52,12 @@ Instrumento.init(
       },
     },
   },
-  { sequelize, modelName: "Instrumento", tableName: "Instrumentos" }
+  {
+    sequelize,
+    timestamps: false,
+    modelName: "Instrumento",
+    tableName: "Instrumentos",
+  }
 );
 
 export default Instrumento;

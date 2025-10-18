@@ -40,7 +40,12 @@ Observacion.init(
       },
     },
   },
-  { sequelize, tableName: "Observaciones", modelName: "Observacion" }
+  {
+    sequelize,
+    timestamps: false,
+    tableName: "Observaciones",
+    modelName: "Observacion",
+  }
 );
 
 export default Observacion;

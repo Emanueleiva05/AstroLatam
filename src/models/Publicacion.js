@@ -41,7 +41,12 @@ Publicacion.init(
       },
     },
   },
-  { sequelize, tableName: "Publicaciones", modelName: "Publicacion" }
+  {
+    sequelize,
+    timestamps: false,
+    tableName: "Publicaciones",
+    modelName: "Publicacion",
+  }
 );
 
 export default Publicacion;
