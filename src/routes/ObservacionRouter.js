@@ -21,6 +21,7 @@ import {
   ReadInstrumentoEspecifico,
   ReadObjeto,
   ReadObjetoEspecifico,
+  ChangeVisibilidad,
 } from "../controllers/ObservacionController.js";
 import {
   EncontrarObservacion,
@@ -35,6 +36,7 @@ import {
   EncontrarObservacionAdjunto,
   EncontrarObservacionInstrumento,
 } from "../middlewares/ObservacionMiddleware.js";
+import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
@@ -149,6 +151,13 @@ router.get(
   EncontrarObservacion,
   EncontrarObservacionInstrumento,
   ReadInstrumentoEspecifico
+);
+
+router.put(
+  "/visibilidad/:id",
+  EncontrarObservacion,
+  VerificarVisibilidad,
+  ChangeVisibilidad
 );
 
 export default router;

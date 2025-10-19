@@ -6,9 +6,7 @@ import {
   AgregarInstrumento,
   ELiminarInstrumento,
   ListarInstrumentos,
-  ListarInstrumentosEspecificoUsuario,
 } from "../service/UsuarioService.js";
-import AppError from "../utils/AppError.js";
 
 export const SetUsuario = async (req, res, next) => {
   const {

@@ -49,3 +49,8 @@ export const ListarPublicacionEspecifico = async (id) => {
   const publicacion = await Publicacion.findByPk(id);
   return publicacion;
 };
+
+export const VisibilidadPublicacion = async (publicacion, estado) => {
+  publicacion.visibilidad = estado;
+  return await publicacion.save();
+};

@@ -3,6 +3,7 @@ import {
   EliminarPublicacion,
   ModificarPublicacion,
   ListarPublicaciones,
+  VisibilidadPublicacion,
 } from "../service/PublicacionService.js";
 
 export const SetPublicacion = async (req, res, next) => {
@@ -76,6 +77,15 @@ export const ReadPublicacionEspecifico = async (req, res) => {
   try {
     const pub = publicacion;
     res.status(200).json(pub);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ChangeVisibilidad = async (req, res, next) => {
+  try {
+    await VisibilidadPublicacion(req.publicacion, req.visibilidad);
+    res.status(200).json({ meesage: "Se cambio el visibilidad con exito" });
   } catch (error) {
     next(error);
   }
