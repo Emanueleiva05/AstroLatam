@@ -45,3 +45,15 @@ export const AgregarAdjunto = async (objeto, adjunto) => {
 export const EliminarAdjunto = async (objeto, adjunto) => {
   return await objeto.removeAdjunto(adjunto);
 };
+
+export const ListarAdjuntos = async (objeto) => {
+  return await objeto.getAdjuntos();
+};
+
+export const ListarAdjuntosEspecificoObjeto = async (objeto, idAdjunto) => {
+  return await objeto.getAdjuntos({
+    where: {
+      idAdjunto: idAdjunto,
+    },
+  });
+};

@@ -1,5 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarObjetoEspecifico } from "../service/ObjetoService.js";
+import {
+  ListarObjetoEspecifico,
+  ListarAdjuntosEspecificoObjeto,
+} from "../service/ObjetoService.js";
 import { ListarTipoObjetoEspecifico } from "../service/TipoObjetoService.js";
 import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
 
@@ -62,6 +65,22 @@ export const EncontrarAdjunto = async (req, res, next) => {
     }
     req.adjunto = adjunto;
 
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarAdjuntoObjeto = async (req, res, next) => {
+  try {
+    const adjunto = await ListarAdjuntosEspecificoObjeto(
+      req.objeto,
+      req.params.idAdjunto
+    );
+    if (adjunto.length === 0) {
+      throw new AppError("No se encontro el adjunto del evento");
+    }
+    req.adjunto = adjunto[0];
     next();
   } catch (error) {
     next(error);

@@ -7,12 +7,14 @@ import {
   ReadObjetoEspecifico,
   SetAdjunto,
   RemoveAdjunto,
+  ReadAdjuntos,
 } from "../controllers/ObjetoController.js";
 import {
   EncontrarObjeto,
   EncontrarAdjunto,
   ValidarDatosObjeto,
   VerificarExistenciaTipoObjeto,
+  EncontrarAdjuntoObjeto,
 } from "../middlewares/ObjetoMiddleware.js";
 
 const router = Router();
@@ -45,6 +47,15 @@ router.delete(
   EncontrarObjeto,
   EncontrarAdjunto,
   RemoveAdjunto
+);
+
+router.get("/listarAdjuntos/:id", EncontrarObjeto, ReadAdjuntos);
+
+router.get(
+  "/listarAdjuntoEspecifico/:id/:idAdjunto",
+  EncontrarObjeto,
+  EncontrarAdjuntoObjeto,
+  ReadObjetoEspecifico
 );
 
 export default router;
