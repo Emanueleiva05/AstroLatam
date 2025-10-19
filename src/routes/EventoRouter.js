@@ -13,6 +13,8 @@ import {
   RemovePais,
   ReadAdjuntoEspecifico,
   ReadAdjuntos,
+  ReadPaises,
+  ReadPaisEspecifico,
 } from "../controllers/EventoController.js";
 import {
   EncontrarEvento,
@@ -22,6 +24,7 @@ import {
   EncontrarObjeto,
   EncontrarPais,
   EncontrarAdjuntoEvento,
+  EncontrarPaisEvento,
 } from "../middlewares/EventoMiddleware.js";
 import { esAdministrador } from "../utils/RoleUser.js";
 
@@ -99,6 +102,15 @@ router.get(
   EncontrarEvento,
   EncontrarAdjuntoEvento,
   ReadAdjuntoEspecifico
+);
+
+router.get("/listarPaises/:id", EncontrarEvento, ReadPaises);
+
+router.get(
+  "/listarPaisEspecifico/:id/:idPais",
+  EncontrarEvento,
+  EncontrarPaisEvento,
+  ReadPaisEspecifico
 );
 
 export default router;

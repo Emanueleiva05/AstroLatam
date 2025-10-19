@@ -66,8 +66,8 @@ export const EliminarAdjunto = async (evento, adjunto) => {
   return await evento.removeAdjunto(adjunto);
 };
 
-export const ListarAdjuntos = async (usuario) => {
-  return await usuario.getAdjuntos();
+export const ListarAdjuntos = async (evento) => {
+  return await evento.getAdjuntos();
 };
 
 export const ListarAdjuntosEspecificoEvento = async (evento, idAdjunto) => {
@@ -86,10 +86,34 @@ export const EliminarPais = async (evento, pais) => {
   return await evento.removePais(pais);
 };
 
+export const ListarPaises = async (evento) => {
+  return await evento.getPais();
+};
+
+export const ListarPaisesEspecificoEvento = async (evento, idPais) => {
+  return await evento.getPais({
+    where: {
+      idPais: idPais,
+    },
+  });
+};
+
 export const AgregarObjeto = async (evento, objeto) => {
   return await evento.addObjeto(objeto);
 };
 
 export const EliminarObjeto = async (evento, objeto) => {
   return await evento.removeObjeto(objeto);
+};
+
+export const ListarObjetos = async (evento) => {
+  return await evento.getObjetos();
+};
+
+export const ListarObjetoEspecificoEvento = async (evento, idObjeto) => {
+  return await evento.getObjetos({
+    where: {
+      idObjeto: idObjeto,
+    },
+  });
 };

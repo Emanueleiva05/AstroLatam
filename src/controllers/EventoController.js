@@ -10,6 +10,7 @@ import {
   AgregarPais,
   EliminarPais,
   ListarAdjuntos,
+  ListarPaises,
 } from "../service/EventoService.js";
 
 export const SetEvento = async (req, res, next) => {
@@ -162,6 +163,23 @@ export const ReadAdjuntos = async (req, res, next) => {
 export const ReadAdjuntoEspecifico = async (req, res, next) => {
   try {
     res.status(200).json(req.adjunto);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadPaises = async (req, res, next) => {
+  try {
+    const paises = await ListarPaises(req.evento);
+    res.status(200).json(paises);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadPaisEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.pais);
   } catch (error) {
     next(error);
   }

@@ -2,6 +2,7 @@ import AppError from "../utils/AppError.js";
 import {
   ListarEvento,
   ListarAdjuntosEspecificoEvento,
+  ListarPaisesEspecificoEvento,
 } from "../service/EventoService.js";
 import { ListarTipoEventoEspecifico } from "../service/TipoEventoService.js";
 import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
@@ -139,6 +140,22 @@ export const EncontrarAdjuntoEvento = async (req, res, next) => {
       throw new AppError("No se encontro el adjunto del evento");
     }
     req.adjunto = adjunto[0];
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarPaisEvento = async (req, res, next) => {
+  try {
+    const pais = await ListarPaisesEspecificoEvento(
+      req.evento,
+      req.params.idPais
+    );
+    if (pais.length === 0) {
+      throw new AppError("No se encontro el pais del evento");
+    }
+    req.pais = pais[0];
     next();
   } catch (error) {
     next(error);
