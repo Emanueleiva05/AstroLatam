@@ -11,6 +11,10 @@ import {
   EliminarEvento,
   EliminarInstrumento,
   EliminarObjeto,
+  ListarAdjuntos,
+  ListarEventos,
+  ListarObjetos,
+  ListarInstrumentos,
 } from "../service/ObservacionService.js";
 
 export const SetObservacion = async (req, res, next) => {
@@ -162,6 +166,74 @@ export const RemoveInstrumento = async (req, res, next) => {
     res
       .status(200)
       .json({ message: "Se elimino un instrumento en la observacion" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadAdjuntos = async (req, res, next) => {
+  try {
+    const adjuntos = await ListarAdjuntos(req.observacion);
+    res.status(200).json(adjuntos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadAdjuntoEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.adjunto);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadObjeto = async (req, res, next) => {
+  try {
+    const objetos = await ListarObjetos(req.observacion);
+    res.status(200).json(objetos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadObjetoEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.objeto);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadInstrumento = async (req, res, next) => {
+  try {
+    const instrumentos = await ListarInstrumentos(req.observacion);
+    res.status(200).json(instrumentos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadInstrumentoEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.instrumento);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadEvento = async (req, res, next) => {
+  try {
+    const eventos = await ListarEventos(req.observacion);
+    res.status(200).json(eventos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadEventoEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.evento);
   } catch (error) {
     next(error);
   }

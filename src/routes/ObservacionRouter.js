@@ -13,6 +13,14 @@ import {
   RemoveInstrumento,
   SetObjeto,
   RemoveObjeto,
+  ReadAdjuntos,
+  ReadAdjuntoEspecifico,
+  ReadEvento,
+  ReadEventoEspecifico,
+  ReadInstrumento,
+  ReadInstrumentoEspecifico,
+  ReadObjeto,
+  ReadObjetoEspecifico,
 } from "../controllers/ObservacionController.js";
 import {
   EncontrarObservacion,
@@ -22,6 +30,10 @@ import {
   EncontrarEvento,
   EncontrarInstrumento,
   EncontrarObjeto,
+  EncontrarObservacionObjeto,
+  EncontrarObservacionEvento,
+  EncontrarObservacionAdjunto,
+  EncontrarObservacionInstrumento,
 } from "../middlewares/ObservacionMiddleware.js";
 
 const router = Router();
@@ -101,6 +113,42 @@ router.delete(
   EncontrarObservacion,
   EncontrarInstrumento,
   RemoveInstrumento
+);
+
+router.get("/listarObjetos/:id", EncontrarObservacion, ReadObjeto);
+
+router.get(
+  "/listarObjetoEspecifico/:id/:idObjeto",
+  EncontrarObservacion,
+  EncontrarObservacionObjeto,
+  ReadObjetoEspecifico
+);
+
+router.get("/listarEventos/:id", EncontrarObservacion, ReadEvento);
+
+router.get(
+  "/listarEventoEspecifico/:id/:idEvento",
+  EncontrarObservacion,
+  EncontrarObservacionEvento,
+  ReadEventoEspecifico
+);
+
+router.get("/listarAdjuntos/:id", EncontrarObservacion, ReadAdjuntos);
+
+router.get(
+  "/listarAdjuntoEspecifico/:id/:idAdjunto",
+  EncontrarObservacion,
+  EncontrarObservacionAdjunto,
+  ReadAdjuntoEspecifico
+);
+
+router.get("/listarInstrumentos/:id", EncontrarObservacion, ReadInstrumento);
+
+router.get(
+  "/listarInstrumentoEspecifico/:id/:idInstrumento",
+  EncontrarObservacion,
+  EncontrarObservacionInstrumento,
+  ReadInstrumentoEspecifico
 );
 
 export default router;

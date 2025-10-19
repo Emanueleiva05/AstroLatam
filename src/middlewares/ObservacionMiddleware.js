@@ -1,7 +1,12 @@
 import AppError from "../utils/AppError.js";
-import { ListarObservacionEspecifico } from "../service/ObservacionService.js";
+import {
+  ListarObservacionEspecifico,
+  ListarAdjuntosEspecificoObservacion,
+  ListarEventoEspecificoObservacion,
+  ListarInstrumentoEspecificoObservacion,
+  ListarObjetosEspecificoObservacion,
+} from "../service/ObservacionService.js";
 import { ListarUbicacionEspecifico } from "../service/UbicacionService.js";
-import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
 import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
 import { ListarEvento } from "../service/EventoService.js";
 import { ListarObjetoEspecifico } from "../service/ObjetoService.js";
@@ -131,6 +136,70 @@ export const EncontrarInstrumento = async (req, res, next) => {
     }
     req.instrumento = instrumento;
 
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarObservacionEvento = async (req, res, next) => {
+  try {
+    const evento = await ListarEventoEspecificoObservacion(
+      req.observacion,
+      req.params.idEvento
+    );
+    if (evento.length === 0) {
+      throw new AppError("No se encontro el objeto del evento");
+    }
+    req.evento = evento[0];
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarObservacionObjeto = async (req, res, next) => {
+  try {
+    const objeto = await ListarObjetosEspecificoObservacion(
+      req.observacion,
+      req.params.idObjeto
+    );
+    if (objeto.length === 0) {
+      throw new AppError("No se encontro el objeto del evento");
+    }
+    req.objeto = objeto[0];
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarObservacionAdjunto = async (req, res, next) => {
+  try {
+    const adjunto = await ListarAdjuntosEspecificoObservacion(
+      req.observacion,
+      req.params.idAdjunto
+    );
+    if (adjunto.length === 0) {
+      throw new AppError("No se encontro el objeto del evento");
+    }
+    req.adjunto = adjunto[0];
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarObservacionInstrumento = async (req, res, next) => {
+  try {
+    const instrumento = await ListarInstrumentoEspecificoObservacion(
+      req.observacion,
+      req.params.idInstrumento
+    );
+    if (instrumento.length === 0) {
+      throw new AppError("No se encontro el instrumento del evento");
+    }
+    req.instrumento = instrumento[0];
     next();
   } catch (error) {
     next(error);
