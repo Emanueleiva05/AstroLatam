@@ -3,6 +3,7 @@ import {
   ListarEvento,
   ListarAdjuntosEspecificoEvento,
   ListarPaisesEspecificoEvento,
+  ListarObjetoEspecificoEvento,
 } from "../service/EventoService.js";
 import { ListarTipoEventoEspecifico } from "../service/TipoEventoService.js";
 import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
@@ -156,6 +157,22 @@ export const EncontrarPaisEvento = async (req, res, next) => {
       throw new AppError("No se encontro el pais del evento");
     }
     req.pais = pais[0];
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EncontrarObjetosEvento = async (req, res, next) => {
+  try {
+    const objeto = await ListarObjetoEspecificoEvento(
+      req.evento,
+      req.params.idObjeto
+    );
+    if (objeto.length === 0) {
+      throw new AppError("No se encontro el objeto del evento");
+    }
+    req.objeto = objeto[0];
     next();
   } catch (error) {
     next(error);

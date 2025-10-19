@@ -11,6 +11,7 @@ import {
   EliminarPais,
   ListarAdjuntos,
   ListarPaises,
+  ListarObjetos,
 } from "../service/EventoService.js";
 
 export const SetEvento = async (req, res, next) => {
@@ -180,6 +181,23 @@ export const ReadPaises = async (req, res, next) => {
 export const ReadPaisEspecifico = async (req, res, next) => {
   try {
     res.status(200).json(req.pais);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadObjetos = async (req, res, next) => {
+  try {
+    const objetos = await ListarObjetos(req.evento);
+    res.status(200).json(objetos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ReadObjetoEspecifico = async (req, res, next) => {
+  try {
+    res.status(200).json(req.objeto);
   } catch (error) {
     next(error);
   }
