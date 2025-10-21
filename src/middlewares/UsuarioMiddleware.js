@@ -8,17 +8,7 @@ import { ListarCiudadEspecifico } from "../service/CiudadService.js";
 import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
 
 export const ValidarDatosUsuario = (req, res, next) => {
-  const {
-    nombre,
-    username,
-    email,
-    password,
-    descripcion,
-    numero,
-    rol,
-    idAdjunto,
-    idCiudad,
-  } = req.body;
+  const { nombre, username, email, password, rol, idCiudad } = req.body;
 
   if (!nombre || nombre.trim() === "") {
     throw new AppError("Nombre no válido para el usuario", 400);
@@ -28,24 +18,12 @@ export const ValidarDatosUsuario = (req, res, next) => {
     throw new AppError("Username no válido para el usuario", 400);
   }
 
-  if (!descripcion || descripcion.trim() === "") {
-    throw new AppError("Descripción no válida para el usuario", 400);
-  }
-
-  if (!numero || numero.trim() === "") {
-    throw new AppError("Numero no válida para el usuario", 400);
-  }
-
   if (!password || password.trim() === "") {
     throw new AppError("Password no válida para el usuario", 400);
   }
 
   if (!email || email.trim() === "") {
     throw new AppError("Email no válida para el usuario", 400);
-  }
-
-  if (!idAdjunto || isNaN(Number(idAdjunto))) {
-    throw new AppError("idAdjunto no válido", 400);
   }
 
   if (!idCiudad || isNaN(Number(idCiudad))) {
@@ -62,13 +40,49 @@ export const ValidarDatosUsuario = (req, res, next) => {
   next();
 };
 
+export const ValidarDatosOpcionalesUsuario = async (req, res, next) => {
+  try {
+    const { idAdjunto, descripcion, numero } = req.body;
+
+    if (idAdjunto !== undefined && isNaN(Number(idAdjunto))) {
+      throw new AppError("idAdjunto no válido", 400);
+    }
+
+    if (descripcion !== undefined && descripcion.trim() === "") {
+      throw new AppError("Descripción no válida para el usuario", 400);
+    }
+
+    if (numero !== undefined && numero.trim() === "") {
+      throw new AppError("Numero no válida para el usuario", 400);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const VerificarExistenciaAdjunto = async (req, res, next) => {
   try {
     const { idAdjunto } = req.body;
+
+    if (!idAdjunto) {
+      return next();
+    }
+
     const adjunto = await ListarAdjuntoEspecifico(idAdjunto);
+
     if (!adjunto) {
       throw new AppError("No se encontró el adjunto especificado", 404);
     }
+
+    if (
+      !adjunto.link_archivo.endsWith("png") &&
+      !adjunto.link_archivo.endsWith("jpg")
+    ) {
+      throw new AppError("El tipo de adjunto no es valido", 400);
+    }
+
     req.adjunto = adjunto;
     next();
   } catch (error) {

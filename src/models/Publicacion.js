@@ -20,6 +20,10 @@ Publicacion.init(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    visibilidad: {
+      type: DataTypes.ENUM("privada", "miembros", "publica"),
+      defaultValue: "publica",
+    },
     fechaPublicacion: {
       type: DataTypes.DATE,
       allowNull: false,

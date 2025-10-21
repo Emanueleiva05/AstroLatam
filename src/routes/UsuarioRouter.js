@@ -17,6 +17,7 @@ import {
   EncontrarUsuario,
   EncontrarInstrumento,
   EncontrarInstrumentoUsuario,
+  ValidarDatosOpcionalesUsuario,
 } from "../middlewares/UsuarioMiddleware.js";
 
 const router = Router();
@@ -24,6 +25,7 @@ const router = Router();
 router.post(
   "/",
   ValidarDatosUsuario,
+  ValidarDatosOpcionalesUsuario,
   VerificarExistenciaAdjunto,
   VerificarExistenciaCiudad,
   SetUsuario
@@ -33,6 +35,7 @@ router.put(
   "/:id",
   EncontrarUsuario,
   ValidarDatosUsuario,
+  ValidarDatosOpcionalesUsuario,
   VerificarExistenciaAdjunto,
   VerificarExistenciaCiudad,
   UpdateUsuario
@@ -53,8 +56,8 @@ router.post(
 
 router.delete(
   "/eliminarInstrumento/:id/:idInstrumento",
-  EncontrarInstrumento,
   EncontrarUsuario,
+  EncontrarInstrumento,
   DeleteInstrumento
 );
 

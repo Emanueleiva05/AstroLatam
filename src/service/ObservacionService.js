@@ -143,3 +143,8 @@ export const ListarObjetosEspecificoObservacion = async (
     },
   });
 };
+
+export const VisibilidadObservacion = async (observacion, estado) => {
+  observacion.visibilidad = estado;
+  return await observacion.save();
+};

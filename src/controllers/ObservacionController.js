@@ -15,6 +15,7 @@ import {
   ListarEventos,
   ListarObjetos,
   ListarInstrumentos,
+  VisibilidadObservacion,
 } from "../service/ObservacionService.js";
 
 export const SetObservacion = async (req, res, next) => {
@@ -234,6 +235,15 @@ export const ReadEvento = async (req, res, next) => {
 export const ReadEventoEspecifico = async (req, res, next) => {
   try {
     res.status(200).json(req.evento);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const ChangeVisibilidad = async (req, res, next) => {
+  try {
+    await VisibilidadObservacion(req.observacion, req.visibilidad);
+    res.status(200).json({ meesage: "Se cambio el visibilidad con exito" });
   } catch (error) {
     next(error);
   }

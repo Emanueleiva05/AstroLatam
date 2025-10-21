@@ -10,7 +10,8 @@ import {
   ValidarDatosAccionUsuario,
   VerificarExistenciaUsuario,
   EncontrarAccionUsuario,
-  validarContenido,
+  ValidarTargetId,
+  ValidarContenido,
 } from "../middlewares/AccionUsuarioMiddleware.js";
 
 const router = Router();
@@ -18,7 +19,8 @@ const router = Router();
 router.post(
   "/",
   ValidarDatosAccionUsuario,
-  validarContenido,
+  ValidarContenido,
+  ValidarTargetId,
   VerificarExistenciaUsuario,
   SetAccionUsuario
 );
@@ -27,7 +29,7 @@ router.put(
   "/:id",
   EncontrarAccionUsuario,
   ValidarDatosAccionUsuario,
-  validarContenido,
+  ValidarContenido,
   VerificarExistenciaUsuario,
   UpdateAccionUsuario
 );
