@@ -40,7 +40,6 @@ HistorialPublicacion.init(
     version: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
-      autoIncrement: true,
     },
     idTipoPublicacion: {
       type: DataTypes.INTEGER,

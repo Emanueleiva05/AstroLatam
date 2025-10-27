@@ -31,13 +31,7 @@ export const SetPublicacion = async (req, res, next) => {
 
 export const UpdatePublicacion = async (req, res, next) => {
   const publicacion = req.publicacion;
-  const {
-    titulo,
-    descripcion,
-    idUsuario,
-    fechaPublicacion,
-    idTipoPublicacion,
-  } = req.body;
+  const { titulo, descripcion } = req.body;
 
   try {
     await CrearHistorial(
@@ -49,14 +43,7 @@ export const UpdatePublicacion = async (req, res, next) => {
       publicacion.idUsuario
     );
 
-    await ModificarPublicacion(
-      publicacion,
-      titulo,
-      descripcion,
-      idUsuario,
-      fechaPublicacion,
-      idTipoPublicacion
-    );
+    await ModificarPublicacion(publicacion, titulo, descripcion);
     res.status(200).json({ message: "Publicacion modificado con exito" });
   } catch (error) {
     next(error);
