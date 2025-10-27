@@ -1,5 +1,11 @@
 import Observacion from "../models/Observacion.js";
+import Usuario from "../models/Usuario.js";
+import Instrumento from "../models/Instrumento.js";
+import Ciudad from "../models/Ciudad.js";
+import Pais from "../models/Pais.js";
+import Provincia from "../models/Provincia.js";
 import AppError from "../utils/AppError.js";
+import Ubicacion from "../models/Ubicacion.js";
 
 export const AgregarObservacion = async (
   titulo,
@@ -147,4 +153,60 @@ export const ListarObjetosEspecificoObservacion = async (
 export const VisibilidadObservacion = async (observacion, estado) => {
   observacion.visibilidad = estado;
   return await observacion.save();
+};
+
+export const FiltrarObservacion = async (
+  pais,
+  provincia,
+  ciudad,
+  instrumento,
+  rol
+) => {
+  const observaciones = await Observacion.findAll({
+    include: [
+      {
+        model: Usuario,
+        ...(rol ? { where: { rol }, required: true } : {}),
+        attributes: [],
+      },
+      {
+        model: Ubicacion,
+        attributes: [],
+        required: !!(pais || provincia || ciudad),
+        include: [
+          {
+            model: Ciudad,
+            ...(ciudad ? { where: { nombre: ciudad }, required: true } : {}),
+            attributes: [],
+            include: [
+              {
+                model: Provincia,
+                ...(provincia
+                  ? { where: { nombre: provincia }, required: true }
+                  : {}),
+                include: [
+                  {
+                    model: Pais,
+                    ...(pais
+                      ? { where: { nombre: pais }, required: true }
+                      : {}),
+                  },
+                ],
+                attributes: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        model: Instrumento,
+        through: { attributes: [] },
+        attributes: [],
+        ...(instrumento
+          ? { where: { nombre: instrumento }, required: true }
+          : {}),
+      },
+    ],
+  });
+  return observaciones;
 };

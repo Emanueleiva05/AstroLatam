@@ -1,5 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarAccionUsuarioEspecifico } from "../service/AccionUsuarioService.js";
+import {
+  ListarAccionUsuarioEspecifico,
+  CambiarEstadoReporte,
+} from "../service/AccionUsuarioService.js";
 import { ListarUsuarioEspecifico } from "../service/UsuarioService.js";
 import { ListarPublicacionEspecifico } from "../service/PublicacionService.js";
 import { ListarObservacionEspecifico } from "../service/ObservacionService.js";
@@ -98,4 +101,24 @@ export const ValidarContenido = (req, res, next) => {
     }
   }
   next();
+};
+
+export const VerificarEstado = (req, res, next) => {
+  try {
+    const estado = req.body.estado;
+    const reporte = req.accion;
+
+    if (reporte.estado === "rechazada" || reporte.estado === "aceptada") {
+      throw new AppError("Este reporte ya esta finalizado");
+    }
+
+    const estados = ["rechazada", "aceptada", "en_revision"];
+    if (!estados.includes(estado)) {
+      throw new AppError("Cambio de estado no valido");
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
