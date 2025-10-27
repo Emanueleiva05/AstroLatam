@@ -17,6 +17,7 @@ import TipoObjeto from "./TipoObjeto.js";
 import TipoPublicacion from "./TipoPublicacion.js";
 import Ubicacion from "./Ubicacion.js";
 import Usuario from "./Usuario.js";
+import HistorialPublicacion from "./HistorialPublicacion.js";
 
 //AccionUsuario
 
@@ -145,6 +146,21 @@ TipoPublicacion.hasMany(Publicacion, { foreignKey: "idTipoPublicacion" });
 
 Publicacion.belongsTo(Usuario, { foreignKey: "idUsuario" });
 Usuario.hasMany(Publicacion, { foreignKey: "idUsuario" });
+
+//HistorialPublicacion
+
+HistorialPublicacion.belongsTo(TipoPublicacion, {
+  foreignKey: "idTipoPublicacion",
+});
+TipoPublicacion.hasMany(HistorialPublicacion, {
+  foreignKey: "idTipoPublicacion",
+});
+
+HistorialPublicacion.belongsTo(Usuario, { foreignKey: "idUsuario" });
+Usuario.hasMany(HistorialPublicacion, { foreignKey: "idUsuario" });
+
+HistorialPublicacion.belongsTo(Publicacion, { foreignKey: "idPublicacion" });
+Publicacion.hasMany(HistorialPublicacion, { foreignKey: "idPublicacion" });
 
 //Ubicacion
 Ubicacion.belongsTo(Ciudad, { foreignKey: "idCiudad" });

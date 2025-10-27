@@ -20,16 +20,10 @@ export const AgregarPublicacion = async (
 export const ModificarPublicacion = async (
   publicacion,
   titulo,
-  descripcion,
-  idUsuario,
-  fechaPublicacion,
-  idTipoPublicacion
+  descripcion
 ) => {
   publicacion.titulo = titulo;
   publicacion.descripcion = descripcion;
-  publicacion.fechaPublicacion = fechaPublicacion;
-  publicacion.idTipoPublicacion = idTipoPublicacion;
-  publicacion.idUsuario = idUsuario;
   return await publicacion.save();
 };
 

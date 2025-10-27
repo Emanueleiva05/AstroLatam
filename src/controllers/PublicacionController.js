@@ -5,6 +5,7 @@ import {
   ListarPublicaciones,
   VisibilidadPublicacion,
 } from "../service/PublicacionService.js";
+import { CrearHistorial } from "../service/HistorialPublicacionService.js";
 
 export const SetPublicacion = async (req, res, next) => {
   const {
@@ -30,23 +31,19 @@ export const SetPublicacion = async (req, res, next) => {
 
 export const UpdatePublicacion = async (req, res, next) => {
   const publicacion = req.publicacion;
-  const {
-    titulo,
-    descripcion,
-    idUsuario,
-    fechaPublicacion,
-    idTipoPublicacion,
-  } = req.body;
+  const { titulo, descripcion } = req.body;
 
   try {
-    await ModificarPublicacion(
-      publicacion,
-      titulo,
-      descripcion,
-      idUsuario,
-      fechaPublicacion,
-      idTipoPublicacion
+    await CrearHistorial(
+      publicacion.idPublicacion,
+      publicacion.titulo,
+      publicacion.descripcion,
+      publicacion.fechaPublicacion,
+      publicacion.idTipoPublicacion,
+      publicacion.idUsuario
     );
+
+    await ModificarPublicacion(publicacion, titulo, descripcion);
     res.status(200).json({ message: "Publicacion modificado con exito" });
   } catch (error) {
     next(error);

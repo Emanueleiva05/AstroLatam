@@ -23,13 +23,7 @@ router.post(
   SetPublicacion
 );
 
-router.put(
-  "/:id",
-  EncontrarPublicacion,
-  ValidarDatosPublicacion,
-  VerificarExistenciaTipoPublicacion,
-  UpdatePublicacion
-);
+router.put("/:id", EncontrarPublicacion, UpdatePublicacion);
 
 router.delete("/:id", EncontrarPublicacion, DeletePublicacion);
 
