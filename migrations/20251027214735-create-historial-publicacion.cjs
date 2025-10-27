@@ -14,6 +14,10 @@ module.exports = {
       idPublicacion: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "Publicaciones",
+          key: "idPublicacion",
+        },
       },
       titulo: {
         type: Sequelize.STRING,

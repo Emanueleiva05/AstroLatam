@@ -5,6 +5,7 @@ import {
   ListarPublicaciones,
   VisibilidadPublicacion,
 } from "../service/PublicacionService.js";
+import { CrearHistorial } from "../service/HistorialPublicacionService.js";
 
 export const SetPublicacion = async (req, res, next) => {
   const {
@@ -39,6 +40,15 @@ export const UpdatePublicacion = async (req, res, next) => {
   } = req.body;
 
   try {
+    await CrearHistorial(
+      publicacion.idPublicacion,
+      publicacion.titulo,
+      publicacion.descripcion,
+      publicacion.fechaPublicacion,
+      publicacion.idTipoPublicacion,
+      publicacion.idUsuario
+    );
+
     await ModificarPublicacion(
       publicacion,
       titulo,
