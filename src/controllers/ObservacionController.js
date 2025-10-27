@@ -16,7 +16,9 @@ import {
   ListarObjetos,
   ListarInstrumentos,
   VisibilidadObservacion,
+  FiltrarObservacion,
 } from "../service/ObservacionService.js";
+import AppError from "../utils/AppError.js";
 
 export const SetObservacion = async (req, res, next) => {
   const {
@@ -76,8 +78,21 @@ export const DeleteObservacion = async (req, res, next) => {
 };
 
 export const ReadObservacion = async (req, res, next) => {
+  const { pais, provincia, ciudad, instrumento, rol } = req.query;
+  console.log(pais);
   try {
-    const observaciones = await ListarObservaciones();
+    const observaciones = await FiltrarObservacion(
+      pais,
+      provincia,
+      ciudad,
+      instrumento,
+      rol
+    );
+
+    if (observaciones.length === 0) {
+      throw new AppError("No se encontraron observaciones", 404);
+    }
+
     res.status(200).json(observaciones);
   } catch (error) {
     next(error);

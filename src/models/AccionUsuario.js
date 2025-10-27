@@ -35,6 +35,10 @@ AccionUsuario.init(
       type: DataTypes.DATE,
       defaultValue: new Date(Date()),
     },
+    nota: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+    },
     idUsuario: {
       type: DataTypes.INTEGER,
       references: {

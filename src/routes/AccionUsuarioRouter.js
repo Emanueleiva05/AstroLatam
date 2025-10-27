@@ -5,12 +5,17 @@ import {
   DeleteAccionUsuario,
   ReadAccionUsuario,
   ReadAccionUsuarioEspecifico,
+  ChangeEstado,
+  ReadReportes,
+  CountReportesTarget,
+  HideReportes,
 } from "../controllers/AccionUsuarioController.js";
 import {
   ValidarDatosAccionUsuario,
   VerificarExistenciaUsuario,
   EncontrarAccionUsuario,
   ValidarTargetId,
+  VerificarEstado,
   ValidarContenido,
 } from "../middlewares/AccionUsuarioMiddleware.js";
 
@@ -34,7 +39,20 @@ router.put(
   UpdateAccionUsuario
 );
 
+router.post(
+  "/:id/estado",
+  EncontrarAccionUsuario,
+  VerificarEstado,
+  ChangeEstado
+);
+
+router.put("/visibilidad/:targetType/:targetId", HideReportes);
+
 router.delete("/:id", EncontrarAccionUsuario, DeleteAccionUsuario);
+
+router.get("/reportes", ReadReportes);
+
+router.get("/reportes/:targetType", CountReportesTarget);
 
 router.get("/", ReadAccionUsuario);
 

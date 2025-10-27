@@ -39,6 +39,22 @@ Observacion.init(
         key: "idUbicacion",
       },
     },
+    idUbicacion: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Ubicacion,
+        key: "idUbicacion",
+      },
+    },
+    idUsuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "Usuarios",
+        key: "idUsuario",
+      },
+    },
   },
   {
     sequelize,

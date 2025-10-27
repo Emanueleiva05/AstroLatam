@@ -92,6 +92,9 @@ Objeto.belongsToMany(Observacion, {
 Observacion.belongsTo(Ubicacion, { foreignKey: "idUbicacion" });
 Ubicacion.hasMany(Observacion, { foreignKey: "idUbicacion" });
 
+Observacion.belongsTo(Usuario, { foreignKey: "idUsuario" });
+Usuario.hasMany(Observacion, { foreignKey: "idUsuario" });
+
 Observacion.belongsToMany(Objeto, {
   through: "ObjetoObservacion",
   foreignKey: "idObservacion",
