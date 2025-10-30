@@ -32,7 +32,7 @@ export const SetUsuario = async (req, res, next) => {
       idAdjunto,
       idCiudad
     );
-    res.status(200).json({ message: "Usuario creado con exito" });
+    res.status(201).json({ message: "Usuario creado con exito" });
   } catch (error) {
     next(error);
   }
@@ -65,7 +65,7 @@ export const UpdateUsuario = async (req, res, next) => {
       idAdjunto,
       idCiudad
     );
-    res.status(200).json({ message: "Usuario modificado con exito" });
+    res.status(204).json({ message: "Usuario modificado con exito" });
   } catch (error) {
     next(error);
   }
@@ -75,7 +75,7 @@ export const DeleteUsuario = async (req, res, next) => {
   const usuario = req.usuario;
   try {
     await EliminarUsuario(usuario);
-    res.status(200).json({ message: "Usuario eliminado con exito" });
+    res.status(204).json({ message: "Usuario eliminado con exito" });
   } catch (error) {
     next(error);
   }
@@ -103,7 +103,7 @@ export const ReadUsuarioEspecifico = async (req, res, next) => {
 export const SetInstrumento = async (req, res, next) => {
   try {
     await AgregarInstrumento(req.usuario, req.instrumento);
-    res.status(200).json({ message: "Se agrego el instrumento con exito" });
+    res.status(201).json({ message: "Se agrego el instrumento con exito" });
   } catch (error) {
     next(error);
   }
@@ -112,7 +112,7 @@ export const SetInstrumento = async (req, res, next) => {
 export const DeleteInstrumento = async (req, res, next) => {
   try {
     await ELiminarInstrumento(req.usuario, req.instrumento);
-    res.status(200).json({ message: "Se elimino el instrumento con exito" });
+    res.status(204).json({ message: "Se elimino el instrumento con exito" });
   } catch (error) {
     next(error);
   }

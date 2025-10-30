@@ -12,7 +12,7 @@ export const SetObjeto = async (req, res, next) => {
   const { nombre, descripcion, idTipoObjeto } = req.body;
   try {
     await AgregarObjeto(nombre, descripcion, idTipoObjeto);
-    res.status(200).json({ message: "Objeto creado con exito" });
+    res.status(201).json({ message: "Objeto creado con exito" });
   } catch (error) {
     next(error);
   }
@@ -24,7 +24,7 @@ export const UpdateObjeto = async (req, res, next) => {
 
   try {
     await ModificarObjeto(objeto, nombre, descripcion, idTipoObjeto);
-    res.status(200).json({ message: "Objeto modificado con exito" });
+    res.status(204).json({ message: "Objeto modificado con exito" });
   } catch (error) {
     next(error);
   }
@@ -34,7 +34,7 @@ export const DeleteObjeto = async (req, res, next) => {
   const objeto = req.objeto;
   try {
     await EliminarObjeto(objeto);
-    res.status(200).json({ message: "Objeto eliminado con exito" });
+    res.status(204).json({ message: "Objeto eliminado con exito" });
   } catch (error) {
     next(error);
   }
@@ -62,7 +62,7 @@ export const ReadObjetoEspecifico = async (req, res, next) => {
 export const SetAdjunto = async (req, res, next) => {
   try {
     await AgregarAdjunto(req.objeto, req.adjunto);
-    res.status(200).json({ message: "Se agrego el adjunto con exito" });
+    res.status(201).json({ message: "Se agrego el adjunto con exito" });
   } catch (error) {
     next(error);
   }
@@ -71,7 +71,7 @@ export const SetAdjunto = async (req, res, next) => {
 export const RemoveAdjunto = async (req, res, next) => {
   try {
     await EliminarAdjunto(req.objeto, req.adjunto);
-    res.status(200).json({ message: "Se elimino el adjunto con exito" });
+    res.status(204).json({ message: "Se elimino el adjunto con exito" });
   } catch (error) {
     next(error);
   }

@@ -9,7 +9,7 @@ export const SetTipoAdjunto = async (req, res, next) => {
   const { nombre } = req.body;
   try {
     await AgregarTipoAdjunto(nombre);
-    res.status(200).json({
+    res.status(201).json({
       message: "Se agrego el TipoAdjunto con exito",
     });
   } catch (error) {
@@ -22,7 +22,7 @@ export const UpdateTipoAdjunto = async (req, res, next) => {
   const tipoAdjunto = req.tipoAdjunto;
   try {
     await ModificarTipoAdjunto(tipoAdjunto, nombre);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se modifico el TipoAdjunto con exito",
     });
   } catch (error) {
@@ -35,7 +35,7 @@ export const DeleteTipoAdjunto = async (req, res, next) => {
 
   try {
     await EliminarTipoAdjunto(tipoAdjunto);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se elimino el TipoAdjunto con exito",
     });
   } catch (error) {

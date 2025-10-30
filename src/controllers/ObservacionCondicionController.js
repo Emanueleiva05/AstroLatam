@@ -10,7 +10,7 @@ export const SetObservacionCondiciones = async (req, res, next) => {
   try {
     await AgregarObservacionCondicion(valor, idTipoCondicion, idObservacion);
     res
-      .status(200)
+      .status(201)
       .json({ message: "ObservacionCondiciones creado con exito" });
   } catch (error) {
     next(error);
@@ -29,7 +29,7 @@ export const UpdateObservacionCondiciones = async (req, res, next) => {
       idObservacion
     );
     res
-      .status(200)
+      .status(204)
       .json({ message: "ObservacionCondiciones modificado con exito" });
   } catch (error) {
     next(error);
@@ -41,7 +41,7 @@ export const DeleteObservacionCondiciones = async (req, res, next) => {
   try {
     await EliminarObservacionCondicion(condicion);
     res
-      .status(200)
+      .status(204)
       .json({ message: "ObservacionCondiciones eliminado con exito" });
   } catch (error) {
     next(error);

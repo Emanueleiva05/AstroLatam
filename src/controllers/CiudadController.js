@@ -9,7 +9,7 @@ export const SetCiudad = async (req, res, next) => {
   const { nombre, idProvincia } = req.body;
   try {
     await AgregarCiudad(nombre, idProvincia);
-    res.status(200).json({
+    res.status(201).json({
       message: "Se agrego el Ciudad con exito",
     });
   } catch (error) {
@@ -22,7 +22,7 @@ export const UpdateCiudad = async (req, res, next) => {
   const { nombre, idProvincia } = req.body;
   try {
     await ModificarCiudad(ciudad, nombre, idProvincia);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se modifico el Ciudad con exito",
     });
   } catch (error) {
@@ -34,7 +34,7 @@ export const DeleteCiudad = async (req, res, next) => {
   const ciudad = req.ciudad;
   try {
     await EliminarCiudad(ciudad);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se elimino el Ciudad con exito",
     });
   } catch (error) {

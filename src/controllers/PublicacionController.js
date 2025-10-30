@@ -23,7 +23,7 @@ export const SetPublicacion = async (req, res, next) => {
       fechaPublicacion,
       idTipoPublicacion
     );
-    res.status(200).json({ message: "Publicacion creado con exito" });
+    res.status(201).json({ message: "Publicacion creado con exito" });
   } catch (error) {
     next(error);
   }
@@ -44,7 +44,7 @@ export const UpdatePublicacion = async (req, res, next) => {
     );
 
     await ModificarPublicacion(publicacion, titulo, descripcion);
-    res.status(200).json({ message: "Publicacion modificado con exito" });
+    res.status(204).json({ message: "Publicacion modificado con exito" });
   } catch (error) {
     next(error);
   }
@@ -54,7 +54,7 @@ export const DeletePublicacion = async (req, res) => {
   const publicacion = req.publicacion;
   try {
     await EliminarPublicacion(publicacion);
-    res.status(200).json({ message: "Publicacion eliminado con exito" });
+    res.status(204).json({ message: "Publicacion eliminado con exito" });
   } catch (error) {
     next(error);
   }
@@ -82,7 +82,7 @@ export const ReadPublicacionEspecifico = async (req, res) => {
 export const ChangeVisibilidad = async (req, res, next) => {
   try {
     await VisibilidadPublicacion(req.publicacion, req.visibilidad);
-    res.status(200).json({ meesage: "Se cambio el visibilidad con exito" });
+    res.status(204).json({ meesage: "Se cambio el visibilidad con exito" });
   } catch (error) {
     next(error);
   }

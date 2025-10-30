@@ -29,7 +29,7 @@ export const SetInstrumento = async (req, res, next) => {
       tipo_prisma,
       idTipoInstrumento
     );
-    res.status(200).json({ message: "Instrumento creado con exito" });
+    res.status(201).json({ message: "Instrumento creado con exito" });
   } catch (error) {
     next(error);
   }
@@ -62,7 +62,7 @@ export const UpdateInstrumento = async (req, res, next) => {
       tipo_prisma,
       idTipoInstrumento
     );
-    res.status(200).json({ message: "Instrumento modificado con exito" });
+    res.status(204).json({ message: "Instrumento modificado con exito" });
   } catch (error) {
     next(error);
   }
@@ -72,7 +72,7 @@ export const DeleteInstrumento = async (req, res, next) => {
   const instrumento = req.instrumento;
   try {
     await EliminarInstrumento(instrumento);
-    res.status(200).json({ message: "Instrumento eliminado con exito" });
+    res.status(204).json({ message: "Instrumento eliminado con exito" });
   } catch (error) {
     next(error);
   }
