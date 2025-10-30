@@ -21,6 +21,7 @@ import ObservacionRouter from "./src/routes/ObservacionRouter.js";
 import ObservacionCondicionRouter from "./src/routes/ObservacionCondicionRouter.js";
 import EventoRouter from "./src/routes/EventoRouter.js";
 import HandleError from "./src/middlewares/HandleError.js";
+import RequestLogger from "./src/middlewares/RequestLogger.js";
 
 env.config();
 
@@ -28,6 +29,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(json());
+app.use(RequestLogger);
 
 app.use("/api/tipoAdjunto", TipoAdjuntoRouter);
 app.use("/api/tipoPublicacion", TipoPublicacionRouter);
