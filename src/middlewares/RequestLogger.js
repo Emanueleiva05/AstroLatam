@@ -9,5 +9,7 @@ const RequestLogger = (req, res, next) => {
     const logMsg = `${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`;
     logger.info(`[${reqId}] ${logMsg}`);
   });
+
+  next();
 };
 export default RequestLogger;
