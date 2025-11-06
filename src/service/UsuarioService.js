@@ -1,31 +1,5 @@
-import bcrypt from "bcrypt";
 import Usuario from "../models/Usuario.js";
 import AppError from "../utils/AppError.js";
-
-export const AgregarUsuario = async (
-  username,
-  nombre,
-  email,
-  password,
-  descripcion,
-  numero,
-  rol,
-  idAdjunto,
-  idCiudad
-) => {
-  const hashedPassword = await bcrypt.hash(password, 10);
-  return await Usuario.create({
-    username,
-    nombre,
-    email,
-    password: hashedPassword,
-    descripcion,
-    numero,
-    rol,
-    idAdjunto,
-    idCiudad,
-  });
-};
 
 export const ModificarUsuario = async (
   usuario,
@@ -66,6 +40,12 @@ export const ListarUsuario = async () => {
 export const ListarUsuarioEspecifico = async (id) => {
   const usuario = await Usuario.findByPk(id);
   return usuario;
+};
+
+export const ListarUsuarioUsernameEspecifico = async (username) => {
+  const usuario = await Usuario.findAll({ where: { username: username } });
+  if (!usuario) throw new AppError("No se encontro el usuario", 401);
+  return usuario[0].toJSON();
 };
 
 export const AgregarInstrumento = async (usuario, instrumento) => {

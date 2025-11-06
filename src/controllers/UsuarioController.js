@@ -1,5 +1,4 @@
 import {
-  AgregarUsuario,
   EliminarUsuario,
   ModificarUsuario,
   ListarUsuario,
@@ -7,6 +6,7 @@ import {
   ELiminarInstrumento,
   ListarInstrumentos,
 } from "../service/UsuarioService.js";
+import { RegistrarUsuario } from "../service/AuthService.js";
 
 export const SetUsuario = async (req, res, next) => {
   const {
@@ -21,7 +21,7 @@ export const SetUsuario = async (req, res, next) => {
     idCiudad,
   } = req.body;
   try {
-    await AgregarUsuario(
+    await RegistrarUsuario(
       username,
       nombre,
       email,

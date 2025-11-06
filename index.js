@@ -20,14 +20,16 @@ import ObjetoRouter from "./src/routes/ObjetoRouter.js";
 import ObservacionRouter from "./src/routes/ObservacionRouter.js";
 import ObservacionCondicionRouter from "./src/routes/ObservacionCondicionRouter.js";
 import EventoRouter from "./src/routes/EventoRouter.js";
+import AuthRouter from "./src/routes/AuthRouter.js";
 import HandleError from "./src/middlewares/HandleError.js";
 import RequestLogger from "./src/middlewares/RequestLogger.js";
+import cookieParser from "cookie-parser";
 
 env.config();
 
 const app = express();
 const PORT = process.env.PORT;
-
+app.use(cookieParser());
 app.use(json());
 app.use(RequestLogger);
 
@@ -50,6 +52,7 @@ app.use("/api/observacion", ObservacionRouter);
 app.use("/api/evento", EventoRouter);
 app.use("/api/observacionCondicion", ObservacionCondicionRouter);
 app.use("/api/objeto", ObjetoRouter);
+app.use("/api/auth", AuthRouter);
 
 app.use(HandleError);
 
