@@ -1,1 +1,19 @@
 [2025-10-30 21:43:37] info: [5eti6ur] GET /api/publicacion/ 200 - 8ms
+[2025-11-05 23:50:46] error: [Code: 400]: Rol no válido
+[2025-11-05 23:50:46] info: [lnb6lob] POST /api/usuario 400 - 11ms
+[2025-11-05 23:51:41] error: [Code: 400]: Rol no válido
+[2025-11-05 23:51:41] info: [r304sm2] POST /api/usuario 400 - 12ms
+[2025-11-05 23:52:42] error: [Code: 400]: Rol no válido
+[2025-11-05 23:52:42] info: [b1sh8e3] POST /api/usuario 400 - 3ms
+[2025-11-05 23:53:12] error: [Code: 400]: Rol no válido
+[2025-11-05 23:53:12] info: [ficex96] POST /api/usuario 400 - 2ms
+[2025-11-05 23:53:44] error: [Code: 500]: Data truncated for column 'rol' at row 1
+[2025-11-05 23:53:44] info: [ktra7pg] POST /api/usuario 500 - 87ms
+[2025-11-05 23:55:53] error: [Code: 400]: Rol no válido
+[2025-11-05 23:55:53] info: [c88215h] POST /api/usuario 400 - 10ms
+[2025-11-05 23:55:56] error: [Code: 400]: Rol no válido
+[2025-11-05 23:55:56] info: [daq5jui] POST /api/usuario 400 - 4ms
+[2025-11-05 23:57:03] error: [Code: 400]: Rol no válido
+[2025-11-05 23:57:03] info: [fic35je] POST /api/usuario 400 - 11ms
+[2025-11-05 23:57:11] info: [b6plt0v] POST /api/usuario 201 - 122ms
+[2025-11-05 23:58:01] info: [2duw4xu] POST /api/usuario 201 - 143ms

@@ -1,4 +1,4 @@
-import { where } from "sequelize";
+import bcrypt from "bcrypt";
 import Usuario from "../models/Usuario.js";
 import AppError from "../utils/AppError.js";
 
@@ -9,14 +9,16 @@ export const AgregarUsuario = async (
   password,
   descripcion,
   numero,
+  rol,
   idAdjunto,
   idCiudad
 ) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
   return await Usuario.create({
     username,
     nombre,
     email,
-    password,
+    password: hashedPassword,
     descripcion,
     numero,
     rol,

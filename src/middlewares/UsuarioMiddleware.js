@@ -32,7 +32,7 @@ export const ValidarDatosUsuario = (req, res, next) => {
 
   if (
     !rol ||
-    ["administrador", "moderador", "astronomo", "aficionado"].includes(rol)
+    !["administrador", "moderador", "astronomo", "aficionado"].includes(rol)
   ) {
     throw new AppError("Rol no válido", 400);
   }
