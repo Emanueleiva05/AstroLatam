@@ -11,6 +11,11 @@ import {
   VerificarExistenciaProvincia,
   EncontrarCiudad,
 } from "../middlewares/CiudadMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 

@@ -11,6 +11,11 @@ import {
   VerificarExistenciaTipoInstrumento,
   EncontrarInstrumento,
 } from "../middlewares/InstrumentoMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 

@@ -12,6 +12,11 @@ import {
   VerificarExistenciaObservacion,
   VerificarExistenciaTipoCondicion,
 } from "../middlewares/ObservacionCondicionMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 

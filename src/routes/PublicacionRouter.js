@@ -13,6 +13,11 @@ import {
   VerificarExistenciaTipoPublicacion,
 } from "../middlewares/PublicacionMiddleware.js";
 import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 

@@ -16,6 +16,11 @@ import {
   VerificarExistenciaTipoObjeto,
   EncontrarAdjuntoObjeto,
 } from "../middlewares/ObjetoMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 

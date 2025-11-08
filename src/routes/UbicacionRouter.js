@@ -11,6 +11,11 @@ import {
   ValidarDatosUbicacion,
   VerificarExistenciaCiudad,
 } from "../middlewares/UbicacionMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 

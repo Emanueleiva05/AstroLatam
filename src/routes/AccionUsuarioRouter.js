@@ -18,11 +18,17 @@ import {
   VerificarEstado,
   ValidarContenido,
 } from "../middlewares/AccionUsuarioMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
 router.post(
   "/",
+  verificarTokenRequired,
   ValidarDatosAccionUsuario,
   ValidarContenido,
   ValidarTargetId,
@@ -32,6 +38,7 @@ router.post(
 
 router.put(
   "/:id",
+  verificarTokenRequired,
   EncontrarAccionUsuario,
   ValidarDatosAccionUsuario,
   ValidarContenido,
@@ -41,21 +48,55 @@ router.put(
 
 router.post(
   "/:id/estado",
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarAccionUsuario,
   VerificarEstado,
   ChangeEstado
 );
 
-router.put("/visibilidad/:targetType/:targetId", HideReportes);
+router.put(
+  "/visibilidad/:targetType/:targetId",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  HideReportes
+);
 
-router.delete("/:id", EncontrarAccionUsuario, DeleteAccionUsuario);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  EncontrarAccionUsuario,
+  DeleteAccionUsuario
+);
 
-router.get("/reportes", ReadReportes);
+router.get(
+  "/reportes",
+  tieneRol("administrador"),
+  verificarTokenRequired,
+  ReadReportes
+);
 
-router.get("/reportes/:targetType", CountReportesTarget);
+router.get(
+  "/reportes/:targetType",
+  verificarTokenRequired,
+  tieneRol("administrador", "moderador"),
+  CountReportesTarget
+);
 
-router.get("/", ReadAccionUsuario);
+router.get(
+  "/",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  ReadAccionUsuario
+);
 
-router.get("/:id", EncontrarAccionUsuario, ReadAccionUsuarioEspecifico);
+router.get(
+  "/:id",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  EncontrarAccionUsuario,
+  ReadAccionUsuarioEspecifico
+);
 
 export default router;
