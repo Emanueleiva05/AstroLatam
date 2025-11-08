@@ -10,24 +10,41 @@ import {
   ValidarDatosTiposEvento,
   EncontrarTipoEvento,
 } from "../middlewares/TipoEventoMiddleware.js";
-import { esAdministrador } from "../utils/RoleUser.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
-router.post("/", esAdministrador, ValidarDatosTiposEvento, SetTipoEvento);
+router.post(
+  "/",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  ValidarDatosTiposEvento,
+  SetTipoEvento
+);
 
 router.put(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoEvento,
   ValidarDatosTiposEvento,
   UpdateTipoEvento
 );
 
-router.delete("/:id", esAdministrador, EncontrarTipoEvento, DeleteTipoEvento);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  EncontrarTipoEvento,
+  DeleteTipoEvento
+);
 
-router.get("/", ReadTiposEvento);
+router.get("/", verificarTokenOpcional, ReadTiposEvento);
 
-router.get("/:id", EncontrarTipoEvento, ReadTipoEvento);
+router.get("/:id", verificarTokenOpcional, EncontrarTipoEvento, ReadTipoEvento);
 
 export default router;

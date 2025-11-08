@@ -9,7 +9,6 @@ import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
 
 export const ValidarDatosUsuario = (req, res, next) => {
   const { nombre, username, email, password, rol, idCiudad } = req.body;
-
   if (!nombre || nombre.trim() === "") {
     throw new AppError("Nombre no válido para el usuario", 400);
   }
@@ -21,7 +20,6 @@ export const ValidarDatosUsuario = (req, res, next) => {
   if (!password || password.trim() === "") {
     throw new AppError("Password no válida para el usuario", 400);
   }
-
   if (!email || email.trim() === "") {
     throw new AppError("Email no válida para el usuario", 400);
   }

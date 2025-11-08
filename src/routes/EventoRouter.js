@@ -29,13 +29,18 @@ import {
   EncontrarPaisEvento,
   EncontrarObjetosEvento,
 } from "../middlewares/EventoMiddleware.js";
-import { esAdministrador } from "../utils/RoleUser.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
 router.post(
   "/",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   ValidarDatosEvento,
   VerificarExistenciaTipoEvento,
   SetEvento
@@ -43,21 +48,35 @@ router.post(
 
 router.put(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarEvento,
   ValidarDatosEvento,
   VerificarExistenciaTipoEvento,
   UpdateEvento
 );
 
-router.delete("/:id", esAdministrador, EncontrarEvento, DeleteEvento);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  EncontrarEvento,
+  DeleteEvento
+);
 
-router.get("/", ReadEvento);
+router.get("/", verificarTokenOpcional, ReadEvento);
 
-router.get("/:id", EncontrarEvento, ReadEventoEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarEvento,
+  ReadEventoEspecifico
+);
 
 router.post(
   "/agregarAdjunto/:id/:idAdjunto",
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarEvento,
   EncontrarAdjunto,
   SetAdjunto
@@ -65,6 +84,8 @@ router.post(
 
 router.delete(
   "/eliminarAdjunto/:id/:idAdjunto",
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarEvento,
   EncontrarAdjunto,
   RemoveAdjunto
@@ -72,6 +93,8 @@ router.delete(
 
 router.post(
   "/agregarPais/:id/:idPais",
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarEvento,
   EncontrarPais,
   SetPais
@@ -79,6 +102,8 @@ router.post(
 
 router.delete(
   "/eliminarPais/:id/:idPais",
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarEvento,
   EncontrarPais,
   RemovePais
@@ -86,6 +111,8 @@ router.delete(
 
 router.post(
   "/agregarObjeto/:id/:idObjeto",
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarEvento,
   EncontrarObjeto,
   SetObjeto
@@ -93,33 +120,54 @@ router.post(
 
 router.delete(
   "/eliminarObjeto/:id/:idObjeto",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  EncontrarEvento,
   EncontrarEvento,
   EncontrarObjeto,
   RemoveObjeto
 );
 
-router.get("/listarInstrumentos/:id", EncontrarEvento, ReadAdjuntos);
+router.get(
+  "/listarInstrumentos/:id",
+  verificarTokenOpcional,
+  EncontrarEvento,
+  ReadAdjuntos
+);
 
 router.get(
   "/listarInstrumentosEspecifico/:id/:idAdjunto",
+  verificarTokenOpcional,
   EncontrarEvento,
   EncontrarAdjuntoEvento,
   ReadAdjuntoEspecifico
 );
 
-router.get("/listarPaises/:id", EncontrarEvento, ReadPaises);
+router.get(
+  "/listarPaises/:id",
+  verificarTokenOpcional,
+  EncontrarEvento,
+  ReadPaises
+);
 
 router.get(
   "/listarPaisEspecifico/:id/:idPais",
+  verificarTokenOpcional,
   EncontrarEvento,
   EncontrarPaisEvento,
   ReadPaisEspecifico
 );
 
-router.get("/listarObjetos/:id", EncontrarEvento, ReadObjetos);
+router.get(
+  "/listarObjetos/:id",
+  verificarTokenOpcional,
+  EncontrarEvento,
+  ReadObjetos
+);
 
 router.get(
   "/listarObjetoEspecifico/:id/:idObjeto",
+  verificarTokenOpcional,
   EncontrarEvento,
   EncontrarObjetosEvento,
   ReadObjetoEspecifico

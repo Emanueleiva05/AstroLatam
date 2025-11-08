@@ -4,13 +4,12 @@ import AppError from "../utils/AppError.js";
 export const verificarTokenOpcional = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) return next();
-
   try {
     const data = jwt.verify(
       token,
       "La-palabra-secreta-debe-ser-muy-larga-nunca-corta"
     );
-    req.session.user = data;
+    req.user = data;
   } catch (error) {
     throw new AppError("Token invalido o expirado", 403);
   }
@@ -27,10 +26,10 @@ export const verificarTokenRequired = (req, res, next) => {
       token,
       "La-palabra-secreta-debe-ser-muy-larga-nunca-corta"
     );
-    req.session.user = data;
+    req.user = data;
     next();
   } catch (error) {
-    throw new AppError("Token invalido o expirado", 403);
+    throw new AppError("Token invalido", 403);
   }
 };
 

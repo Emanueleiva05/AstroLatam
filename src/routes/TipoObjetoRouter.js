@@ -10,24 +10,46 @@ import {
   EncontrarTipoObjeto,
   ValidarDatosTiposObjeto,
 } from "../middlewares/TipoObjetoMiddleware.js";
-import { esAdministrador } from "../utils/RoleUser.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
-router.post("/", esAdministrador, ValidarDatosTiposObjeto, SetTipoObjeto);
+router.post(
+  "/",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  ValidarDatosTiposObjeto,
+  SetTipoObjeto
+);
 
 router.put(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoObjeto,
   ValidarDatosTiposObjeto,
   UpdateTipoObjeto
 );
 
-router.delete("/:id", esAdministrador, EncontrarTipoObjeto, DeleteTipoObjeto);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  EncontrarTipoObjeto,
+  DeleteTipoObjeto
+);
 
-router.get("/", ReadTipoObjeto);
+router.get("/", verificarTokenOpcional, ReadTipoObjeto);
 
-router.get("/:id", EncontrarTipoObjeto, ReadTipoObjetoEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarTipoObjeto,
+  ReadTipoObjetoEspecifico
+);
 
 export default router;

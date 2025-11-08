@@ -25,6 +25,7 @@ export const register = async (req, res, next) => {
       idAdjunto,
       idCiudad
     );
+
     res.status(201).json({ message: "Usuario creado con exito" });
   } catch (error) {
     next(error);
@@ -35,10 +36,11 @@ export const loginUser = async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const user = await login(username, password);
+
     const token = jwt.sign(
-      { id: user.id, username: user.username },
+      { id: user.id, username: user.username, rol: user.rol },
       "La-palabra-secreta-debe-ser-muy-larga-nunca-corta",
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
     res
       .cookie("access_token", token, {
@@ -46,7 +48,7 @@ export const loginUser = async (req, res, next) => {
         secure: false,
         sameSite: "strict",
       })
-      .send({ user });
+      .send({ user, token });
   } catch (error) {
     res.status(401).send(error.message);
   }
@@ -57,12 +59,12 @@ export const logout = (req, res, next) => {
 };
 
 export const render = (req, res, next) => {
-  const { user } = req.session;
+  const { user } = req.user;
   res.render("index", user);
 };
 
 export const protegida = (req, res, next) => {
-  const { user } = req.session;
+  const { user } = req.user;
   if (!user) return res.status(403).send("Acceso no autorizado");
   res.render("protected", user);
 };

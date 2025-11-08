@@ -33,10 +33,12 @@ Usuario.init(
     descripcion: {
       type: DataTypes.TEXT,
       defaultValue: "No hay descripcion",
+      allowNull: true,
     },
     numero: {
       type: DataTypes.STRING,
       defaultValue: "No hay numero de contacto",
+      allowNull: true,
     },
     rol: {
       type: DataTypes.ENUM(

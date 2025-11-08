@@ -30,8 +30,8 @@ export const RegistrarUsuario = async (
 
 export const login = async (username, password) => {
   const user = await ListarUsuarioUsernameEspecifico(username);
-
   const isValid = await bcrypt.compare(password, user.password);
+
   if (!isValid) throw new AppError("Contrasena no valida");
 
   const { password: _, ...publicUser } = user;

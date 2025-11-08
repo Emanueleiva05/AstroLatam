@@ -43,9 +43,10 @@ export const ListarUsuarioEspecifico = async (id) => {
 };
 
 export const ListarUsuarioUsernameEspecifico = async (username) => {
-  const usuario = await Usuario.findAll({ where: { username: username } });
+  const usuario = await Usuario.findOne({ where: { username: username } });
+  console.log(usuario);
   if (!usuario) throw new AppError("No se encontro el usuario", 401);
-  return usuario[0].toJSON();
+  return usuario.toJSON();
 };
 
 export const AgregarInstrumento = async (usuario, instrumento) => {

@@ -10,20 +10,26 @@ import {
   EncontrarTipoPublicacion,
   ValidarDatosTiposPublicacion,
 } from "../middlewares/TipoPublicacionMiddleware.js";
-import { esAdministrador } from "../utils/RoleUser.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
 router.post(
   "/",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   ValidarDatosTiposPublicacion,
   SetTipoPublicacion
 );
 
 router.put(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoPublicacion,
   ValidarDatosTiposPublicacion,
   UpdateTipoPublicacion
@@ -31,13 +37,19 @@ router.put(
 
 router.delete(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoPublicacion,
   DeleteTipoPublicacion
 );
 
-router.get("/", ReadTipoPublicacion);
+router.get("/", verificarTokenOpcional, ReadTipoPublicacion);
 
-router.get("/:id", EncontrarTipoPublicacion, ReadTipoPublicacionEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarTipoPublicacion,
+  ReadTipoPublicacionEspecifico
+);
 
 export default router;
