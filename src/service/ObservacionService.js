@@ -12,7 +12,8 @@ export const AgregarObservacion = async (
   descripcion,
   horaObservacion,
   fechaObservacion,
-  idUbicacion
+  idUbicacion,
+  idUsuario
 ) => {
   return await Observacion.create({
     titulo,
@@ -20,6 +21,7 @@ export const AgregarObservacion = async (
     descripcion,
     fechaObservacion,
     idUbicacion,
+    idUsuario,
   });
 };
 
@@ -36,6 +38,7 @@ export const ModificarObservacion = async (
   observacion.horaObservacion = horaObservacion;
   observacion.fechaObservacion = fechaObservacion;
   observacion.idUbicacion = idUbicacion;
+
   return await observacion.save();
 };
 

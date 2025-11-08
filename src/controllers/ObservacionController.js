@@ -2,7 +2,6 @@ import {
   AgregarObservacion,
   EliminarObservacion,
   ModificarObservacion,
-  ListarObservaciones,
   AgregarAdjunto,
   AgregarEvento,
   AgregarInstrumento,
@@ -27,6 +26,7 @@ export const SetObservacion = async (req, res, next) => {
     horaObservacion,
     fechaObservacion,
     idUbicacion,
+    idUsuario,
   } = req.body;
   try {
     await AgregarObservacion(
@@ -34,7 +34,8 @@ export const SetObservacion = async (req, res, next) => {
       descripcion,
       horaObservacion,
       fechaObservacion,
-      idUbicacion
+      idUbicacion,
+      idUsuario
     );
     res.status(201).json({ message: "Observacion creado con exito" });
   } catch (error) {

@@ -36,12 +36,12 @@ export const loginUser = async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const user = await login(username, password);
-
     const token = jwt.sign(
-      { id: user.id, username: user.username, rol: user.rol },
+      { id: user.idUsuario, username: user.username, rol: user.rol },
       "La-palabra-secreta-debe-ser-muy-larga-nunca-corta",
       { expiresIn: "24h" }
     );
+    console.log(user);
     res
       .cookie("access_token", token, {
         httpOnly: true,

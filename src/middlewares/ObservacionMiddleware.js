@@ -10,6 +10,7 @@ import { ListarUbicacionEspecifico } from "../service/UbicacionService.js";
 import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
 import { ListarEvento } from "../service/EventoService.js";
 import { ListarObjetoEspecifico } from "../service/ObjetoService.js";
+import { ListarUsuarioEspecifico } from "../service/UsuarioService.js";
 
 export const ValidarDatosObservacion = (req, res, next) => {
   const {
@@ -19,6 +20,7 @@ export const ValidarDatosObservacion = (req, res, next) => {
     horaObservacion,
     fechaObservacion,
     idUbicacion,
+    idUsuario,
   } = req.body;
 
   if (!titulo || titulo.trim() === "") {
@@ -50,10 +52,24 @@ export const ValidarDatosObservacion = (req, res, next) => {
 export const VerificarExistenciaUbicacion = async (req, res, next) => {
   try {
     const { idUbicacion } = req.body;
-
     const ubicacion = await ListarUbicacionEspecifico(idUbicacion);
     if (!ubicacion) {
       throw new AppError("No se encontro la ubicacion especifica", 404);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const VerificarExistenciaUsuario = async (req, res, next) => {
+  try {
+    const { idUsuario } = req.body;
+
+    const usuario = await ListarUsuarioEspecifico(idUsuario);
+    if (!usuario) {
+      throw new AppError("No se encontro el usuario especifica", 404);
     }
 
     next();

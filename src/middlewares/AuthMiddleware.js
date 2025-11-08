@@ -20,7 +20,6 @@ export const verificarTokenOpcional = (req, res, next) => {
 export const verificarTokenRequired = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) throw new AppError("No se proporciono token", 401);
-
   try {
     const data = jwt.verify(
       token,
@@ -41,6 +40,22 @@ export const validarDatos = (req, res, next) => {
 
   if (!password || password.trim() === "" || password.length < 6) {
     throw new AppError("Password no válida para el usuario", 400);
+  }
+
+  next();
+};
+
+export const verificarUsuario = (req, res, next) => {
+  const idUsuario =
+    req.publicacion?.idUsuario ||
+    req.observacion?.idUsuario ||
+    req.accion?.idUsuario ||
+    req.usuario?.idUsuario;
+
+  if (!idUsuario) throw new AppError("No se encontro el idUsuario", 404);
+
+  if (req.user.id !== idUsuario) {
+    throw new AppError("Solo puedes modificar tu contenido", 401);
   }
 
   next();
