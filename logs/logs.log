@@ -18,3 +18,18 @@
 [2025-11-09 12:31:06] info: [ctzdk9f] POST /api/observacion/agregarInstrumento/5/1 201 - 22ms
 [2025-11-09 12:31:11] error: [Code: 404]: El instrumento no esta asociado al usuario
 [2025-11-09 12:31:11] info: [f6to65y] POST /api/observacion/agregarInstrumento/6/1 404 - 12ms
+[2025-11-09 12:42:41] info: [io0gbmg] POST /api/auth/ 404 - 5ms
+[2025-11-09 12:42:54] info: [8e9a3ew] POST /api/auth/login 200 - 130ms
+[2025-11-09 12:43:12] error: [Code: 404]: No se encontro la tipoEvento especifico
+[2025-11-09 12:43:12] info: [u1ovf6f] POST /api/evento 404 - 19ms
+[2025-11-09 12:43:42] info: [qglp3ze] POST /api/evento 201 - 31ms
+[2025-11-09 12:44:13] error: [Code: 401]: No se proporciono token
+[2025-11-09 12:44:13] info: [044n48i] POST /api/evento 401 - 1ms
+[2025-11-09 12:44:53] info: [khhzuyh] DELETE /api/evento/4 204 - 21ms
+[2025-11-09 12:46:29] error: [Code: 404]: No se encontro el objeto especifico
+[2025-11-09 12:46:29] info: [x1efh6t] POST /api/evento/agregarObjeto/5/6 404 - 16ms
+[2025-11-09 12:46:55] error: [Code: 404]: No se encontro el objeto especifico
+[2025-11-09 12:46:55] info: [kzw3hsg] POST /api/evento/agregarObjeto/5/7 404 - 12ms
+[2025-11-09 12:47:26] error: [Code: 404]: No se encontro el objeto especifico
+[2025-11-09 12:47:26] info: [v72g9xh] POST /api/evento/agregarObjeto/5/7 404 - 26ms
+[2025-11-09 12:47:45] info: [23w0g4e] POST /api/evento/agregarObjeto/5/1 201 - 37ms

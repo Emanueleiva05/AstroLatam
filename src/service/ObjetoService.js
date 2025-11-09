@@ -35,6 +35,7 @@ export const ListarObjetos = async () => {
 
 export const ListarObjetoEspecifico = async (id) => {
   const objeto = await Objeto.findByPk(id);
+  console.log(objeto);
   return objeto;
 };
 

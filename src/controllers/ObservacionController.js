@@ -80,7 +80,6 @@ export const DeleteObservacion = async (req, res, next) => {
 
 export const ReadObservacion = async (req, res, next) => {
   const { pais, provincia, ciudad, instrumento, rol } = req.query;
-  console.log(pais);
   try {
     const observaciones = await FiltrarObservacion(
       pais,

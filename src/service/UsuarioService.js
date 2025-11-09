@@ -44,7 +44,6 @@ export const ListarUsuarioEspecifico = async (id) => {
 
 export const ListarUsuarioUsernameEspecifico = async (username) => {
   const usuario = await Usuario.findOne({ where: { username: username } });
-  console.log(usuario);
   if (!usuario) throw new AppError("No se encontro el usuario", 401);
   return usuario.toJSON();
 };

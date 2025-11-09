@@ -41,7 +41,6 @@ export const loginUser = async (req, res, next) => {
       "La-palabra-secreta-debe-ser-muy-larga-nunca-corta",
       { expiresIn: "24h" }
     );
-    console.log(user);
     res
       .cookie("access_token", token, {
         httpOnly: true,

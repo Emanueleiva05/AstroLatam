@@ -35,6 +35,5 @@ export const login = async (username, password) => {
   if (!isValid) throw new AppError("Contrasena no valida");
 
   const { password: _, ...publicUser } = user;
-  console.log(publicUser);
   return publicUser;
 };
