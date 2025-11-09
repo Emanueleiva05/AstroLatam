@@ -36,6 +36,7 @@ import {
   EncontrarObservacionAdjunto,
   EncontrarObservacionInstrumento,
   VerificarExistenciaUsuario,
+  instrumentoEnUsuario,
 } from "../middlewares/ObservacionMiddleware.js";
 import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
 import {
@@ -141,6 +142,7 @@ router.post(
   EncontrarObservacion,
   verificarUsuario,
   EncontrarInstrumento,
+  instrumentoEnUsuario,
   SetInstrumento
 );
 
@@ -163,7 +165,6 @@ router.get(
 router.get(
   "/listarObjetoEspecifico/:id/:idObjeto",
   verificarTokenOpcional,
-
   EncontrarObservacion,
   EncontrarObservacionObjeto,
   ReadObjetoEspecifico

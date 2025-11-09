@@ -20,12 +20,25 @@ const router = Router();
 
 router.post("/", ValidarDatosPais, SetPais);
 
-router.put("/:id", EncontrarPais, ValidarDatosPais, UpdatePais);
+router.put(
+  "/:id",
+  verificarTokenRequired,
+  EncontrarPais,
+  tieneRol("administrador"),
+  ValidarDatosPais,
+  UpdatePais
+);
 
-router.delete("/:id", EncontrarPais, DeletePais);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  EncontrarPais,
+  tieneRol("administrador"),
+  DeletePais
+);
 
-router.get("/", ReadPaises);
+router.get("/", verificarTokenOpcional, ReadPaises);
 
-router.get("/:id", EncontrarPais, ReadPaisEspecifico);
+router.get("/:id", verificarTokenOpcional, EncontrarPais, ReadPaisEspecifico);
 
 export default router;

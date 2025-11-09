@@ -11,7 +11,6 @@ import {
   VerificarExistenciaTipoAdjunto,
   EncontrarAdjunto,
 } from "../middlewares/AdjuntoMiddleware.js";
-import { tieneRol } from "../middlewares/RoleUser.js";
 import {
   verificarTokenOpcional,
   verificarTokenRequired,
@@ -22,7 +21,6 @@ const router = Router();
 router.post(
   "/",
   verificarTokenRequired,
-
   ValidarDatosAdjunto,
   VerificarExistenciaTipoAdjunto,
   SetAdjunto
@@ -31,7 +29,6 @@ router.post(
 router.put(
   "/:id",
   verificarTokenRequired,
-
   EncontrarAdjunto,
   ValidarDatosAdjunto,
   VerificarExistenciaTipoAdjunto,
