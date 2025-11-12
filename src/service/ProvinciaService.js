@@ -16,7 +16,7 @@ export const EliminarProvincia = async (provincia) => {
 };
 
 export const ListarProvincias = async () => {
-  const reply = await clientRedis.get("provincias");
+  const reply = await clientRedis.get("provincia:listado");
   if (reply) return JSON.parse(reply);
 
   const provincias = await Provincia.findAll();
@@ -24,17 +24,21 @@ export const ListarProvincias = async () => {
     throw new AppError("No se encontraron provincias creados", 404);
   }
 
-  await clientRedis.set("provincias", JSON.stringify(provincias));
+  await clientRedis.set("provincia:listado", JSON.stringify(provincias), {
+    EX: 3600,
+  });
 
   return provincias;
 };
 
 export const ListarProvinciaEspecifico = async (id) => {
-  const reply = await clientRedis.get(`/provincia/${id}`);
+  const reply = await clientRedis.get(`provincia:${id}`);
   if (reply) return JSON.parse(reply);
 
   const provincia = await Provincia.findByPk(id);
-  await clientRedis.set(`/provincia/${id}`, JSON.stringify(provincia));
+  await clientRedis.set(`provincia:${id}`, JSON.stringify(provincia), {
+    EX: 3600,
+  });
 
   return provincia;
 };

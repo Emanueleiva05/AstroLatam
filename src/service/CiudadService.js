@@ -16,7 +16,7 @@ export const EliminarCiudad = async (ciudad) => {
 };
 
 export const ListarCiudades = async () => {
-  const reply = await clientRedis.get("ciudades");
+  const reply = await clientRedis.get("ciudad:listado");
 
   if (reply) return JSON.parse(reply);
 
@@ -26,19 +26,21 @@ export const ListarCiudades = async () => {
     throw new AppError("No se encontraron ciudades creadas", 404);
   }
 
-  await clientRedis.set("ciudades", JSON.stringify(ciudades));
+  await clientRedis.set("ciudad:listado", JSON.stringify(ciudades), {
+    EX: 3600,
+  });
 
   return ciudades;
 };
 
 export const ListarCiudadEspecifico = async (id) => {
-  const reply = await clientRedis.get(`/ciudad/${id}`);
+  const reply = await clientRedis.get(`ciudad:${id}`);
 
   if (reply) return JSON.parse(reply);
 
   const ciudad = await Ciudad.findByPk(id);
 
-  await clientRedis.set(`/ciudad/${id}`, JSON.stringify(ciudad));
+  await clientRedis.set(`:ciudad:${id}`, JSON.stringify(ciudad), { EX: 3600 });
 
   return ciudad;
 };

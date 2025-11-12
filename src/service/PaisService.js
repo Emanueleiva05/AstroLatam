@@ -16,7 +16,7 @@ export const EliminarPais = async (pais) => {
 };
 
 export const ListarPaises = async () => {
-  const reply = await clientRedis.get("paises");
+  const reply = await clientRedis.get("pais:listado");
 
   if (reply) return JSON.parse(reply);
 
@@ -25,19 +25,19 @@ export const ListarPaises = async () => {
     throw new AppError("No se encontraron paises creados", 404);
   }
 
-  await clientRedis.set("paises", JSON.stringify(paises));
+  await clientRedis.set("pais:listado", JSON.stringify(paises), { EX: 3600 });
 
   return paises;
 };
 
 export const ListarPaisEspecifico = async (id) => {
-  const reply = await clientRedis.get(`/pais/${id}`);
+  const reply = await clientRedis.get(`pais:${id}`);
 
   if (reply) return JSON.parse(reply);
 
   const pais = await Pais.findByPk(id);
 
-  await clientRedis.set(`/pais/${id}`, JSON.stringify(pais));
+  await clientRedis.set(`pais:${id}`, JSON.stringify(pais), { EX: 3600 });
 
   return pais;
 };
