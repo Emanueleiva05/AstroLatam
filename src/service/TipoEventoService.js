@@ -1,4 +1,5 @@
 import TipoEvento from "../models/TipoEvento.js";
+import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
 export const AgregarTipoEvento = async (nombre) => {
@@ -15,14 +16,30 @@ export const EliminarTipoEvento = async (tipoEvento) => {
 };
 
 export const ListarTipoEventos = async () => {
+  const reply = await clientRedis.get("tipoEventos:listado");
+  if (reply) return JSON.parse(reply);
+
   const tipoEventos = await TipoEvento.findAll();
   if (tipoEventos.length === 0) {
     throw new AppError("No se encontraron tipoEventos creados", 404);
   }
+
+  await clientRedis.set("tipoEventos:listado", JSON.stringify(tipoEventos), {
+    EX: 3600,
+  });
+
   return tipoEventos;
 };
 
 export const ListarTipoEventoEspecifico = async (id) => {
+  const reply = await clientRedis.get(`tipoEvento:${id}`);
+  if (reply) return JSON.parse(reply);
+
   const tipoEvento = await TipoEvento.findByPk(id);
+
+  await clientRedis.set(`tipoEvento:${id}`, JSON.stringify(tipoEvento), {
+    EX: 3600,
+  });
+
   return tipoEvento;
 };

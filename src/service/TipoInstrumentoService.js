@@ -1,4 +1,5 @@
 import TipoInstrumento from "../models/TipoInstrumento.js";
+import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
 export const AgregarTipoInstrumento = async (nombre, descripcion) => {
@@ -23,14 +24,33 @@ export const EliminarTipoInstrumento = async (tipoInstrumento) => {
 };
 
 export const ListarTipoInstrumentos = async () => {
+  const reply = await clientRedis.get("tipoInstrumento:listado");
+  if (reply) return JSON.parse(reply);
+
   const tipoInstrumentos = await TipoInstrumento.findAll();
   if (tipoInstrumentos.length === 0) {
     throw new AppError("No se encontraron tipoEventos creados", 404);
   }
+
+  await clientRedis.set(
+    "tipoInstrumento:listado",
+    JSON.stringify(tipoInstrumentos),
+    { EX: 3600 }
+  );
+
   return tipoInstrumentos;
 };
 
 export const ListarTipoInstrumentoEspecifico = async (id) => {
+  const reply = await clientRedis.get(`tipoInstrumento:${id}`);
+  if (reply) return JSON.parse(reply);
+
   const tipoInstrumento = await TipoInstrumento.findByPk(id);
+
+  await clientRedis.set(
+    `tipoInstrumento:${id}`,
+    JSON.stringify(tipoInstrumento),
+    { EX: 3600 }
+  );
   return tipoInstrumento;
 };

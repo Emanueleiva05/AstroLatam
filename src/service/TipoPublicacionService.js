@@ -1,4 +1,5 @@
 import TipoPublicacion from "../models/TipoPublicacion.js";
+import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
 export const AgregarTipoPublicacion = async (nombre, descripcion) => {
@@ -23,14 +24,33 @@ export const EliminarTipoPublicacion = async (tipoPublicacion) => {
 };
 
 export const ListarTipoPublicaciones = async () => {
+  const reply = await clientRedis.get("tipoPublicacion:listado");
+  if (reply) return JSON.parse(reply);
+
   const tipoPublicaciones = await TipoPublicacion.findAll();
   if (tipoPublicaciones.length === 0) {
     throw new AppError("No se encontraron tipoPublicaciones creados", 404);
   }
+
+  await clientRedis.set(
+    "tipoPublicacion:listado",
+    JSON.stringify(tipoPublicaciones),
+    { EX: 3600 }
+  );
   return tipoPublicaciones;
 };
 
 export const ListarTipoPublicacionEspecifico = async (id) => {
+  const reply = await clientRedis.get(`tipoPublicacion:${id}`);
+  if (reply) return JSON.parse(reply);
+
   const tipoPublicacion = await TipoPublicacion.findByPk(id);
+
+  await clientRedis.set(
+    `tipoPublicacion:${id}`,
+    JSON.stringify(tipoPublicacion),
+    { EX: 3600 }
+  );
+
   return tipoPublicacion;
 };
