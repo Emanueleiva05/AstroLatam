@@ -11,7 +11,7 @@ export const AgregarEvento = async (
   fechaFin,
   idTipoEvento
 ) => {
-  return await Evento.create({
+  const nuevo = await Evento.create({
     nombre,
     horaInicio,
     descripcion,
@@ -20,6 +20,10 @@ export const AgregarEvento = async (
     fechaFin,
     idTipoEvento,
   });
+
+  await clientRedis.del("evento:listado");
+
+  return nuevo;
 };
 
 export const ModificarEvento = async (
@@ -32,6 +36,9 @@ export const ModificarEvento = async (
   fechaFin,
   idTipoEvento
 ) => {
+  await clientRedis.del("evento:listado");
+  await clientRedis.del(`evento:${evento.idEvento}`);
+
   evento.nombre = nombre;
   evento.descripcion = descripcion;
   evento.horaInicio = horaInicio;
@@ -43,6 +50,8 @@ export const ModificarEvento = async (
 };
 
 export const EliminarEvento = async (evento) => {
+  await clientRedis.del("evento:listado");
+  await clientRedis.del(`evento:${evento.idEvento}`);
   return await evento.destroy();
 };
 

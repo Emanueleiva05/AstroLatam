@@ -3,10 +3,14 @@ import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
 export const AgregarTipoInstrumento = async (nombre, descripcion) => {
-  return await TipoInstrumento.create({
+  const nuevo = await TipoInstrumento.create({
     nombre,
     descripcion,
   });
+
+  await clientRedis.del("tipoInstrumento:listado");
+
+  return nuevo;
 };
 
 export const ModificarTipoInstrumento = async (
@@ -14,12 +18,17 @@ export const ModificarTipoInstrumento = async (
   nombre,
   descripcion
 ) => {
+  await clientRedis.del("tipoInstrumento:listado");
+  await clientRedis.del(`tipoInstrumento:${tipoInstrumento.idTipoInstrumento}`);
   tipoInstrumento.nombre = nombre;
   tipoInstrumento.descripcion = descripcion;
+
   return await tipoInstrumento.save();
 };
 
 export const EliminarTipoInstrumento = async (tipoInstrumento) => {
+  await clientRedis.del("tipoInstrumento:listado");
+  await clientRedis.del(`tipoInstrumento:${tipoInstrumento.idTipoInstrumento}`);
   return await tipoInstrumento.destroy();
 };
 

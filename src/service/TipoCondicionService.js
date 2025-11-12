@@ -3,15 +3,21 @@ import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
 export const AgregarTipoCondicion = async (nombre) => {
-  return await TipoCondicion.create({ nombre });
+  const nuevo = await TipoCondicion.create({ nombre });
+  await clientRedis.del(`tipoCondicion:listado`);
+  return nuevo;
 };
 
 export const ModificarTipoCondicion = async (tipoCondicion, nombre) => {
+  await clientRedis.del(`tipoCondicion:listado`);
+  await clientRedis.del(`tipoCondicion:${tipoCondicion.idTipoCondicion}`);
   tipoCondicion.nombre = nombre;
   return await tipoCondicion.save();
 };
 
 export const EliminarTipoCondicion = async (tipoCondicion) => {
+  await clientRedis.del(`tipoCondicion:listado`);
+  await clientRedis.del(`tipoCondicion:${tipoCondicion.idTipoCondicion}`);
   return await tipoCondicion.destroy();
 };
 

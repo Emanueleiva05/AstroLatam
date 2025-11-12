@@ -3,15 +3,21 @@ import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
 export const AgregarCiudad = async (nombre, idProvincia) => {
-  return await Ciudad.create({ nombre, idProvincia });
+  const nuevo = await Ciudad.create({ nombre, idProvincia });
+  await clientRedis.del("ciudad:listado");
+  return nuevo;
 };
 
 export const ModificarCiudad = async (ciudad, nombre) => {
+  await clientRedis.del("ciudad:listado");
+  await clientRedis.del(`ciudad:${ciudad.idCiudad}`);
   ciudad.nombre = nombre;
   return await ciudad.save();
 };
 
 export const EliminarCiudad = async (ciudad) => {
+  await clientRedis.del("ciudad:listado");
+  await clientRedis.del(`ciudad:${ciudad.idCiudad}`);
   return await ciudad.destroy();
 };
 

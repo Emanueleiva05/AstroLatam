@@ -3,10 +3,14 @@ import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
 export const AgregarTipoPublicacion = async (nombre, descripcion) => {
-  return await TipoPublicacion.create({
+  const nuevo = await TipoPublicacion.create({
     nombre,
     descripcion,
   });
+
+  await clientRedis.del("tipoPublicacion:listado");
+
+  return nuevo;
 };
 
 export const ModificarTipoPublicacion = async (
@@ -14,12 +18,19 @@ export const ModificarTipoPublicacion = async (
   nombre,
   descripcion
 ) => {
+  await clientRedis.del("tipoPublicacion:listado");
+  await clientRedis.del(`tipoPublicacion:${tipoPublicacion.idTipoPublicacion}`);
+
   tipoPublicacion.nombre = nombre;
   tipoPublicacion.descripcion = descripcion;
+
   return await tipoPublicacion.save();
 };
 
 export const EliminarTipoPublicacion = async (tipoPublicacion) => {
+  await clientRedis.del("tipoPublicacion:listado");
+  await clientRedis.del(`tipoPublicacion:${tipoPublicacion.idTipoPublicacion}`);
+
   return await tipoPublicacion.destroy();
 };
 

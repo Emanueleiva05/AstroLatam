@@ -13,7 +13,7 @@ export const AgregarInstrumento = async (
   tipo_prisma,
   idTipoInstrumento
 ) => {
-  return await Instrumento.create({
+  const nuevo = await Instrumento.create({
     nombre,
     apertura,
     descripcion,
@@ -24,6 +24,10 @@ export const AgregarInstrumento = async (
     tipo_prisma,
     idTipoInstrumento,
   });
+
+  await clientRedis.del("instrumento:listado");
+
+  return nuevo;
 };
 
 export const ModificarInstrumento = async (
@@ -38,6 +42,8 @@ export const ModificarInstrumento = async (
   tipo_prisma,
   idTipoInstrumento
 ) => {
+  await clientRedis.del("instrumento:listado");
+  await clientRedis.del(`instrumento:${instrumento.idInstrumento}`);
   instrumento.nombre = nombre;
   instrumento.descripcion = descripcion;
   instrumento.apertura = apertura;
@@ -51,6 +57,8 @@ export const ModificarInstrumento = async (
 };
 
 export const EliminarInstrumento = async (instrumento) => {
+  await clientRedis.del("instrumento:listado");
+  await clientRedis.del(`instrumento:${instrumento.idInstrumento}`);
   return await instrumento.destroy();
 };
 

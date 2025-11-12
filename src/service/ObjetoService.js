@@ -3,11 +3,13 @@ import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
 export const AgregarObjeto = async (nombre, descripcion, idTipoObjeto) => {
-  return await Objeto.create({
+  const nuevo = await Objeto.create({
     nombre,
     descripcion,
     idTipoObjeto,
   });
+  await clientRedis.del("objeto:listado");
+  return nuevo;
 };
 
 export const ModificarObjeto = async (
@@ -16,6 +18,9 @@ export const ModificarObjeto = async (
   descripcion,
   idTipoObjeto
 ) => {
+  await clientRedis.del("objeto:listado");
+  await clientRedis.del(`objeto:${objeto.idObjeto}`);
+
   objeto.nombre = nombre;
   objeto.descripcion = descripcion;
   objeto.idTipoObjeto = idTipoObjeto;
@@ -23,6 +28,8 @@ export const ModificarObjeto = async (
 };
 
 export const EliminarObjeto = async (objeto) => {
+  await clientRedis.del("objeto:listado");
+  await clientRedis.del(`objeto:${objeto.idObjeto}`);
   return await objeto.destroy();
 };
 

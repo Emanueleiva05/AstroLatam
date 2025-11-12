@@ -3,15 +3,21 @@ import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
 export const AgregarPais = async (nombre) => {
-  return await Pais.create({ nombre });
+  const nuevo = await Pais.create({ nombre });
+  await clientRedis.del("pais:listado");
+  return nuevo;
 };
 
 export const ModificarPais = async (pais, nombre) => {
+  await clientRedis.del("pais:listado");
+  await clientRedis.del(`pais:${pais.idPais}`);
   pais.nombre = nombre;
   return await pais.save();
 };
 
 export const EliminarPais = async (pais) => {
+  await clientRedis.del("pais:listado");
+  await clientRedis.del(`pais:${pais.idPais}`);
   return await pais.destroy();
 };
 

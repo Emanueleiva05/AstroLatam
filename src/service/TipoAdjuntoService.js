@@ -3,15 +3,21 @@ import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
 export const AgregarTipoAdjunto = async (nombre) => {
-  return await TipoAdjunto.create({ nombre });
+  const nuevo = await TipoAdjunto.create({ nombre });
+  await clientRedis.del("tipoAdjunto:listado");
+  return nuevo;
 };
 
 export const ModificarTipoAdjunto = async (tipoAdjunto, nombre) => {
+  await clientRedis.del("tipoAdjunto:listado");
+  await clientRedis.del(`tipoAdjunto${tipoAdjunto.idTipoAdjunto}`);
   tipoAdjunto.nombre = nombre;
   return await tipoAdjunto.save();
 };
 
 export const EliminarTipoAdjunto = async (tipoAdjunto) => {
+  await clientRedis.del("tipoAdjunto:listado");
+  await clientRedis.del(`tipoAdjunto${tipoAdjunto.idTipoAdjunto}`);
   return await tipoAdjunto.destroy();
 };
 

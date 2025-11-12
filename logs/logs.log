@@ -210,3 +210,23 @@
 [2025-11-12 15:29:27] info: [otf2dg1] GET /api/objeto/listarAdjuntoEspecifico/1/33 500 - 5ms
 [2025-11-12 15:29:49] error: [Code: 500]: objeto.getAdjuntos is not a function
 [2025-11-12 15:29:49] info: [2drvhmd] GET /api/objeto/listarAdjuntoEspecifico/1/33 500 - 5ms
+[2025-11-12 20:19:54] info: [yoh4tq1] GET /api/login 404 - 2ms
+[2025-11-12 20:20:02] info: [7y46gsh] GET /api/auth/login 404 - 1ms
+[2025-11-12 20:20:39] info: [pqng093] POST /api/auth/login 200 - 53ms
+[2025-11-12 20:21:10] error: [Code: 400]: Descripcion no valido para el tipo publicacion
+[2025-11-12 20:21:10] info: [ukn7iev] POST /api/tipoPublicacion 400 - 2ms
+[2025-11-12 20:21:22] info: [70qqbcz] POST /api/tipoPublicacion 201 - 11ms
+[2025-11-12 20:21:32] info: [v91iqyn] GET /api/tipoPublicacion 200 - 5ms
+[2025-11-12 20:21:33] info: [57xzojl] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:34] info: [zbuziji] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:34] info: [m822bee] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:35] info: [0vfntrm] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:35] info: [aweuyue] GET /api/tipoPublicacion 200 - 2ms
+[2025-11-12 20:21:41] info: [wpgu9k5] POST /api/tipoPublicacion 201 - 8ms
+[2025-11-12 20:21:44] info: [13zysmf] GET /api/tipoPublicacion 200 - 3ms
+[2025-11-12 20:21:45] info: [qidnb3y] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:46] info: [5o9hoy4] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:46] info: [4gctb0a] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:46] info: [eb53gls] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:47] info: [ci007do] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-12 20:21:48] info: [3moen7c] GET /api/tipoPublicacion 200 - 1ms
