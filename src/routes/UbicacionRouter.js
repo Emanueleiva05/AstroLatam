@@ -11,6 +11,12 @@ import {
   ValidarDatosUbicacion,
   VerificarExistenciaCiudad,
 } from "../middlewares/UbicacionMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+  verificarUsuario,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
@@ -23,16 +29,29 @@ router.post(
 
 router.put(
   "/:id",
+  verificarTokenRequired,
   EncontrarUbicacion,
+  verificarUsuario,
   ValidarDatosUbicacion,
   VerificarExistenciaCiudad,
   UpdateUbicacion
 );
 
-router.delete("/:id", EncontrarUbicacion, DeleteUbicacion);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  verificarUsuario,
+  EncontrarUbicacion,
+  DeleteUbicacion
+);
 
-router.get("/", ReadUbicacion);
+router.get("/", verificarTokenOpcional, ReadUbicacion);
 
-router.get("/:id", EncontrarUbicacion, ReadUbicacionEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarUbicacion,
+  ReadUbicacionEspecifico
+);
 
 export default router;

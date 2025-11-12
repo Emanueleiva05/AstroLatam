@@ -16,43 +16,77 @@ import {
   VerificarExistenciaTipoObjeto,
   EncontrarAdjuntoObjeto,
 } from "../middlewares/ObjetoMiddleware.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
-router.post("/", ValidarDatosObjeto, VerificarExistenciaTipoObjeto, SetObjeto);
+router.post(
+  "/",
+  verificarTokenRequired,
+  ValidarDatosObjeto,
+  VerificarExistenciaTipoObjeto,
+  SetObjeto
+);
 
 router.put(
   "/:id",
+  verificarTokenRequired,
   EncontrarObjeto,
+  tieneRol("administrador"),
   ValidarDatosObjeto,
   VerificarExistenciaTipoObjeto,
   UpdateObjeto
 );
 
-router.delete("/:id", EncontrarObjeto, DeleteObjeto);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  EncontrarObjeto,
+  tieneRol("administrador"),
+  DeleteObjeto
+);
 
-router.get("/", ReadObjeto);
+router.get("/", verificarTokenOpcional, ReadObjeto);
 
-router.get("/:id", EncontrarObjeto, ReadObjetoEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarObjeto,
+  ReadObjetoEspecifico
+);
 
 router.post(
   "/agregarAdjunto/:id/:idAdjunto",
+  verificarTokenRequired,
   EncontrarObjeto,
+  tieneRol("administrador"),
   EncontrarAdjunto,
   SetAdjunto
 );
 
 router.delete(
   "/eliminarAdjunto/:id/:idAdjunto",
+  verificarTokenRequired,
   EncontrarObjeto,
+  tieneRol("administrador"),
   EncontrarAdjunto,
   RemoveAdjunto
 );
 
-router.get("/listarAdjuntos/:id", EncontrarObjeto, ReadAdjuntos);
+router.get(
+  "/listarAdjuntos/:id",
+  verificarTokenOpcional,
+  EncontrarObjeto,
+  ReadAdjuntos
+);
 
 router.get(
   "/listarAdjuntoEspecifico/:id/:idAdjunto",
+  verificarTokenOpcional,
   EncontrarObjeto,
   EncontrarAdjuntoObjeto,
   ReadObjetoEspecifico

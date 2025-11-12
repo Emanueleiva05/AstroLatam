@@ -9,7 +9,7 @@ export const SetAdjunto = async (req, res, next) => {
   const { link_archivo, descripcion, idTipoAdjunto } = req.body;
   try {
     await AgregarAdjunto(link_archivo, descripcion, idTipoAdjunto);
-    res.status(200).json({ message: "Adjunto creado con exito" });
+    res.status(201).json({ message: "Adjunto creado con exito" });
   } catch (error) {
     next(error);
   }
@@ -21,7 +21,7 @@ export const UpdateAdjunto = async (req, res, next) => {
 
   try {
     await ModificarAdjunto(adjunto, link_archivo, descripcion, idTipoAdjunto);
-    res.status(200).json({ message: "Adjunto modificado con exito" });
+    res.status(204).json({ message: "Adjunto modificado con exito" });
   } catch (error) {
     next(error);
   }
@@ -31,7 +31,7 @@ export const DeleteAdjunto = async (req, res, next) => {
   const adjunto = req.adjunto;
   try {
     await EliminarAdjunto(adjunto);
-    res.status(200).json({ message: "Adjunto eliminado con exito" });
+    res.status(204).json({ message: "Adjunto eliminado con exito" });
   } catch (error) {
     next(error);
   }

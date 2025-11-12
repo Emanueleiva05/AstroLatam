@@ -19,11 +19,17 @@ import {
   EncontrarInstrumentoUsuario,
   ValidarDatosOpcionalesUsuario,
 } from "../middlewares/UsuarioMiddleware.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+  verificarUsuario,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
 router.post(
   "/",
+  verificarTokenRequired,
   ValidarDatosUsuario,
   ValidarDatosOpcionalesUsuario,
   VerificarExistenciaAdjunto,
@@ -33,7 +39,9 @@ router.post(
 
 router.put(
   "/:id",
+  verificarTokenRequired,
   EncontrarUsuario,
+  verificarUsuario,
   ValidarDatosUsuario,
   ValidarDatosOpcionalesUsuario,
   VerificarExistenciaAdjunto,
@@ -41,30 +49,51 @@ router.put(
   UpdateUsuario
 );
 
-router.delete("/:id", EncontrarUsuario, DeleteUsuario);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  EncontrarUsuario,
+  verificarUsuario,
+  DeleteUsuario
+);
 
-router.get("/", ReadUsuario);
+router.get("/", verificarTokenOpcional, ReadUsuario);
 
-router.get("/:id", EncontrarUsuario, ReadUsuarioEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarUsuario,
+  ReadUsuarioEspecifico
+);
 
 router.post(
   "/agregarInstrumento/:id/:idInstrumento",
+  verificarTokenRequired,
   EncontrarUsuario,
+  verificarUsuario,
   EncontrarInstrumento,
   SetInstrumento
 );
 
 router.delete(
   "/eliminarInstrumento/:id/:idInstrumento",
+  verificarTokenRequired,
   EncontrarUsuario,
+  verificarUsuario,
   EncontrarInstrumento,
   DeleteInstrumento
 );
 
-router.get("/listarInstrumentos/:id", EncontrarUsuario, ReadInstrumentos);
+router.get(
+  "/listarInstrumentos/:id",
+  verificarTokenOpcional,
+  EncontrarUsuario,
+  ReadInstrumentos
+);
 
 router.get(
   "/listarInstrumentosEspecifico/:id/:idInstrumento",
+  verificarTokenOpcional,
   EncontrarUsuario,
   EncontrarInstrumentoUsuario,
   ReadInstrumentoEspecifico

@@ -9,7 +9,7 @@ export const SetTipoInstrumento = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
     await AgregarTipoInstrumento(nombre, descripcion);
-    res.status(200).json({ message: "Se creo el Tipo Instrumento con exito" });
+    res.status(201).json({ message: "Se creo el Tipo Instrumento con exito" });
   } catch (error) {
     next(error);
   }
@@ -21,7 +21,7 @@ export const UpdateTipoInstrumento = async (req, res, next) => {
   try {
     await ModificarTipoInstrumento(tipoInstrumento, nombre, descripcion);
     res
-      .status(200)
+      .status(204)
       .json({ message: "Se modifico el Tipo Instrumento con exito" });
   } catch (error) {
     next(error);
@@ -33,7 +33,7 @@ export const DeleteTipoInstrumento = async (req, res, next) => {
   try {
     await EliminarTipoInstrumento(tipoInstrumento);
     res
-      .status(200)
+      .status(204)
       .json({ message: "Se elimino el Tipo Instrumento con exito" });
   } catch (error) {
     next(error);

@@ -20,7 +20,7 @@ export const SetAccionUsuario = async (req, res, next) => {
       fecha,
       idUsuario
     );
-    res.status(200).json({ message: "AccionUsuario creado con exito" });
+    res.status(201).json({ message: "AccionUsuario creado con exito" });
   } catch (error) {
     next(error);
   }
@@ -39,7 +39,7 @@ export const UpdateAccionUsuario = async (req, res, next) => {
       fecha,
       idUsuario
     );
-    res.status(200).json({ message: "AccionUsuario modificado con exito" });
+    res.status(204).json({ message: "AccionUsuario modificado con exito" });
   } catch (error) {
     next(error);
   }
@@ -49,7 +49,7 @@ export const DeleteAccionUsuario = async (req, res, next) => {
   try {
     const accion = req.accion;
     await EliminarAccionUsuario(accion);
-    res.status(200).json({ message: "AccionUsuario eliminado con exito" });
+    res.status(204).json({ message: "AccionUsuario eliminado con exito" });
   } catch (error) {
     next(error);
   }
@@ -76,7 +76,7 @@ export const ReadAccionUsuarioEspecifico = async (req, res, next) => {
 export const ChangeEstado = async (req, res, next) => {
   try {
     await CambiarEstadoReporte(req.accion, nota, estado);
-    res.status(200).json({ message: "Cambio de estado realizado" });
+    res.status(204).json({ message: "Cambio de estado realizado" });
   } catch (error) {
     next(error);
   }
@@ -94,7 +94,7 @@ export const ReadReportes = async (req, res, next) => {
 export const CountReportesTarget = async (req, res, next) => {
   try {
     const contar = await ContarReportesDeUnContenido(req.params.targetType);
-    res.status(200).json({ cantidad: contar });
+    res.status(204).json({ cantidad: contar });
   } catch (error) {
     next(error);
   }
@@ -106,7 +106,7 @@ export const HideReportes = async (req, res, next) => {
       req.params.targetType,
       parseInt(req.params.targetId)
     );
-    res.status(200).json({
+    res.status(204).json({
       message: message,
     });
   } catch (error) {

@@ -10,23 +10,45 @@ import {
   EncontrarTipoAdjunto,
   ValidarDatosTiposAdjunto,
 } from "../middlewares/TipoAdjuntoMiddleware.js";
-import { esAdministrador } from "../utils/RoleUser.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 const router = Router();
 
-router.post("/", esAdministrador, ValidarDatosTiposAdjunto, SetTipoAdjunto);
+router.post(
+  "/",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  ValidarDatosTiposAdjunto,
+  SetTipoAdjunto
+);
 
 router.put(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoAdjunto,
   ValidarDatosTiposAdjunto,
   UpdateTipoAdjunto
 );
 
-router.delete("/:id", esAdministrador, EncontrarTipoAdjunto, DeleteTipoAdjunto);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  EncontrarTipoAdjunto,
+  DeleteTipoAdjunto
+);
 
-router.get("/", ReadTiposAdjuntos);
+router.get("/", verificarTokenOpcional, ReadTiposAdjuntos);
 
-router.get("/:id", EncontrarTipoAdjunto, ReadTipoAdjunto);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarTipoAdjunto,
+  ReadTipoAdjunto
+);
 
 export default router;

@@ -17,7 +17,7 @@ export const SetUbicacion = async (req, res, next) => {
       geohash,
       idCiudad
     );
-    res.status(200).json({
+    res.status(201).json({
       message: "Se agrego el Ubicacion con exito",
     });
   } catch (error) {
@@ -39,7 +39,7 @@ export const UpdateUbicacion = async (req, res, next) => {
       geohash,
       idCiudad
     );
-    res.status(200).json({
+    res.status(204).json({
       message: "Se modifico el Ubicacion con exito",
     });
   } catch (error) {
@@ -51,7 +51,7 @@ export const DeleteUbicacion = async (req, res, next) => {
   const ubicacion = req.ubicacion;
   try {
     await EliminarUbicacion(ubicacion);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se elimino el Ubicacion con exito",
     });
   } catch (error) {

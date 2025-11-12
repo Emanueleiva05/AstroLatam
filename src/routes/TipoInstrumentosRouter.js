@@ -10,20 +10,26 @@ import {
   EncontrarTipoInstrumento,
   ValidarDatosTiposInstrumento,
 } from "../middlewares/TipoInstrumentoMiddleware.js";
-import { esAdministrador } from "../utils/RoleUser.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
 router.post(
   "/",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   ValidarDatosTiposInstrumento,
   SetTipoInstrumento
 );
 
 router.put(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoInstrumento,
   ValidarDatosTiposInstrumento,
   UpdateTipoInstrumento
@@ -31,13 +37,19 @@ router.put(
 
 router.delete(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoInstrumento,
   DeleteTipoInstrumento
 );
 
-router.get("/", ReadTipoInstrumento);
+router.get("/", verificarTokenOpcional, ReadTipoInstrumento);
 
-router.get("/:id", EncontrarTipoInstrumento, ReadTipoInstrumentoEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarTipoInstrumento,
+  ReadTipoInstrumentoEspecifico
+);
 
 export default router;

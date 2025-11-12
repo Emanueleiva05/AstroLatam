@@ -13,6 +13,11 @@ import {
   VerificarExistenciaTipoPublicacion,
 } from "../middlewares/PublicacionMiddleware.js";
 import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+  verificarUsuario,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
@@ -23,17 +28,36 @@ router.post(
   SetPublicacion
 );
 
-router.put("/:id", EncontrarPublicacion, UpdatePublicacion);
+router.put(
+  "/:id",
+  verificarTokenRequired,
+  EncontrarPublicacion,
+  verificarUsuario,
+  UpdatePublicacion
+);
 
-router.delete("/:id", EncontrarPublicacion, DeletePublicacion);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  EncontrarPublicacion,
+  verificarUsuario,
+  DeletePublicacion
+);
 
-router.get("/", ReadPublicacion);
+router.get("/", verificarTokenOpcional, ReadPublicacion);
 
-router.get("/:id", EncontrarPublicacion, ReadPublicacionEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarPublicacion,
+  ReadPublicacionEspecifico
+);
 
 router.put(
   "/visibilidad/:id",
+  verificarTokenRequired,
   EncontrarPublicacion,
+  verificarUsuario,
   VerificarVisibilidad,
   ChangeVisibilidad
 );

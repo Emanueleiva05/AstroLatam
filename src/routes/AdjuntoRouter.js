@@ -11,11 +11,16 @@ import {
   VerificarExistenciaTipoAdjunto,
   EncontrarAdjunto,
 } from "../middlewares/AdjuntoMiddleware.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
 router.post(
   "/",
+  verificarTokenRequired,
   ValidarDatosAdjunto,
   VerificarExistenciaTipoAdjunto,
   SetAdjunto
@@ -23,16 +28,22 @@ router.post(
 
 router.put(
   "/:id",
+  verificarTokenRequired,
   EncontrarAdjunto,
   ValidarDatosAdjunto,
   VerificarExistenciaTipoAdjunto,
   UpdateAdjunto
 );
 
-router.delete("/:id", EncontrarAdjunto, DeleteAdjunto);
+router.delete("/:id", verificarTokenRequired, EncontrarAdjunto, DeleteAdjunto);
 
-router.get("/", ReadAdjuntos);
+router.get("/", verificarTokenOpcional, ReadAdjuntos);
 
-router.get("/:id", EncontrarAdjunto, ReadAdjuntoEspecifico);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarAdjunto,
+  ReadAdjuntoEspecifico
+);
 
 export default router;

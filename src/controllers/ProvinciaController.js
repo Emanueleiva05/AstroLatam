@@ -9,7 +9,7 @@ export const SetProvincia = async (req, res, next) => {
   const { nombre, idPais } = req.body;
   try {
     await AgregarProvincia(nombre, idPais);
-    res.status(200).json({
+    res.status(201).json({
       message: "Se agrego el Provincia con exito",
     });
   } catch (error) {
@@ -22,7 +22,7 @@ export const UpdateProvincia = async (req, res, next) => {
   const { nombre, idPais } = req.body;
   try {
     await ModificarProvincia(provincia, nombre, idPais);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se modifico el Provincia con exito",
     });
   } catch (error) {
@@ -34,7 +34,7 @@ export const DeleteProvincia = async (req, res, next) => {
   const provincia = req.provincia;
   try {
     await EliminarProvincia(provincia);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se elimino el Provincia con exito",
     });
   } catch (error) {

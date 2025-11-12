@@ -9,7 +9,7 @@ export const SetTipoCondicion = async (req, res, next) => {
   const { nombre } = req.body;
   try {
     await AgregarTipoCondicion(nombre);
-    res.status(200).json({
+    res.status(201).json({
       message: "Se agrego el TipoCondicion con exito",
     });
   } catch (error) {
@@ -22,7 +22,7 @@ export const UpdateTipoCondicion = async (req, res, next) => {
   const tipoCondicion = req.tipoCondicion;
   try {
     await ModificarTipoCondicion(tipoCondicion, nombre);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se modifico el TipoCondicion con exito",
     });
   } catch (error) {
@@ -34,7 +34,7 @@ export const DeleteTipoCondicion = async (req, res, next) => {
   const tipoCondicion = req.tipoCondicion;
   try {
     await EliminarTipoCondicion(tipoCondicion);
-    res.status(200).json({
+    res.status(204).json({
       message: "Se elimino el TipoCondicion con exito",
     });
   } catch (error) {

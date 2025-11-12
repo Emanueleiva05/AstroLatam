@@ -9,7 +9,7 @@ export const SetTipoObjeto = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
     await AgregarTipoObjeto(nombre, descripcion);
-    res.status(200).json({ message: "Se creo el Tipo Objeto con exito" });
+    res.status(201).json({ message: "Se creo el Tipo Objeto con exito" });
   } catch (error) {
     next(error);
   }
@@ -20,7 +20,7 @@ export const UpdateTipoObjeto = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
     await ModificarTipoObjeto(tipoObjeto, nombre, descripcion);
-    res.status(200).json({ message: "Se modifico el Tipo Objeto con exito" });
+    res.status(204).json({ message: "Se modifico el Tipo Objeto con exito" });
   } catch (error) {
     next(error);
   }
@@ -30,7 +30,7 @@ export const DeleteTipoObjeto = async (req, res, next) => {
   const tipoObjeto = req.tipoObjeto;
   try {
     await EliminarTipoObjeto(tipoObjeto);
-    res.status(200).json({ message: "Se elimino el Tipo Objeto con exito" });
+    res.status(204).json({ message: "Se elimino el Tipo Objeto con exito" });
   } catch (error) {
     next(error);
   }

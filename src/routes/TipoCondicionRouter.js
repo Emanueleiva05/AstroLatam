@@ -10,15 +10,26 @@ import {
   ValidarDatosTiposCondicion,
   EncontrarTipoCondicion,
 } from "../middlewares/TipoCondicionMiddleware.js";
-import { esAdministrador } from "../utils/RoleUser.js";
+import { tieneRol } from "../middlewares/RoleUser.js";
+import {
+  verificarTokenOpcional,
+  verificarTokenRequired,
+} from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
 
-router.post("/", esAdministrador, ValidarDatosTiposCondicion, SetTipoCondicion);
+router.post(
+  "/",
+  verificarTokenRequired,
+  tieneRol("administrador"),
+  ValidarDatosTiposCondicion,
+  SetTipoCondicion
+);
 
 router.put(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoCondicion,
   ValidarDatosTiposCondicion,
   UpdateTipoCondicion
@@ -26,13 +37,19 @@ router.put(
 
 router.delete(
   "/:id",
-  esAdministrador,
+  verificarTokenRequired,
+  tieneRol("administrador"),
   EncontrarTipoCondicion,
   DeleteTipoCondicion
 );
 
-router.get("/", ReadTiposCondiciones);
+router.get("/", verificarTokenOpcional, ReadTiposCondiciones);
 
-router.get("/:id", EncontrarTipoCondicion, ReadTipoCondicion);
+router.get(
+  "/:id",
+  verificarTokenOpcional,
+  EncontrarTipoCondicion,
+  ReadTipoCondicion
+);
 
 export default router;

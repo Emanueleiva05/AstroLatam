@@ -10,6 +10,10 @@ import { ListarUbicacionEspecifico } from "../service/UbicacionService.js";
 import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
 import { ListarEvento } from "../service/EventoService.js";
 import { ListarObjetoEspecifico } from "../service/ObjetoService.js";
+import {
+  ListarUsuarioEspecifico,
+  ListarInstrumentosEspecificoUsuario,
+} from "../service/UsuarioService.js";
 
 export const ValidarDatosObservacion = (req, res, next) => {
   const {
@@ -19,6 +23,7 @@ export const ValidarDatosObservacion = (req, res, next) => {
     horaObservacion,
     fechaObservacion,
     idUbicacion,
+    idUsuario,
   } = req.body;
 
   if (!titulo || titulo.trim() === "") {
@@ -50,10 +55,24 @@ export const ValidarDatosObservacion = (req, res, next) => {
 export const VerificarExistenciaUbicacion = async (req, res, next) => {
   try {
     const { idUbicacion } = req.body;
-
     const ubicacion = await ListarUbicacionEspecifico(idUbicacion);
     if (!ubicacion) {
       throw new AppError("No se encontro la ubicacion especifica", 404);
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const VerificarExistenciaUsuario = async (req, res, next) => {
+  try {
+    const { idUsuario } = req.body;
+
+    const usuario = await ListarUsuarioEspecifico(idUsuario);
+    if (!usuario) {
+      throw new AppError("No se encontro el usuario especifica", 404);
     }
 
     next();
@@ -135,6 +154,26 @@ export const EncontrarInstrumento = async (req, res, next) => {
       throw new AppError("No se encontro el adjunto especifica", 404);
     }
     req.instrumento = instrumento;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const instrumentoEnUsuario = async (req, res, next) => {
+  try {
+    const usuario = await ListarUsuarioEspecifico(req.observacion.idUsuario);
+
+    if (!usuario) throw new AppError("Usuario no encontrado", 404);
+
+    const instrumento = await ListarInstrumentosEspecificoUsuario(
+      usuario,
+      req.instrumento.idInstrumento
+    );
+
+    if (instrumento.length === 0)
+      throw new AppError("El instrumento no esta asociado al usuario", 404);
 
     next();
   } catch (error) {
