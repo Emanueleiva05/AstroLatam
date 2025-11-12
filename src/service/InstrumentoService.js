@@ -1,5 +1,6 @@
 import Instrumento from "../models/Instrumento.js";
 import AppError from "../utils/AppError.js";
+import clientRedis from "../settings/redis.js";
 
 export const AgregarInstrumento = async (
   nombre,
@@ -54,14 +55,29 @@ export const EliminarInstrumento = async (instrumento) => {
 };
 
 export const ListarInstrumentos = async (id) => {
+  const reply = await clientRedis.get("instrumento:listado");
+  if (reply) return JSON.parse(reply);
+
   const instrumentos = await Instrumento.findAll();
   if (instrumentos.length === 0) {
     throw new AppError("No se encontraron instrumentos creados", 404);
   }
+
+  await clientRedis.set("instrumento:listado", JSON.stringify(instrumentos), {
+    EX: 3600,
+  });
+
   return instrumentos;
 };
 
 export const ListarInstrumentoEspecifico = async (id) => {
+  const reply = await clientRedis.get(`instrumento:${id}`);
+  if (reply) return JSON.parse(reply);
+
   const instrumento = await Instrumento.findByPk(id);
+
+  await clientRedis.set(`instrumento:${id}`, JSON.stringify(instrumento), {
+    EX: 3600,
+  });
   return instrumento;
 };

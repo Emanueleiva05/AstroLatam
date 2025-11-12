@@ -42,13 +42,11 @@ export const VerificarExistenciaTipoObjeto = async (req, res, next) => {
 export const EncontrarObjeto = async (req, res, next) => {
   try {
     const { id } = req.params;
-
     const objeto = await ListarObjetoEspecifico(id);
     if (!objeto) {
       throw new AppError("No se encontro el objeto especifico", 404);
     }
     req.objeto = objeto;
-
     next();
   } catch (error) {
     next(error);
@@ -81,6 +79,7 @@ export const EncontrarAdjuntoObjeto = async (req, res, next) => {
       throw new AppError("No se encontro el adjunto del evento");
     }
     req.adjunto = adjunto[0];
+
     next();
   } catch (error) {
     next(error);

@@ -1,5 +1,6 @@
 import Evento from "../models/Evento.js";
 import AppError from "../utils/AppError.js";
+import clientRedis from "../settings/redis.js";
 
 export const AgregarEvento = async (
   nombre,
@@ -46,15 +47,29 @@ export const EliminarEvento = async (evento) => {
 };
 
 export const ListarEventos = async () => {
+  const reply = await clientRedis.get("evento:listado");
+  if (reply) return JSON.parse(reply);
+
   const eventos = await Evento.findAll();
   if (eventos.length === 0) {
     throw new AppError("No se encontraron eventos creados", 404);
   }
+
+  await clientRedis.set("evento:listado", JSON.stringify(eventos), {
+    EX: 3600,
+  });
+
   return eventos;
 };
 
 export const ListarEvento = async (id) => {
+  const reply = await clientRedis.get(`evento:${id}`);
+  if (reply) return JSON.parse(reply);
+
   const evento = await Evento.findByPk(id);
+
+  await clientRedis.set(`evento:${id}`, JSON.stringify(evento), { EX: 3600 });
+
   return evento;
 };
 
@@ -67,7 +82,16 @@ export const EliminarAdjunto = async (evento, adjunto) => {
 };
 
 export const ListarAdjuntos = async (evento) => {
-  return await evento.getAdjuntos();
+  const reply = await clientRedis.get("evento:adjunto:listado");
+  if (reply) return JSON.parse(reply);
+
+  const adjuntos = await evento.getAdjuntos();
+
+  await clientRedis.set("evento:adjunto:listado", JSON.stringify(adjuntos), {
+    EX: 3600,
+  });
+
+  return adjuntos;
 };
 
 export const ListarAdjuntosEspecificoEvento = async (evento, idAdjunto) => {
@@ -87,7 +111,16 @@ export const EliminarPais = async (evento, pais) => {
 };
 
 export const ListarPaises = async (evento) => {
-  return await evento.getPais();
+  const reply = await clientRedis.get("evento:pais:listado");
+  if (reply) return JSON.parse(reply);
+
+  const paises = await evento.getPais();
+
+  await clientRedis.set("evento:pais:listado", JSON.stringify(paises), {
+    EX: 3600,
+  });
+
+  return paises;
 };
 
 export const ListarPaisesEspecificoEvento = async (evento, idPais) => {
@@ -107,7 +140,15 @@ export const EliminarObjeto = async (evento, objeto) => {
 };
 
 export const ListarObjetos = async (evento) => {
-  return await evento.getObjetos();
+  const reply = await clientRedis.get("evento:objeto:listado");
+  if (reply) return JSON.parse(reply);
+
+  const objetos = await evento.getObjetos();
+
+  await clientRedis.set("evento:objeto:listado", JSON.stringify(objetos), {
+    EX: 3600,
+  });
+  return objetos;
 };
 
 export const ListarObjetoEspecificoEvento = async (evento, idObjeto) => {
