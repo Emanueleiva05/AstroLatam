@@ -80,7 +80,10 @@ export const DeleteInstrumento = async (req, res, next) => {
 
 export const ReadInstrumento = async (req, res, next) => {
   try {
-    const instrumentos = await ListarInstrumentos();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const instrumentos = await ListarInstrumentos(page, size);
     res.status(200).json(instrumentos);
   } catch (error) {
     next(error);

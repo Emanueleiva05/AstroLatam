@@ -21,12 +21,19 @@ export const EliminarCiudad = async (ciudad) => {
   return await ciudad.destroy();
 };
 
-export const ListarCiudades = async () => {
+export const ListarCiudades = async (page, size) => {
   const reply = await clientRedis.get("ciudad:listado");
-
   if (reply) return JSON.parse(reply);
 
-  const ciudades = await Ciudad.findAll();
+  if (!page) page = 0;
+  if (!size) size = 5;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const ciudades = await Ciudad.findAll(options);
 
   if (ciudades.length === 0) {
     throw new AppError("No se encontraron ciudades creadas", 404);

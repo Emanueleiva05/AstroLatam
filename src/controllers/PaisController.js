@@ -44,7 +44,10 @@ export const DeletePais = async (req, res, next) => {
 
 export const ReadPaises = async (req, res, next) => {
   try {
-    const paises = await ListarPaises();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const paises = await ListarPaises(page, size);
     res.status(200).json(paises);
   } catch (error) {
     next(error);

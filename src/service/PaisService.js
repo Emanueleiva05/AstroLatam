@@ -21,12 +21,19 @@ export const EliminarPais = async (pais) => {
   return await pais.destroy();
 };
 
-export const ListarPaises = async () => {
+export const ListarPaises = async (page, size) => {
   const reply = await clientRedis.get("pais:listado");
-
   if (reply) return JSON.parse(reply);
 
-  const paises = await Pais.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const paises = await Pais.findAll(options);
   if (paises.length === 0) {
     throw new AppError("No se encontraron paises creados", 404);
   }

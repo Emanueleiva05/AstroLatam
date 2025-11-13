@@ -44,7 +44,10 @@ export const DeleteTipoCondicion = async (req, res, next) => {
 
 export const ReadTiposCondiciones = async (req, res, next) => {
   try {
-    const tiposCondiciones = await ListarTipoCondiciones();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const tiposCondiciones = await ListarTipoCondiciones(page, size);
     res.status(200).json(tiposCondiciones);
   } catch (error) {
     next(error);

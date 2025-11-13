@@ -61,7 +61,10 @@ export const DeleteUbicacion = async (req, res, next) => {
 
 export const ReadUbicacion = async (req, res, next) => {
   try {
-    const ubicaciones = await ListarUbicaciones();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const ubicaciones = await ListarUbicaciones(page, size);
     res.status(200).json(ubicaciones);
   } catch (error) {
     next(error);

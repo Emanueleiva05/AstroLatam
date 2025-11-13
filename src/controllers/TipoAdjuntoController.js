@@ -45,7 +45,10 @@ export const DeleteTipoAdjunto = async (req, res, next) => {
 
 export const ReadTiposAdjuntos = async (req, res, next) => {
   try {
-    const TiposAdjuntos = await ListarTipoAdjuntos();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const TiposAdjuntos = await ListarTipoAdjuntos(page, size);
     res.status(200).json(TiposAdjuntos);
   } catch (error) {
     next(error);

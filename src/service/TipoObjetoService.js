@@ -26,11 +26,19 @@ export const EliminarTipoObjeto = async (tipoObjeto) => {
   return await tipoObjeto.destroy();
 };
 
-export const ListarTipoObjetos = async () => {
+export const ListarTipoObjetos = async (page, size) => {
   const reply = await clientRedis.get("tipoObjeto:listado");
   if (reply) return JSON.parse(reply);
 
-  const tipoObjetos = await TipoObjeto.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const tipoObjetos = await TipoObjeto.findAll(options);
   if (tipoObjetos.length === 0) {
     throw new AppError("No se encontraron tipoObjetos creados", 404);
   }

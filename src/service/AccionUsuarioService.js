@@ -44,8 +44,16 @@ export const EliminarAccionUsuario = async (accionUsuario) => {
   return await accionUsuario.destroy();
 };
 
-export const ListarAccionUsuarios = async () => {
-  const acciones = await AccionUsuario.findAll();
+export const ListarAccionUsuarios = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 5;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(page) * parseInt(size),
+  };
+
+  const acciones = await AccionUsuario.findAll(options);
   if (acciones.length === 0) {
     throw new AppError("No se encontraron acciones de usuarios creados", 404);
   }

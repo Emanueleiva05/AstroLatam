@@ -32,11 +32,19 @@ export const EliminarTipoInstrumento = async (tipoInstrumento) => {
   return await tipoInstrumento.destroy();
 };
 
-export const ListarTipoInstrumentos = async () => {
+export const ListarTipoInstrumentos = async (page, size) => {
   const reply = await clientRedis.get("tipoInstrumento:listado");
   if (reply) return JSON.parse(reply);
 
-  const tipoInstrumentos = await TipoInstrumento.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const tipoInstrumentos = await TipoInstrumento.findAll(options);
   if (tipoInstrumentos.length === 0) {
     throw new AppError("No se encontraron tipoEventos creados", 404);
   }

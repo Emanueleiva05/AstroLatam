@@ -83,7 +83,10 @@ export const DeleteUsuario = async (req, res, next) => {
 
 export const ReadUsuario = async (req, res, next) => {
   try {
-    const usuarios = await ListarUsuario();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const usuarios = await ListarUsuario(page, size);
     res.status(200).json(usuarios);
   } catch (error) {
     next(error);

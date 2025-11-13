@@ -29,8 +29,16 @@ export const EliminarUsuario = async (usuario) => {
   return await usuario.destroy();
 };
 
-export const ListarUsuario = async () => {
-  const usuarios = await Usuario.findAll();
+export const ListarUsuario = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const usuarios = await Usuario.findAll(options);
   if (usuarios.length === 0) {
     throw new AppError("No se encontraron usuarios creados", 404);
   }

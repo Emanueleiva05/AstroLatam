@@ -29,8 +29,16 @@ export const EliminarAdjunto = async (adjunto) => {
   return await adjunto.destroy();
 };
 
-export const ListarAdjunto = async (id) => {
-  const adjuntos = await Adjunto.findAll();
+export const ListarAdjunto = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 5;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(page) * parseInt(size),
+  };
+
+  const adjuntos = await Adjunto.findAll(options);
   if (adjuntos.length === 0) {
     throw new AppError("No se encontraron adjuntos creados", 404);
   }

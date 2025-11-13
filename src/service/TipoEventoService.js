@@ -21,11 +21,19 @@ export const EliminarTipoEvento = async (tipoEvento) => {
   return await tipoEvento.destroy();
 };
 
-export const ListarTipoEventos = async () => {
+export const ListarTipoEventos = async (page, size) => {
   const reply = await clientRedis.get("tipoEventos:listado");
   if (reply) return JSON.parse(reply);
 
-  const tipoEventos = await TipoEvento.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const tipoEventos = await TipoEvento.findAll(options);
   if (tipoEventos.length === 0) {
     throw new AppError("No se encontraron tipoEventos creados", 404);
   }

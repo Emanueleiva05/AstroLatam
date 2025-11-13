@@ -21,11 +21,19 @@ export const EliminarTipoAdjunto = async (tipoAdjunto) => {
   return await tipoAdjunto.destroy();
 };
 
-export const ListarTipoAdjuntos = async () => {
+export const ListarTipoAdjuntos = async (page, size) => {
   const reply = await clientRedis.get("tipoAdjunto:listado");
   if (reply) return JSON.parse(reply);
 
-  const tipoAdjuntos = await TipoAdjunto.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const tipoAdjuntos = await TipoAdjunto.findAll(options);
   if (tipoAdjuntos.length === 0) {
     throw new AppError("No se encontraron tipoAdjuntos creados", 404);
   }

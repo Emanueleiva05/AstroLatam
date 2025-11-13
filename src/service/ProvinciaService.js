@@ -21,11 +21,19 @@ export const EliminarProvincia = async (provincia) => {
   return await provincia.destroy();
 };
 
-export const ListarProvincias = async () => {
+export const ListarProvincias = async (page, size) => {
   const reply = await clientRedis.get("provincia:listado");
   if (reply) return JSON.parse(reply);
 
-  const provincias = await Provincia.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const provincias = await Provincia.findAll(options);
   if (provincias.length === 0) {
     throw new AppError("No se encontraron provincias creados", 404);
   }

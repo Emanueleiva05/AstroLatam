@@ -29,8 +29,16 @@ export const EliminarObservacionCondicion = async (observacionCondicion) => {
   return await observacionCondicion.destroy();
 };
 
-export const ListarObservacionCondiciones = async () => {
-  const observacionCondiciones = await ObservacionCondicion.findAll();
+export const ListarObservacionCondiciones = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const observacionCondiciones = await ObservacionCondicion.findAll(options);
   if (observacionCondiciones.length === 0) {
     throw new AppError("No se encontraron objetos condiciones creados", 404);
   }

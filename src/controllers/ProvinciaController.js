@@ -44,7 +44,10 @@ export const DeleteProvincia = async (req, res, next) => {
 
 export const ReadProvincias = async (req, res, next) => {
   try {
-    const provincias = await ListarProvincias();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const provincias = await ListarProvincias(page, size);
     res.status(200).json(provincias);
   } catch (error) {
     next(error);

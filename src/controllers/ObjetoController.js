@@ -42,7 +42,10 @@ export const DeleteObjeto = async (req, res, next) => {
 
 export const ReadObjeto = async (req, res, next) => {
   try {
-    const objetos = await ListarObjetos();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const objetos = await ListarObjetos(page, size);
     res.status(200).json(objetos);
   } catch (error) {
     next(error);

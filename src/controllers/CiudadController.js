@@ -44,7 +44,10 @@ export const DeleteCiudad = async (req, res, next) => {
 
 export const ReadCiudades = async (req, res, next) => {
   try {
-    const ciudades = await ListarCiudades();
+    const size = req.query.size;
+    const page = req.query.page;
+
+    const ciudades = await ListarCiudades(page, size);
     res.status(200).json(ciudades);
   } catch (error) {
     next(error);

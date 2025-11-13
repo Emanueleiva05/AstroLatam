@@ -34,11 +34,19 @@ export const EliminarTipoPublicacion = async (tipoPublicacion) => {
   return await tipoPublicacion.destroy();
 };
 
-export const ListarTipoPublicaciones = async () => {
+export const ListarTipoPublicaciones = async (page, size) => {
   const reply = await clientRedis.get("tipoPublicacion:listado");
   if (reply) return JSON.parse(reply);
 
-  const tipoPublicaciones = await TipoPublicacion.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const tipoPublicaciones = await TipoPublicacion.findAll(options);
   if (tipoPublicaciones.length === 0) {
     throw new AppError("No se encontraron tipoPublicaciones creados", 404);
   }

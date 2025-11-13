@@ -31,8 +31,16 @@ export const EliminarPublicacion = async (publicacion) => {
   return await publicacion.destroy();
 };
 
-export const ListarPublicaciones = async (id) => {
-  const publicaciones = await Publicacion.findAll();
+export const ListarPublicaciones = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const publicaciones = await Publicacion.findAll(options);
   if (publicaciones.length === 0) {
     throw new AppError("No se encontraron publicacion creados", 404);
   }

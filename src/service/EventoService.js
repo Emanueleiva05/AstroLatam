@@ -55,11 +55,19 @@ export const EliminarEvento = async (evento) => {
   return await evento.destroy();
 };
 
-export const ListarEventos = async () => {
+export const ListarEventos = async (page, size) => {
   const reply = await clientRedis.get("evento:listado");
   if (reply) return JSON.parse(reply);
 
-  const eventos = await Evento.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const eventos = await Evento.findAll(options);
   if (eventos.length === 0) {
     throw new AppError("No se encontraron eventos creados", 404);
   }

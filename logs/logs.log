@@ -230,3 +230,18 @@
 [2025-11-12 20:21:46] info: [eb53gls] GET /api/tipoPublicacion 200 - 1ms
 [2025-11-12 20:21:47] info: [ci007do] GET /api/tipoPublicacion 200 - 1ms
 [2025-11-12 20:21:48] info: [3moen7c] GET /api/tipoPublicacion 200 - 1ms
+[2025-11-13 19:34:35] error: [Code: 401]: No se proporciono token
+[2025-11-13 19:34:35] info: [vx9dggp] GET /api/accionUsuario 401 - 4ms
+[2025-11-13 19:34:42] error: [Code: 500]: Cannot destructure property 'user' of 'req.user' as it is undefined.
+[2025-11-13 19:34:42] info: [ddfrp3f] GET /api/auth 500 - 2ms
+[2025-11-13 19:34:55] info: [ztmzyc4] GET /api/auth/login 404 - 1ms
+[2025-11-13 19:34:59] info: [u5ftpm2] POST /api/auth/login 200 - 65ms
+[2025-11-13 19:35:08] info: [3p9i19i] GET /api/accionUsuario 200 - 7ms
+[2025-11-13 19:35:21] info: [2wttlld] GET /api/accionUsuario?size=2 200 - 4ms
+[2025-11-13 19:35:30] info: [logqcdi] GET /api/accionUsuario?size=2&page=1 200 - 3ms
+[2025-11-13 19:41:39] info: [30n62ix] GET /api/ciudad 200 - 14ms
+[2025-11-13 19:41:50] info: [pufu2di] GET /api/ciudad?size=1 200 - 2ms
+[2025-11-13 19:42:35] info: [qa6tfif] GET /api/ciudad?size=1 200 - 5ms
+[2025-11-13 19:42:47] info: [dahe6wq] GET /api/ciudad?size=1 200 - 5ms
+[2025-11-13 19:43:57] info: [4rof4ky] GET /api/ciudad?size=1 200 - 9ms
+[2025-11-13 19:43:58] info: [fg2j48r] GET /api/ciudad?size=1 200 - 3ms

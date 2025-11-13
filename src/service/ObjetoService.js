@@ -33,11 +33,19 @@ export const EliminarObjeto = async (objeto) => {
   return await objeto.destroy();
 };
 
-export const ListarObjetos = async () => {
+export const ListarObjetos = async (page, size) => {
   const reply = await clientRedis.get("objeto:listado");
   if (reply) return JSON.parse(reply);
 
-  const objetos = await Objeto.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const objetos = await Objeto.findAll(options);
   if (objetos.length === 0) {
     throw new AppError("No se encontraron objetos creados", 404);
   }

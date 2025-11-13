@@ -62,11 +62,19 @@ export const EliminarInstrumento = async (instrumento) => {
   return await instrumento.destroy();
 };
 
-export const ListarInstrumentos = async (id) => {
+export const ListarInstrumentos = async (page, size) => {
   const reply = await clientRedis.get("instrumento:listado");
   if (reply) return JSON.parse(reply);
 
-  const instrumentos = await Instrumento.findAll();
+  if (!page) page = 0;
+  if (!size) size = 0;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const instrumentos = await Instrumento.findAll(options);
   if (instrumentos.length === 0) {
     throw new AppError("No se encontraron instrumentos creados", 404);
   }

@@ -50,7 +50,10 @@ export const DeleteObservacionCondiciones = async (req, res, next) => {
 
 export const ReadObservacionCondiciones = async (req, res, next) => {
   try {
-    const condiciones = await ListarObservacionCondiciones();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const condiciones = await ListarObservacionCondiciones(page, size);
     res.status(200).json(condiciones);
   } catch (error) {
     next(error);
