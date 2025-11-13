@@ -31,7 +31,7 @@ export const EliminarObservacionCondicion = async (observacionCondicion) => {
 
 export const ListarObservacionCondiciones = async (page, size) => {
   if (!page) page = 0;
-  if (!size) size = 0;
+  if (!size) size = 5;
 
   const options = {
     limit: parseInt(size),

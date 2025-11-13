@@ -245,3 +245,50 @@
 [2025-11-13 19:42:47] info: [dahe6wq] GET /api/ciudad?size=1 200 - 5ms
 [2025-11-13 19:43:57] info: [4rof4ky] GET /api/ciudad?size=1 200 - 9ms
 [2025-11-13 19:43:58] info: [fg2j48r] GET /api/ciudad?size=1 200 - 3ms
+[2025-11-13 20:04:17] error: [Code: 404]: No se encontraron paises creados
+[2025-11-13 20:04:17] info: [uv8pcwr] GET /api/pais 404 - 15ms
+[2025-11-13 20:04:36] error: [Code: 404]: No se encontraron paises creados
+[2025-11-13 20:04:36] info: [d1yuktp] GET /api/pais 404 - 6ms
+[2025-11-13 20:04:37] error: [Code: 404]: No se encontraron paises creados
+[2025-11-13 20:04:37] info: [ncu5i2s] GET /api/pais 404 - 3ms
+[2025-11-13 20:04:47] info: [ato7oda] GET /api/pais 200 - 10ms
+[2025-11-13 20:04:54] info: [6qwa573] GET /api/pais 200 - 5ms
+[2025-11-13 20:05:02] info: [eh54bt1] GET /api/pais 200 - 10ms
+[2025-11-13 20:22:32] error: [Code: 500]: AppError is not defined
+[2025-11-13 20:22:32] info: [au1xjsn] GET /api/pais?page=a 500 - 5ms
+[2025-11-13 20:23:17] error: [Code: 400]: Numero de pagina invalido, Debe ser un numero
+[2025-11-13 20:23:17] info: [bz4jo8r] GET /api/pais?page=a 400 - 6ms
+[2025-11-13 20:23:24] error: [Code: 400]: Tamano de pagina invalido, Debe ser un numero
+[2025-11-13 20:23:24] info: [3h0ola7] GET /api/pais?page=2 400 - 1ms
+[2025-11-13 20:24:10] error: [Code: 400]: Tamano de pagina invalido, Debe ser un numero
+[2025-11-13 20:24:10] info: [7gzsc70] GET /api/pais?page=2 400 - 5ms
+[2025-11-13 20:24:30] error: [Code: 400]: Tamano de pagina invalido, Debe ser un numero
+[2025-11-13 20:24:30] info: [ex61ht5] GET /api/pais?page=2 400 - 5ms
+[2025-11-13 20:24:42] error: [Code: 400]: Tamano de pagina invalido, Debe ser un numero
+[2025-11-13 20:24:42] info: [grb81jh] GET /api/pais?page=0 400 - 1ms
+[2025-11-13 20:24:45] error: [Code: 400]: Numero de pagina invalido, Debe ser un numero
+[2025-11-13 20:24:45] info: [0dk6uhn] GET /api/pais?page=-1 400 - 2ms
+[2025-11-13 20:25:09] error: [Code: 400]: Tamano de pagina invalido, Debe ser un numero
+[2025-11-13 20:25:09] info: [lwp58be] GET /api/pais?page=1 400 - 5ms
+[2025-11-13 20:26:56] error: [Code: 400]: Tamano de pagina invalido, Debe ser un numero
+[2025-11-13 20:26:56] info: [vghgksn] GET /api/pais?page=1 400 - 6ms
+[2025-11-13 20:28:26] info: [0epuuda] GET /api/pais?page=1 200 - 5ms
+[2025-11-13 20:28:35] info: [msktvmy] GET /api/pais?page=0 200 - 2ms
+[2025-11-13 20:28:38] info: [ua6suq9] GET /api/pais?page=1 200 - 1ms
+[2025-11-13 20:28:41] info: [v0s5rje] GET /api/pais?page=2 200 - 2ms
+[2025-11-13 20:28:51] info: [dp0ej57] GET /api/pais?page=2&size=10 200 - 1ms
+[2025-11-13 20:28:54] info: [2od6zxu] GET /api/pais?page=0&size=10 200 - 1ms
+[2025-11-13 20:28:58] error: [Code: 400]: Tamano de pagina invalido. Debe ser un numero entero mayor que cero.
+[2025-11-13 20:28:58] info: [jslz8pm] GET /api/pais?page=0&size=0 400 - 1ms
+[2025-11-13 20:29:00] info: [8449bso] GET /api/pais?page=0&size=1 200 - 2ms
+[2025-11-13 20:29:33] info: [0ykd2df] GET /api/ciudad?page=0&size=1 200 - 2ms
+[2025-11-13 20:29:37] info: [ier5446] GET /api/ciudad?page=0&size=2 200 - 2ms
+[2025-11-13 20:29:41] info: [ec2cbn2] GET /api/ciudad?page=0&size=3 200 - 1ms
+[2025-11-13 20:29:46] info: [bad9jki] GET /api/ciudad 200 - 2ms
+[2025-11-13 20:29:47] info: [kkue1l6] GET /api/ciudad 200 - 1ms
+[2025-11-13 20:29:47] info: [i8qa7p7] GET /api/ciudad 200 - 0ms
+[2025-11-13 20:29:47] info: [r5c5d78] GET /api/ciudad 200 - 1ms
+[2025-11-13 20:29:48] info: [l9fz8m9] GET /api/ciudad 200 - 0ms
+[2025-11-13 20:30:01] info: [a630xt9] GET /api/accionUsuario 200 - 8ms
+[2025-11-13 20:30:16] info: [i3lqqqs] GET /api/accionUsuario?page=1&size=1 200 - 4ms
+[2025-11-13 20:30:21] info: [itekfwp] GET /api/accionUsuario?page=0&size=1 200 - 3ms

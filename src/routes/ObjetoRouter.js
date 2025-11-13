@@ -21,6 +21,7 @@ import {
   verificarTokenOpcional,
   verificarTokenRequired,
 } from "../middlewares/AuthMiddleware.js";
+import { validarPageSize } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
@@ -50,7 +51,7 @@ router.delete(
   DeleteObjeto
 );
 
-router.get("/", verificarTokenOpcional, ReadObjeto);
+router.get("/", verificarTokenOpcional, validarPageSize, ReadObjeto);
 
 router.get(
   "/:id",

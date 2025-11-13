@@ -23,6 +23,7 @@ import {
   verificarTokenOpcional,
   verificarTokenRequired,
 } from "../middlewares/AuthMiddleware.js";
+import { validarPageSize } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
@@ -88,6 +89,7 @@ router.get(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
+  validarPageSize,
   ReadAccionUsuario
 );
 

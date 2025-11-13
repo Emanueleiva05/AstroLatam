@@ -41,7 +41,7 @@ export const EliminarUbicacion = async (ubicacion) => {
 
 export const ListarUbicaciones = async (page, size) => {
   if (!page) page = 0;
-  if (!size) size = 0;
+  if (!size) size = 5;
 
   const options = {
     limit: parseInt(size),

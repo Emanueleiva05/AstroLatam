@@ -15,6 +15,7 @@ import {
   verificarTokenOpcional,
   verificarTokenRequired,
 } from "../middlewares/AuthMiddleware.js";
+import { validarPageSize } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
@@ -43,7 +44,7 @@ router.delete(
   DeleteTipoEvento
 );
 
-router.get("/", verificarTokenOpcional, ReadTiposEvento);
+router.get("/", verificarTokenOpcional, validarPageSize, ReadTiposEvento);
 
 router.get("/:id", verificarTokenOpcional, EncontrarTipoEvento, ReadTipoEvento);
 
