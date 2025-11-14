@@ -33,17 +33,27 @@ export const ListarCiudades = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const ciudades = await Ciudad.findAll(options);
+  const { count, rows } = await Ciudad.findAndCountAll(options);
 
-  if (ciudades.length === 0) {
+  if (rows.length === 0) {
     throw new AppError("No se encontraron ciudades creadas", 404);
   }
 
-  await clientRedis.set("ciudad:listado", JSON.stringify(ciudades), {
+  await clientRedis.set("ciudad:listado", JSON.stringify(rows), {
     EX: 3600,
   });
 
-  return ciudades;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarCiudadEspecifico = async (id) => {

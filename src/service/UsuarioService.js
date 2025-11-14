@@ -38,11 +38,22 @@ export const ListarUsuario = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const usuarios = await Usuario.findAll(options);
-  if (usuarios.length === 0) {
+  const { count, rows } = await Usuario.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron usuarios creados", 404);
   }
-  return usuarios;
+
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarUsuarioEspecifico = async (id) => {

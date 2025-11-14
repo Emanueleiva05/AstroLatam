@@ -292,3 +292,15 @@
 [2025-11-13 20:30:01] info: [a630xt9] GET /api/accionUsuario 200 - 8ms
 [2025-11-13 20:30:16] info: [i3lqqqs] GET /api/accionUsuario?page=1&size=1 200 - 4ms
 [2025-11-13 20:30:21] info: [itekfwp] GET /api/accionUsuario?page=0&size=1 200 - 3ms
+[2025-11-13 20:53:34] error: [Code: 500]: acciones is not defined
+[2025-11-13 20:53:34] info: [sn64fnr] GET /api/accionUsuario?page=0&size=1 500 - 17ms
+[2025-11-13 20:54:18] info: [u8fdpwy] GET /api/accionUsuario?page=0&size=1 200 - 10ms
+[2025-11-13 20:54:37] info: [rrot3y8] GET /api/accionUsuario?page=1&size=1 200 - 6ms
+[2025-11-13 20:56:54] error: [Code: 500]: ciudades is not defined
+[2025-11-13 20:56:54] info: [9jmn6m6] GET /api/ciudad 500 - 12ms
+[2025-11-13 20:57:30] info: [r8j7tra] GET /api/ciudad 200 - 11ms
+[2025-11-13 21:00:01] info: [lplhym5] GET /api/instrumento 200 - 25ms
+[2025-11-13 21:06:51] info: [jlq2v5u] GET /api/tipoP 404 - 2ms
+[2025-11-13 21:06:53] error: [Code: 400]: Nombre no valido para el tipo publicacion
+[2025-11-13 21:06:53] info: [gab6hnk] POST /api/tipoPublicacion 400 - 4ms
+[2025-11-13 21:06:58] info: [3044mbq] GET /api/tipoPublicacion 200 - 13ms

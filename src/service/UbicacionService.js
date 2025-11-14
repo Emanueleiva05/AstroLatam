@@ -48,11 +48,21 @@ export const ListarUbicaciones = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const ubicaciones = await Ubicacion.findAll(options);
-  if (ubicaciones.length === 0) {
+  const { count, rows } = await Ubicacion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron ubicaciones creadas", 404);
   }
-  return ubicaciones;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarUbicacionEspecifico = async (id) => {

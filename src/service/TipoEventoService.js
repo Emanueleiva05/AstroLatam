@@ -33,16 +33,26 @@ export const ListarTipoEventos = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const tipoEventos = await TipoEvento.findAll(options);
-  if (tipoEventos.length === 0) {
+  const { count, rows } = await TipoEvento.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron tipoEventos creados", 404);
   }
 
-  await clientRedis.set("tipoEventos:listado", JSON.stringify(tipoEventos), {
+  await clientRedis.set("tipoEventos:listado", JSON.stringify(rows), {
     EX: 3600,
   });
 
-  return tipoEventos;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarTipoEventoEspecifico = async (id) => {

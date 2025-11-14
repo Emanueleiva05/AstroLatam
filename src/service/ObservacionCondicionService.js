@@ -38,11 +38,22 @@ export const ListarObservacionCondiciones = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const observacionCondiciones = await ObservacionCondicion.findAll(options);
-  if (observacionCondiciones.length === 0) {
+  const { count, rows } = await ObservacionCondicion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron objetos condiciones creados", 404);
   }
-  return observacionCondiciones;
+
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarObservacionCondicionEspecifico = async (id) => {

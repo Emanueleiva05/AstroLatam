@@ -33,16 +33,26 @@ export const ListarProvincias = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const provincias = await Provincia.findAll(options);
-  if (provincias.length === 0) {
+  const { count, rows } = await Provincia.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron provincias creados", 404);
   }
 
-  await clientRedis.set("provincia:listado", JSON.stringify(provincias), {
+  await clientRedis.set("provincia:listado", JSON.stringify(rows), {
     EX: 3600,
   });
 
-  return provincias;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarProvinciaEspecifico = async (id) => {

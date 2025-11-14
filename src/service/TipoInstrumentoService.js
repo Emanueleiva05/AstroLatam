@@ -44,18 +44,26 @@ export const ListarTipoInstrumentos = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const tipoInstrumentos = await TipoInstrumento.findAll(options);
-  if (tipoInstrumentos.length === 0) {
+  const { count, rows } = await TipoInstrumento.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron tipoEventos creados", 404);
   }
 
-  await clientRedis.set(
-    "tipoInstrumento:listado",
-    JSON.stringify(tipoInstrumentos),
-    { EX: 3600 }
-  );
+  await clientRedis.set("tipoInstrumento:listado", JSON.stringify(rows), {
+    EX: 3600,
+  });
 
-  return tipoInstrumentos;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarTipoInstrumentoEspecifico = async (id) => {

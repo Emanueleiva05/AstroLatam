@@ -40,11 +40,22 @@ export const ListarPublicaciones = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const publicaciones = await Publicacion.findAll(options);
-  if (publicaciones.length === 0) {
+  const { count, rows } = await Publicacion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron publicacion creados", 404);
   }
-  return publicaciones;
+
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarPublicacionEspecifico = async (id) => {

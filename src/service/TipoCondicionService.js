@@ -33,20 +33,26 @@ export const ListarTipoCondiciones = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const tipoCondiciones = await TipoCondicion.findAll(options);
-  if (tipoCondiciones.length === 0) {
+  const { count, rows } = await TipoCondicion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron tipoCondiciones creados", 404);
   }
 
-  await clientRedis.set(
-    `tipoCondicion:listado`,
-    JSON.stringify(tipoCondiciones),
-    {
-      EX: 3600,
-    }
-  );
+  await clientRedis.set(`tipoCondicion:listado`, JSON.stringify(rows), {
+    EX: 3600,
+  });
 
-  return tipoCondiciones;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarTipoCondicionEspecifico = async (id) => {

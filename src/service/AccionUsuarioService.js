@@ -53,11 +53,22 @@ export const ListarAccionUsuarios = async (page, size) => {
     offset: parseInt(page) * parseInt(size),
   };
 
-  const acciones = await AccionUsuario.findAll(options);
-  if (acciones.length === 0) {
+  const { count, rows } = await AccionUsuario.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron acciones de usuarios creados", 404);
   }
-  return acciones;
+
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarAccionUsuarioEspecifico = async (id) => {

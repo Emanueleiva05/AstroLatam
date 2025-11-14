@@ -45,16 +45,26 @@ export const ListarObjetos = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const objetos = await Objeto.findAll(options);
-  if (objetos.length === 0) {
+  const { count, rows } = await Objeto.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron objetos creados", 404);
   }
 
-  await clientRedis.set("objeto:listado", JSON.stringify(objetos), {
+  await clientRedis.set("objeto:listado", JSON.stringify(rows), {
     EX: 3600,
   });
 
-  return objetos;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarObjetoEspecifico = async (id) => {

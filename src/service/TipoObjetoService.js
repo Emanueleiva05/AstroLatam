@@ -38,16 +38,26 @@ export const ListarTipoObjetos = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const tipoObjetos = await TipoObjeto.findAll(options);
-  if (tipoObjetos.length === 0) {
+  const { count, rows } = await TipoObjeto.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron tipoObjetos creados", 404);
   }
 
-  await clientRedis.set("tipoObjeto:listado", JSON.stringify(tipoObjetos), {
+  await clientRedis.set("tipoObjeto:listado", JSON.stringify(rows), {
     EX: 3600,
   });
 
-  return tipoObjetos;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarTipoObjetoEspecifico = async (id) => {

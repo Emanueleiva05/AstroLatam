@@ -33,16 +33,26 @@ export const ListarTipoAdjuntos = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const tipoAdjuntos = await TipoAdjunto.findAll(options);
-  if (tipoAdjuntos.length === 0) {
+  const { count, rows } = await TipoAdjunto.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron tipoAdjuntos creados", 404);
   }
 
-  await clientRedis.set("ipoAdjunto:listado", JSON.stringify(tipoAdjuntos), {
+  await clientRedis.set("ipoAdjunto:listado", JSON.stringify(rows), {
     EX: 3600,
   });
 
-  return tipoAdjuntos;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarTipoAdjuntoEspecifico = async (id) => {

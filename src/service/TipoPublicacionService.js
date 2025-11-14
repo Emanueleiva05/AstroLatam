@@ -46,17 +46,26 @@ export const ListarTipoPublicaciones = async (page, size) => {
     offset: parseInt(size) * parseInt(page),
   };
 
-  const tipoPublicaciones = await TipoPublicacion.findAll(options);
-  if (tipoPublicaciones.length === 0) {
+  const { count, rows } = await TipoPublicacion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron tipoPublicaciones creados", 404);
   }
 
-  await clientRedis.set(
-    "tipoPublicacion:listado",
-    JSON.stringify(tipoPublicaciones),
-    { EX: 3600 }
-  );
-  return tipoPublicaciones;
+  await clientRedis.set("tipoPublicacion:listado", JSON.stringify(rows), {
+    EX: 3600,
+  });
+
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarTipoPublicacionEspecifico = async (id) => {
