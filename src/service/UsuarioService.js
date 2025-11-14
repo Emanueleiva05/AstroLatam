@@ -1,5 +1,6 @@
 import Usuario from "../models/Usuario.js";
 import AppError from "../utils/AppError.js";
+import clientRedis from "../settings/redis.js";
 
 export const ModificarUsuario = async (
   usuario,
@@ -33,6 +34,11 @@ export const ListarUsuario = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
+  const reply = await clientRedis.get(
+    `usuario:listado:page=${page}:size=${size}`
+  );
+  if (reply) return JSON.parse(reply);
+
   const options = {
     limit: parseInt(size),
     offset: parseInt(size) * parseInt(page),
@@ -43,7 +49,7 @@ export const ListarUsuario = async (page, size) => {
     throw new AppError("No se encontraron usuarios creados", 404);
   }
 
-  return {
+  const response = {
     data: rows,
     meta: {
       page: parseInt(page),
@@ -54,6 +60,16 @@ export const ListarUsuario = async (page, size) => {
       havPrevPage: page > 0,
     },
   };
+
+  await clientRedis.set(
+    `usuario:listado:page=${page}:size=${size}`,
+    JSON.stringify(response),
+    {
+      EX: 3600,
+    }
+  );
+
+  return response;
 };
 
 export const ListarUsuarioEspecifico = async (id) => {

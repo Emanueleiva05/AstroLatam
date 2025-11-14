@@ -21,7 +21,7 @@ export const AgregarEvento = async (
     idTipoEvento,
   });
 
-  await clientRedis.del("evento:listado");
+  await clientRedis.del("evento:listado:*");
 
   return nuevo;
 };
@@ -36,7 +36,7 @@ export const ModificarEvento = async (
   fechaFin,
   idTipoEvento
 ) => {
-  await clientRedis.del("evento:listado");
+  await clientRedis.del("evento:listado:*");
   await clientRedis.del(`evento:${evento.idEvento}`);
 
   evento.nombre = nombre;
@@ -50,17 +50,19 @@ export const ModificarEvento = async (
 };
 
 export const EliminarEvento = async (evento) => {
-  await clientRedis.del("evento:listado");
+  await clientRedis.del("evento:listado:*");
   await clientRedis.del(`evento:${evento.idEvento}`);
   return await evento.destroy();
 };
 
 export const ListarEventos = async (page, size) => {
-  const reply = await clientRedis.get("evento:listado");
-  if (reply) return JSON.parse(reply);
-
   if (!page) page = 0;
   if (!size) size = 5;
+
+  const reply = await clientRedis.get(
+    `evento:listado:page=${page}:size=${size}`
+  );
+  if (reply) return JSON.parse(reply);
 
   const options = {
     limit: parseInt(size),
@@ -72,11 +74,7 @@ export const ListarEventos = async (page, size) => {
     throw new AppError("No se encontraron eventos creados", 404);
   }
 
-  await clientRedis.set("evento:listado", JSON.stringify(rows), {
-    EX: 3600,
-  });
-
-  return {
+  const response = {
     data: rows,
     meta: {
       page: parseInt(page),
@@ -87,6 +85,16 @@ export const ListarEventos = async (page, size) => {
       havPrevPage: page > 0,
     },
   };
+
+  await clientRedis.set(
+    `evento:listado:page=${page}:size=${size}`,
+    JSON.stringify(response),
+    {
+      EX: 3600,
+    }
+  );
+
+  return response;
 };
 
 export const ListarEvento = async (id) => {
