@@ -62,19 +62,12 @@ export const EliminarInstrumento = async (instrumento) => {
   return await instrumento.destroy();
 };
 
-export const ListarInstrumentos = async (page, size) => {
+export const ListarInstrumentos = async () => {
   const reply = await clientRedis.get("instrumento:listado");
   if (reply) return JSON.parse(reply);
 
-  if (!page) page = 0;
-  if (!size) size = 5;
+  const rows = await Instrumento.findAll();
 
-  const options = {
-    limit: parseInt(size),
-    offset: parseInt(size) * parseInt(page),
-  };
-
-  const { count, rows } = await Instrumento.findAndCountAll(options);
   if (rows.length === 0) {
     throw new AppError("No se encontraron instrumentos creados", 404);
   }
@@ -83,17 +76,7 @@ export const ListarInstrumentos = async (page, size) => {
     EX: 3600,
   });
 
-  return {
-    data: rows,
-    meta: {
-      page: parseInt(page),
-      size: options.limit,
-      totalItem: count,
-      totalPage: Math.ceil(count / options.limit),
-      hasNextPage: options.offset + options.limit < count,
-      havPrevPage: page > 0,
-    },
-  };
+  return rows;
 };
 
 export const ListarInstrumentoEspecifico = async (id) => {

@@ -21,19 +21,11 @@ export const EliminarCiudad = async (ciudad) => {
   return await ciudad.destroy();
 };
 
-export const ListarCiudades = async (page, size) => {
+export const ListarCiudades = async () => {
   const reply = await clientRedis.get("ciudad:listado");
   if (reply) return JSON.parse(reply);
 
-  if (!page) page = 0;
-  if (!size) size = 5;
-
-  const options = {
-    limit: parseInt(size),
-    offset: parseInt(size) * parseInt(page),
-  };
-
-  const { count, rows } = await Ciudad.findAndCountAll(options);
+  const rows = await Ciudad.findAll();
 
   if (rows.length === 0) {
     throw new AppError("No se encontraron ciudades creadas", 404);
@@ -43,17 +35,7 @@ export const ListarCiudades = async (page, size) => {
     EX: 3600,
   });
 
-  return {
-    data: rows,
-    meta: {
-      page: parseInt(page),
-      size: options.limit,
-      totalItem: count,
-      totalPage: Math.ceil(count / options.limit),
-      hasNextPage: options.offset + options.limit < count,
-      havPrevPage: page > 0,
-    },
-  };
+  return rows;
 };
 
 export const ListarCiudadEspecifico = async (id) => {

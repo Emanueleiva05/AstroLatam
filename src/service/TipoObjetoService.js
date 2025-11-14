@@ -26,19 +26,12 @@ export const EliminarTipoObjeto = async (tipoObjeto) => {
   return await tipoObjeto.destroy();
 };
 
-export const ListarTipoObjetos = async (page, size) => {
+export const ListarTipoObjetos = async () => {
   const reply = await clientRedis.get("tipoObjeto:listado");
   if (reply) return JSON.parse(reply);
 
-  if (!page) page = 0;
-  if (!size) size = 5;
+  const rows = await TipoObjeto.findAll();
 
-  const options = {
-    limit: parseInt(size),
-    offset: parseInt(size) * parseInt(page),
-  };
-
-  const { count, rows } = await TipoObjeto.findAndCountAll(options);
   if (rows.length === 0) {
     throw new AppError("No se encontraron tipoObjetos creados", 404);
   }
@@ -47,17 +40,7 @@ export const ListarTipoObjetos = async (page, size) => {
     EX: 3600,
   });
 
-  return {
-    data: rows,
-    meta: {
-      page: parseInt(page),
-      size: options.limit,
-      totalItem: count,
-      totalPage: Math.ceil(count / options.limit),
-      hasNextPage: options.offset + options.limit < count,
-      havPrevPage: page > 0,
-    },
-  };
+  return rows;
 };
 
 export const ListarTipoObjetoEspecifico = async (id) => {

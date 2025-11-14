@@ -21,19 +21,12 @@ export const EliminarTipoCondicion = async (tipoCondicion) => {
   return await tipoCondicion.destroy();
 };
 
-export const ListarTipoCondiciones = async (page, size) => {
+export const ListarTipoCondiciones = async () => {
   const reply = await clientRedis.get(`tipoCondicion:listado`);
   if (reply) return JSON.parse(reply);
 
-  if (!page) page = 0;
-  if (!size) size = 5;
+  const rows = await TipoCondicion.findAll();
 
-  const options = {
-    limit: parseInt(size),
-    offset: parseInt(size) * parseInt(page),
-  };
-
-  const { count, rows } = await TipoCondicion.findAndCountAll(options);
   if (rows.length === 0) {
     throw new AppError("No se encontraron tipoCondiciones creados", 404);
   }
@@ -42,17 +35,7 @@ export const ListarTipoCondiciones = async (page, size) => {
     EX: 3600,
   });
 
-  return {
-    data: rows,
-    meta: {
-      page: parseInt(page),
-      size: options.limit,
-      totalItem: count,
-      totalPage: Math.ceil(count / options.limit),
-      hasNextPage: options.offset + options.limit < count,
-      havPrevPage: page > 0,
-    },
-  };
+  return rows;
 };
 
 export const ListarTipoCondicionEspecifico = async (id) => {

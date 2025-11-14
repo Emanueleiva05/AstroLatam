@@ -25,32 +25,15 @@ export const ListarPaises = async (page, size) => {
   const reply = await clientRedis.get("pais:listado");
   if (reply) return JSON.parse(reply);
 
-  if (!page) page = 0;
-  if (!size) size = 5;
+  const rows = await Pais.findAll();
 
-  const options = {
-    limit: parseInt(size),
-    offset: parseInt(size) * parseInt(page),
-  };
-
-  const { count, rows } = await Pais.findAndCountAll(options);
   if (rows.length === 0) {
     throw new AppError("No se encontraron paises creados", 404);
   }
 
   await clientRedis.set("pais:listado", JSON.stringify(rows), { EX: 3600 });
 
-  return {
-    data: rows,
-    meta: {
-      page: parseInt(page),
-      size: options.limit,
-      totalItem: count,
-      totalPage: Math.ceil(count / options.limit),
-      hasNextPage: options.offset + options.limit < count,
-      havPrevPage: page > 0,
-    },
-  };
+  return rows;
 };
 
 export const ListarPaisEspecifico = async (id) => {
