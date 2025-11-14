@@ -1,5 +1,6 @@
 import Publicacion from "../models/Publicacion.js";
 import AppError from "../utils/AppError.js";
+import clientRedis from "../settings/redis.js";
 
 export const AgregarPublicacion = async (
   titulo,
@@ -31,12 +32,46 @@ export const EliminarPublicacion = async (publicacion) => {
   return await publicacion.destroy();
 };
 
-export const ListarPublicaciones = async (id) => {
-  const publicaciones = await Publicacion.findAll();
-  if (publicaciones.length === 0) {
+export const ListarPublicaciones = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 5;
+
+  const reply = await clientRedis.get(
+    `publicacion:listado:page=${page}:size=${size}`
+  );
+  if (reply) return JSON.parse(reply);
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const { count, rows } = await Publicacion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron publicacion creados", 404);
   }
-  return publicaciones;
+
+  const response = {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
+
+  await clientRedis.set(
+    `publicacion:listado:page=${page}:size=${size}`,
+    JSON.stringify(response),
+    {
+      EX: 3600,
+    }
+  );
+
+  return response;
 };
 
 export const ListarPublicacionEspecifico = async (id) => {

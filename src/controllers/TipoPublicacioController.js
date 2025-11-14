@@ -52,7 +52,10 @@ export const ReadTipoPublicacionEspecifico = async (req, res, next) => {
 
 export const ReadTipoPublicacion = async (req, res, next) => {
   try {
-    const tipoPublicaciones = await ListarTipoPublicaciones();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const tipoPublicaciones = await ListarTipoPublicaciones(page, size);
     res.status(200).json(tipoPublicaciones);
   } catch (error) {
     next(error);

@@ -17,6 +17,7 @@ import {
   verificarTokenOpcional,
   verificarTokenRequired,
 } from "../middlewares/AuthMiddleware.js";
+import { validarPageSize } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
@@ -39,7 +40,7 @@ router.put(
 
 router.delete("/:id", EncontrarCondicion, DeleteObservacionCondiciones);
 
-router.get("/", ReadObservacionCondiciones);
+router.get("/", validarPageSize, ReadObservacionCondiciones);
 
 router.get("/:id", EncontrarCondicion, ReadObservacionCondicionesEspecifico);
 

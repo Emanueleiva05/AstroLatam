@@ -81,7 +81,10 @@ export const DeleteEvento = async (req, res, next) => {
 
 export const ReadEvento = async (req, res, next) => {
   try {
-    const eventos = await ListarEventos();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const eventos = await ListarEventos(page, size);
     res.status(200).json(eventos);
   } catch (error) {
     next(error);

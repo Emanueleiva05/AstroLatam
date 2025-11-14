@@ -29,12 +29,31 @@ export const EliminarObservacionCondicion = async (observacionCondicion) => {
   return await observacionCondicion.destroy();
 };
 
-export const ListarObservacionCondiciones = async () => {
-  const observacionCondiciones = await ObservacionCondicion.findAll();
-  if (observacionCondiciones.length === 0) {
+export const ListarObservacionCondiciones = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 5;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const { count, rows } = await ObservacionCondicion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron objetos condiciones creados", 404);
   }
-  return observacionCondiciones;
+
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarObservacionCondicionEspecifico = async (id) => {

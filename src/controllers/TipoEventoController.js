@@ -44,7 +44,10 @@ export const DeleteTipoEvento = async (req, res, next) => {
 
 export const ReadTiposEvento = async (req, res, next) => {
   try {
-    const tiposEventos = await ListarTipoEventos();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const tiposEventos = await ListarTipoEventos(page, size);
     res.status(200).json(tiposEventos);
   } catch (error) {
     next(error);

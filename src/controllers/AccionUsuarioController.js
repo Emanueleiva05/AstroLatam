@@ -57,7 +57,10 @@ export const DeleteAccionUsuario = async (req, res, next) => {
 
 export const ReadAccionUsuario = async (req, res, next) => {
   try {
-    const accionusuarios = await ListarAccionUsuarios();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const accionusuarios = await ListarAccionUsuarios(page, size);
     res.status(200).json(accionusuarios);
   } catch (error) {
     next(error);

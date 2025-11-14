@@ -48,7 +48,10 @@ export const ReadTipoObjetoEspecifico = async (req, res, next) => {
 
 export const ReadTipoObjeto = async (req, res, next) => {
   try {
-    const tipoObjeto = await ListarTipoObjetos();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const tipoObjeto = await ListarTipoObjetos(page, size);
     res.status(200).json(tipoObjeto);
   } catch (error) {
     next(error);

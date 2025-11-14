@@ -39,12 +39,30 @@ export const EliminarUbicacion = async (ubicacion) => {
   return await ubicacion.destroy();
 };
 
-export const ListarUbicaciones = async () => {
-  const ubicaciones = await Ubicacion.findAll();
-  if (ubicaciones.length === 0) {
+export const ListarUbicaciones = async (page, size) => {
+  if (!page) page = 0;
+  if (!size) size = 5;
+
+  const options = {
+    limit: parseInt(size),
+    offset: parseInt(size) * parseInt(page),
+  };
+
+  const { count, rows } = await Ubicacion.findAndCountAll(options);
+  if (rows.length === 0) {
     throw new AppError("No se encontraron ubicaciones creadas", 404);
   }
-  return ubicaciones;
+  return {
+    data: rows,
+    meta: {
+      page: parseInt(page),
+      size: options.limit,
+      totalItem: count,
+      totalPage: Math.ceil(count / options.limit),
+      hasNextPage: options.offset + options.limit < count,
+      havPrevPage: page > 0,
+    },
+  };
 };
 
 export const ListarUbicacionEspecifico = async (id) => {

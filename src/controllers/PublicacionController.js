@@ -62,7 +62,10 @@ export const DeletePublicacion = async (req, res) => {
 
 export const ReadPublicacion = async (req, res) => {
   try {
-    const publicaciones = await ListarPublicaciones();
+    const page = req.query.page;
+    const size = req.query.size;
+
+    const publicaciones = await ListarPublicaciones(page, size);
     res.status(200).json(publicaciones);
   } catch (error) {
     next(error);

@@ -15,6 +15,8 @@ import {
   verificarTokenOpcional,
   verificarTokenRequired,
 } from "../middlewares/AuthMiddleware.js";
+import { validarPageSize } from "../utils/GeneralValidation.js";
+
 const router = Router();
 
 router.post(
@@ -42,7 +44,7 @@ router.delete(
   DeleteTipoAdjunto
 );
 
-router.get("/", verificarTokenOpcional, ReadTiposAdjuntos);
+router.get("/", verificarTokenOpcional, validarPageSize, ReadTiposAdjuntos);
 
 router.get(
   "/:id",

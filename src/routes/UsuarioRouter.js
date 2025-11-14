@@ -24,6 +24,7 @@ import {
   verificarTokenRequired,
   verificarUsuario,
 } from "../middlewares/AuthMiddleware.js";
+import { validarPageSize } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
@@ -57,7 +58,7 @@ router.delete(
   DeleteUsuario
 );
 
-router.get("/", verificarTokenOpcional, ReadUsuario);
+router.get("/", verificarTokenOpcional, validarPageSize, ReadUsuario);
 
 router.get(
   "/:id",
