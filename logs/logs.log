@@ -304,3 +304,20 @@
 [2025-11-13 21:06:53] error: [Code: 400]: Nombre no valido para el tipo publicacion
 [2025-11-13 21:06:53] info: [gab6hnk] POST /api/tipoPublicacion 400 - 4ms
 [2025-11-13 21:06:58] info: [3044mbq] GET /api/tipoPublicacion 200 - 13ms
+[2025-11-14 16:35:26] info: [yiv01qk] GET /api/evento 200 - 4ms
+[2025-11-14 16:35:40] info: [1liub4h] GET /api/evento/listarPaises/1 200 - 21ms
+[2025-11-14 16:35:55] error: [Code: 500]: evento.getObjetos is not a function
+[2025-11-14 16:35:55] info: [0163pig] GET /api/evento/listarObjetos/1 500 - 3ms
+[2025-11-14 16:36:45] error: [Code: 500]: evento.getAdjuntos is not a function
+[2025-11-14 16:36:45] info: [0rhmmbe] GET /api/evento/listarAdjuntos/1 500 - 7ms
+[2025-11-14 16:38:12] info: [a3rmzsl] GET /api/evento/listaPaises/1 404 - 2ms
+[2025-11-14 16:38:17] info: [s5a5l5v] GET /api/evento/listarPaises/1 200 - 3ms
+[2025-11-14 16:38:43] info: [jxwitkk] GET /api/evento/listarPaises/1 200 - 5ms
+[2025-11-14 16:39:13] info: [gx5afp0] GET /api/evento/listarPaises/1 200 - 5ms
+[2025-11-14 16:39:44] info: [6crz4w7] GET /api/evento/listarPaises/1 200 - 3ms
+[2025-11-14 16:40:00] info: [tuxxrlt] GET /api/evento/listarPaises/1 200 - 4ms
+[2025-11-14 16:40:09] info: [jzn6l1n] GET /api/evento/listarPaises/1 200 - 5ms
+[2025-11-14 16:40:17] error: [Code: 500]: evento.getPaises is not a function
+[2025-11-14 16:40:17] info: [cb9y1f0] GET /api/evento/listarPaises/1 500 - 6ms
+[2025-11-14 16:40:31] error: [Code: 500]: evento.getPais is not a function
+[2025-11-14 16:40:31] info: [p0vuydq] GET /api/evento/listarPaises/1 500 - 6ms

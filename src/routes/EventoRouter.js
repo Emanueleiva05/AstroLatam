@@ -130,7 +130,7 @@ router.delete(
 );
 
 router.get(
-  "/listarInstrumentos/:id",
+  "/listarAdjuntos/:id",
   verificarTokenOpcional,
   EncontrarEvento,
   ReadAdjuntos
