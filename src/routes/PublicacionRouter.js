@@ -55,7 +55,7 @@ router.get(
 );
 
 router.put(
-  "/visibilidad/:id",
+  "/visible/:id",
   verificarTokenRequired,
   EncontrarPublicacion,
   verificarUsuario,

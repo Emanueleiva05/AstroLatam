@@ -57,7 +57,7 @@ router.post(
 );
 
 router.put(
-  "/visibilidad/:targetType/:targetId",
+  "/visible/:targetType/:targetId",
   verificarTokenRequired,
   tieneRol("administrador"),
   HideReportes

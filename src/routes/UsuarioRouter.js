@@ -68,7 +68,7 @@ router.get(
 );
 
 router.post(
-  "/agregarInstrumento/:id/:idInstrumento",
+  "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
   EncontrarUsuario,
   verificarUsuario,
@@ -77,7 +77,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarInstrumento/:id/:idInstrumento",
+  "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
   EncontrarUsuario,
   verificarUsuario,
@@ -86,14 +86,14 @@ router.delete(
 );
 
 router.get(
-  "/listarInstrumentos/:id",
+  "/:id/instrumentos",
   verificarTokenOpcional,
   EncontrarUsuario,
   ReadInstrumentos
 );
 
 router.get(
-  "/listarInstrumentosEspecifico/:id/:idInstrumento",
+  "/:id/instrumentos/:idInstrumento",
   verificarTokenOpcional,
   EncontrarUsuario,
   EncontrarInstrumentoUsuario,

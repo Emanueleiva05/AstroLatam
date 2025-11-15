@@ -75,7 +75,7 @@ router.get(
 );
 
 router.post(
-  "/agregarAdjunto/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   tieneRol("administrador"),
   EncontrarEvento,
@@ -84,7 +84,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarAdjunto/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   tieneRol("administrador"),
   EncontrarEvento,
@@ -93,7 +93,7 @@ router.delete(
 );
 
 router.post(
-  "/agregarPais/:id/:idPais",
+  "/:id/paises/:idPais",
   verificarTokenRequired,
   tieneRol("administrador"),
   EncontrarEvento,
@@ -102,7 +102,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarPais/:id/:idPais",
+  "/:id/paises/:idPais",
   verificarTokenRequired,
   tieneRol("administrador"),
   EncontrarEvento,
@@ -111,7 +111,7 @@ router.delete(
 );
 
 router.post(
-  "/agregarObjeto/:id/:idObjeto",
+  "/:id/objetos/:idObjeto",
   verificarTokenRequired,
   tieneRol("administrador"),
   EncontrarEvento,
@@ -120,7 +120,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarObjeto/:id/:idObjeto",
+  "/:id/objetos/:idObjeto",
   verificarTokenRequired,
   tieneRol("administrador"),
   EncontrarEvento,
@@ -130,29 +130,24 @@ router.delete(
 );
 
 router.get(
-  "/listarAdjuntos/:id",
+  "/:id/adjuntos",
   verificarTokenOpcional,
   EncontrarEvento,
   ReadAdjuntos
 );
 
 router.get(
-  "/listarInstrumentosEspecifico/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenOpcional,
   EncontrarEvento,
   EncontrarAdjuntoEvento,
   ReadAdjuntoEspecifico
 );
 
-router.get(
-  "/listarPaises/:id",
-  verificarTokenOpcional,
-  EncontrarEvento,
-  ReadPaises
-);
+router.get("/:id/paises", verificarTokenOpcional, EncontrarEvento, ReadPaises);
 
 router.get(
-  "/listarPaisEspecifico/:id/:idPais",
+  "/:id/paises/:idPais",
   verificarTokenOpcional,
   EncontrarEvento,
   EncontrarPaisEvento,
@@ -160,14 +155,14 @@ router.get(
 );
 
 router.get(
-  "/listarObjetos/:id",
+  "/:id/objetos",
   verificarTokenOpcional,
   EncontrarEvento,
   ReadObjetos
 );
 
 router.get(
-  "/listarObjetoEspecifico/:id/:idObjeto",
+  "/:id/objetos/:idObjeto",
   verificarTokenOpcional,
   EncontrarEvento,
   EncontrarObjetosEvento,

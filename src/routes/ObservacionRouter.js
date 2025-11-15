@@ -83,7 +83,7 @@ router.get(
 );
 
 router.post(
-  "/agregarAdjunto/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -92,7 +92,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarAdjunto/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -101,7 +101,7 @@ router.delete(
 );
 
 router.post(
-  "/agregarObjeto/:id/:idObjeto",
+  "/:id/objetos/:idObjeto",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -110,7 +110,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarObjeto/:id/:idObjeto",
+  "/:id/objetos/:idObjeto",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -119,7 +119,7 @@ router.delete(
 );
 
 router.post(
-  "/agregarEvento/:id/:idEvento",
+  "/:id/eventos/:idEvento",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -128,7 +128,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarEvento/:id/:idEvento",
+  "/:id/eventos/:idEvento",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -137,7 +137,7 @@ router.delete(
 );
 
 router.post(
-  "/agregarInstrumento/:id/:idInstrumento",
+  "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -147,7 +147,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarInstrumento/:id/:idInstrumento",
+  "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,
@@ -156,14 +156,14 @@ router.delete(
 );
 
 router.get(
-  "/listarObjetos/:id",
+  "/:id/objetos",
   verificarTokenOpcional,
   EncontrarObservacion,
   ReadObjeto
 );
 
 router.get(
-  "/listarObjetoEspecifico/:id/:idObjeto",
+  "/:id/objetos/:idObjeto",
   verificarTokenOpcional,
   EncontrarObservacion,
   EncontrarObservacionObjeto,
@@ -171,14 +171,14 @@ router.get(
 );
 
 router.get(
-  "/listarEventos/:id",
+  "/:id/eventos",
   verificarTokenOpcional,
   EncontrarObservacion,
   ReadEvento
 );
 
 router.get(
-  "/listarEventoEspecifico/:id/:idEvento",
+  "/:id/eventos/:idEvento",
   verificarTokenOpcional,
   EncontrarObservacion,
   EncontrarObservacionEvento,
@@ -186,14 +186,14 @@ router.get(
 );
 
 router.get(
-  "/listarAdjuntos/:id",
+  "/:id/adjuntos",
   verificarTokenOpcional,
   EncontrarObservacion,
   ReadAdjuntos
 );
 
 router.get(
-  "/listarAdjuntoEspecifico/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenOpcional,
   EncontrarObservacion,
   EncontrarObservacionAdjunto,
@@ -201,14 +201,14 @@ router.get(
 );
 
 router.get(
-  "/listarInstrumentos/:id",
+  "/:id/instrumentos",
   verificarTokenOpcional,
   EncontrarObservacion,
   ReadInstrumento
 );
 
 router.get(
-  "/listarInstrumentoEspecifico/:id/:idInstrumento",
+  "/:id/instrumentos/:idInstrumento",
   verificarTokenOpcional,
   EncontrarObservacion,
   EncontrarObservacionInstrumento,
@@ -216,7 +216,7 @@ router.get(
 );
 
 router.put(
-  "/visibilidad/:id",
+  "/visible/:id",
   verificarTokenRequired,
   EncontrarObservacion,
   verificarUsuario,

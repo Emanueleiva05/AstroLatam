@@ -61,7 +61,7 @@ router.get(
 );
 
 router.post(
-  "/agregarAdjunto/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   EncontrarObjeto,
   tieneRol("administrador"),
@@ -70,7 +70,7 @@ router.post(
 );
 
 router.delete(
-  "/eliminarAdjunto/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   EncontrarObjeto,
   tieneRol("administrador"),
@@ -79,14 +79,14 @@ router.delete(
 );
 
 router.get(
-  "/listarAdjuntos/:id",
+  "/:id/adjuntos",
   verificarTokenOpcional,
   EncontrarObjeto,
   ReadAdjuntos
 );
 
 router.get(
-  "/listarAdjuntoEspecifico/:id/:idAdjunto",
+  "/:id/adjuntos/:idAdjunto",
   verificarTokenOpcional,
   EncontrarObjeto,
   EncontrarAdjuntoObjeto,

@@ -146,6 +146,9 @@ export const EliminarPais = async (evento, pais) => {
 };
 
 export const ListarPaises = async (evento) => {
+  const reply = await clientRedis.get("evento:pais:listado");
+  if (reply) return JSON.parse(reply);
+
   const paises = await evento.getPais();
 
   await clientRedis.set("evento:pais:listado", JSON.stringify(paises), {
