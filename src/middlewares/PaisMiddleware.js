@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
-import { ListarPaisEspecifico } from "../service/PaisService.js";
+import { getCountryById } from "../service/PaisService.js";
 
-export const ValidarDatosPais = (req, res, next) => {
+export const validateCountryData = (req, res, next) => {
   const { nombre } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -11,11 +11,11 @@ export const ValidarDatosPais = (req, res, next) => {
   next();
 };
 
-export const EncontrarPais = async (req, res, next) => {
+export const findCountry = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const pais = await ListarPaisEspecifico(id);
+    const pais = await getCountryById(id);
     if (!pais) {
       throw new AppError("No se encontro el pais especifico", 404);
     }

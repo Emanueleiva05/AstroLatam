@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
-import { ListarTipoInstrumentoEspecifico } from "../service/TipoInstrumentoService.js";
+import { getInstrumentTypeById } from "../service/TipoInstrumentoService.js";
 
-export const ValidarDatosTiposInstrumento = (req, res, next) => {
+export const validateInstrumentTypeData = (req, res, next) => {
   const { nombre, descripcion } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -15,11 +15,11 @@ export const ValidarDatosTiposInstrumento = (req, res, next) => {
   next();
 };
 
-export const EncontrarTipoInstrumento = async (req, res, next) => {
+export const findInstrumentType = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const tipoInstrumento = await ListarTipoInstrumentoEspecifico(id);
+    const tipoInstrumento = await getInstrumentTypeById(id);
 
     if (!tipoInstrumento) {
       throw new AppError("No se encontro el tipoInstrumento especifico", 404);

@@ -2,7 +2,7 @@ import TipoPublicacion from "../models/TipoPublicacion.js";
 import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarTipoPublicacion = async (nombre, descripcion) => {
+export const createPublicationType = async (nombre, descripcion) => {
   const nuevo = await TipoPublicacion.create({
     nombre,
     descripcion,
@@ -13,7 +13,7 @@ export const AgregarTipoPublicacion = async (nombre, descripcion) => {
   return nuevo;
 };
 
-export const ModificarTipoPublicacion = async (
+export const updatePublicationType = async (
   tipoPublicacion,
   nombre,
   descripcion
@@ -27,14 +27,14 @@ export const ModificarTipoPublicacion = async (
   return await tipoPublicacion.save();
 };
 
-export const EliminarTipoPublicacion = async (tipoPublicacion) => {
+export const deletePublicationType = async (tipoPublicacion) => {
   await clientRedis.del("tipoPublicacion:listado");
   await clientRedis.del(`tipoPublicacion:${tipoPublicacion.idTipoPublicacion}`);
 
   return await tipoPublicacion.destroy();
 };
 
-export const ListarTipoPublicaciones = async () => {
+export const getPublicationTypes = async () => {
   const reply = await clientRedis.get("tipoPublicacion:listado");
   if (reply) return JSON.parse(reply);
 
@@ -51,7 +51,7 @@ export const ListarTipoPublicaciones = async () => {
   return rows;
 };
 
-export const ListarTipoPublicacionEspecifico = async (id) => {
+export const getPublicationTypeById = async (id) => {
   const reply = await clientRedis.get(`tipoPublicacion:${id}`);
   if (reply) return JSON.parse(reply);
 

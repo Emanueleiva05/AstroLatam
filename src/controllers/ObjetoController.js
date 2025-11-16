@@ -1,58 +1,58 @@
 import {
-  AgregarObjeto,
-  EliminarObjeto,
-  ModificarObjeto,
-  ListarObjetos,
-  AgregarAdjunto,
-  EliminarAdjunto,
-  ListarAdjuntos,
+  createObject,
+  deleteObject,
+  updateObject,
+  getObjects,
+  addObjectAttachment,
+  removeObjectAttachment,
+  getObjectAttachments,
 } from "../service/ObjetoService.js";
 
-export const SetObjeto = async (req, res, next) => {
+export const createObjectHandler = async (req, res, next) => {
   const { nombre, descripcion, idTipoObjeto } = req.body;
   try {
-    await AgregarObjeto(nombre, descripcion, idTipoObjeto);
+    await createObject(nombre, descripcion, idTipoObjeto);
     res.status(201).json({ message: "Objeto creado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const UpdateObjeto = async (req, res, next) => {
+export const updateObjectHandler = async (req, res, next) => {
   const objeto = req.objeto;
   const { nombre, descripcion, idTipoObjeto } = req.body;
 
   try {
-    await ModificarObjeto(objeto, nombre, descripcion, idTipoObjeto);
+    await updateObject(objeto, nombre, descripcion, idTipoObjeto);
     res.status(204).json({ message: "Objeto modificado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const DeleteObjeto = async (req, res, next) => {
+export const deleteObjectHandler = async (req, res, next) => {
   const objeto = req.objeto;
   try {
-    await EliminarObjeto(objeto);
+    await deleteObject(objeto);
     res.status(204).json({ message: "Objeto eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObjeto = async (req, res, next) => {
+export const getObjectsHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const objetos = await ListarObjetos(page, size);
+    const objetos = await getObjects(page, size);
     res.status(200).json(objetos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObjetoEspecifico = async (req, res, next) => {
+export const getObjectHandler = async (req, res, next) => {
   const objeto = req.objeto;
   try {
     const obj = objeto;
@@ -62,34 +62,34 @@ export const ReadObjetoEspecifico = async (req, res, next) => {
   }
 };
 
-export const SetAdjunto = async (req, res, next) => {
+export const addObjectAttachmentHandler = async (req, res, next) => {
   try {
-    await AgregarAdjunto(req.objeto, req.adjunto);
+    await addObjectAttachment(req.objeto, req.adjunto);
     res.status(201).json({ message: "Se agrego el adjunto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const RemoveAdjunto = async (req, res, next) => {
+export const removeObjectAttachmentHandler = async (req, res, next) => {
   try {
-    await EliminarAdjunto(req.objeto, req.adjunto);
+    await removeObjectAttachment(req.objeto, req.adjunto);
     res.status(204).json({ message: "Se elimino el adjunto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadAdjuntos = async (req, res, next) => {
+export const getObjectAttachmentsHandler = async (req, res, next) => {
   try {
-    const adjuntos = await ListarAdjuntos(req.objeto);
+    const adjuntos = await getObjectAttachments(req.objeto);
     res.status(200).json(adjuntos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadAdjuntoEspecifico = async (req, res, next) => {
+export const getObjectAttachmentHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.adjunto);
   } catch (error) {

@@ -1,8 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarPublicacionEspecifico } from "../service/PublicacionService.js";
-import { ListarTipoPublicacionEspecifico } from "../service/TipoPublicacionService.js";
+import { getPublicationById } from "../service/PublicacionService.js";
+import { getPublicationTypeById } from "../service/TipoPublicacionService.js";
 
-export const ValidarDatosPublicacion = (req, res, next) => {
+export const validatePublicationData = (req, res, next) => {
   const { titulo, descripcion, fechaPublicacion, idTipoPublicacion } = req.body;
 
   if (!titulo || titulo.trim() === "") {
@@ -24,11 +24,11 @@ export const ValidarDatosPublicacion = (req, res, next) => {
   next();
 };
 
-export const EncontrarPublicacion = async (req, res, next) => {
+export const findPublication = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const publicacion = await ListarPublicacionEspecifico(id);
+    const publicacion = await getPublicationById(id);
     if (!publicacion) {
       throw new AppError("No se encontro la publicacion especifica", 404);
     }
@@ -40,13 +40,11 @@ export const EncontrarPublicacion = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaTipoPublicacion = async (req, res, next) => {
+export const validatePublicationTypeExist = async (req, res, next) => {
   try {
     const { idTipoPublicacion } = req.body;
 
-    const tipoPublicacion = await ListarTipoPublicacionEspecifico(
-      idTipoPublicacion
-    );
+    const tipoPublicacion = await getPublicationTypeById(idTipoPublicacion);
     if (!tipoPublicacion) {
       throw new AppError("No se encontro el tipoPublicacion especifico", 404);
     }

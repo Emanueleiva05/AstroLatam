@@ -2,7 +2,7 @@ import TipoObjeto from "../models/TipoObjeto.js";
 import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarTipoObjeto = async (nombre, descripcion) => {
+export const createObjectType = async (nombre, descripcion) => {
   const nuevo = await TipoObjeto.create({ nombre, descripcion });
 
   await clientRedis.del("tipoObjeto:listado");
@@ -10,7 +10,7 @@ export const AgregarTipoObjeto = async (nombre, descripcion) => {
   return nuevo;
 };
 
-export const ModificarTipoObjeto = async (tipoObjeto, nombre, descripcion) => {
+export const updateObjectType = async (tipoObjeto, nombre, descripcion) => {
   await clientRedis.del("tipoObjeto:listado");
   await clientRedis.del(`tipoObjeto:${tipoObjeto.idTipoObjeto}`);
   tipoObjeto.nombre = nombre;
@@ -19,14 +19,14 @@ export const ModificarTipoObjeto = async (tipoObjeto, nombre, descripcion) => {
   return await tipoObjeto.save();
 };
 
-export const EliminarTipoObjeto = async (tipoObjeto) => {
+export const deleteObjectType = async (tipoObjeto) => {
   await clientRedis.del("tipoObjeto:listado");
   await clientRedis.del(`tipoObjeto:${tipoObjeto.idTipoObjeto}`);
 
   return await tipoObjeto.destroy();
 };
 
-export const ListarTipoObjetos = async () => {
+export const getObjectTypes = async () => {
   const reply = await clientRedis.get("tipoObjeto:listado");
   if (reply) return JSON.parse(reply);
 
@@ -43,7 +43,7 @@ export const ListarTipoObjetos = async () => {
   return rows;
 };
 
-export const ListarTipoObjetoEspecifico = async (id) => {
+export const getObjectTypeById = async (id) => {
   const reply = await clientRedis.get(`tipoObjeto:${id}`);
   if (reply) return JSON.parse(reply);
 

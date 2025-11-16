@@ -1,7 +1,7 @@
 import Ubicacion from "../models/Ubicacion.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarUbicacion = async (
+export const createLocation = async (
   latitud,
   longitud,
   tz_original,
@@ -19,7 +19,7 @@ export const AgregarUbicacion = async (
   });
 };
 
-export const ModificarUbicacion = async (
+export const updateLocation = async (
   ubicacion,
   latitud,
   longitud,
@@ -35,11 +35,11 @@ export const ModificarUbicacion = async (
   return await ubicacion.save();
 };
 
-export const EliminarUbicacion = async (ubicacion) => {
+export const deleteLocation = async (ubicacion) => {
   return await ubicacion.destroy();
 };
 
-export const ListarUbicaciones = async (page, size) => {
+export const getLocations = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
@@ -65,7 +65,7 @@ export const ListarUbicaciones = async (page, size) => {
   };
 };
 
-export const ListarUbicacionEspecifico = async (id) => {
+export const getLocationById = async (id) => {
   const ubicacion = await Ubicacion.findByPk(id);
   return ubicacion;
 };

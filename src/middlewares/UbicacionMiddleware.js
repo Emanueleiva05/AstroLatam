@@ -1,8 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarUbicacionEspecifico } from "../service/UbicacionService.js";
-import { ListarCiudadEspecifico } from "../service/CiudadService.js";
+import { getLocationById } from "../service/UbicacionService.js";
+import { getCityById } from "../service/CiudadService.js";
 
-export const ValidarDatosUbicacion = (req, res, next) => {
+export const validateLocationData = (req, res, next) => {
   const { latitud, longitud, tz_original, timestamp_utc, geohash, idCiudad } =
     req.body;
 
@@ -33,11 +33,11 @@ export const ValidarDatosUbicacion = (req, res, next) => {
   next();
 };
 
-export const EncontrarUbicacion = async (req, res, next) => {
+export const findLocation = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const ubicacion = await ListarUbicacionEspecifico(id);
+    const ubicacion = await getLocationById(id);
     if (!ubicacion) {
       throw new AppError("No se encontro la ubicacion especifica", 404);
     }
@@ -49,11 +49,11 @@ export const EncontrarUbicacion = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaCiudad = async (req, res, next) => {
+export const validateCityExists = async (req, res, next) => {
   try {
     const { idCiudad } = req.body;
 
-    const ciudad = await ListarCiudadEspecifico(idCiudad);
+    const ciudad = await getCityById(idCiudad);
     if (!ciudad) {
       throw new AppError("No se encontro la ciudad especifica", 404);
     }

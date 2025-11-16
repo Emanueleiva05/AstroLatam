@@ -5,7 +5,7 @@ import {
   ListarTipoPublicaciones,
 } from "../service/TipoPublicacionService.js";
 
-export const SetTipoPublicacion = async (req, res, next) => {
+export const createPublicationTypeHandler = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
     await AgregarTipoPublicacion(nombre, descripcion);
@@ -15,7 +15,7 @@ export const SetTipoPublicacion = async (req, res, next) => {
   }
 };
 
-export const UpdateTipoPublicacion = async (req, res, next) => {
+export const updatePublicationTypeHandler = async (req, res, next) => {
   const tipoPublicacion = req.tipoPublicacion;
   const { nombre, descripcion } = req.body;
   try {
@@ -28,7 +28,7 @@ export const UpdateTipoPublicacion = async (req, res, next) => {
   }
 };
 
-export const DeleteTipoPublicacion = async (req, res, next) => {
+export const deletePublicationTypeHandler = async (req, res, next) => {
   const tipoPublicacion = req.tipoPublicacion;
   try {
     await EliminarTipoPublicacion(tipoPublicacion);
@@ -40,7 +40,7 @@ export const DeleteTipoPublicacion = async (req, res, next) => {
   }
 };
 
-export const ReadTipoPublicacionEspecifico = async (req, res, next) => {
+export const getPublicationTypeHandler = async (req, res, next) => {
   const tipoPublicacion = req.tipoPublicacion;
   try {
     const tipoPu = tipoPublicacion;
@@ -50,7 +50,7 @@ export const ReadTipoPublicacionEspecifico = async (req, res, next) => {
   }
 };
 
-export const ReadTipoPublicacion = async (req, res, next) => {
+export const getPublicationTypesHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;

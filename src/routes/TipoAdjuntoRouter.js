@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-  DeleteTipoAdjunto,
-  ReadTipoAdjunto,
-  ReadTiposAdjuntos,
-  SetTipoAdjunto,
-  UpdateTipoAdjunto,
+  deleteAttachmentTypeHandler,
+  getAttachmentTypeHandler,
+  getAttachmentTypesHandler,
+  createAttachmentTypeHandler,
+  updateAttachmentTypeHandler,
 } from "../controllers/TipoAdjuntoController.js";
 import {
-  EncontrarTipoAdjunto,
-  ValidarDatosTiposAdjunto,
+  findAttachmentType,
+  validateAttachmentTypeData,
 } from "../middlewares/TipoAdjuntoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,34 +23,39 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosTiposAdjunto,
-  SetTipoAdjunto
+  validateAttachmentTypeData,
+  createAttachmentTypeHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoAdjunto,
-  ValidarDatosTiposAdjunto,
-  UpdateTipoAdjunto
+  findAttachmentType,
+  validateAttachmentTypeData,
+  updateAttachmentTypeHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoAdjunto,
-  DeleteTipoAdjunto
+  findAttachmentType,
+  deleteAttachmentTypeHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadTiposAdjuntos);
+router.get(
+  "/",
+  verificarTokenOpcional,
+  validarPageSize,
+  getAttachmentTypesHandler
+);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarTipoAdjunto,
-  ReadTipoAdjunto
+  findAttachmentType,
+  getAttachmentTypeHandler
 );
 
 export default router;

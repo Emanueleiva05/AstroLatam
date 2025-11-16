@@ -1,14 +1,14 @@
 import {
-  AgregarTipoAdjunto,
-  ListarTipoAdjuntos,
-  EliminarTipoAdjunto,
-  ModificarTipoAdjunto,
+  createAttachmentType,
+  getAttachmentTypes,
+  deleteAttachmentType,
+  updateAttachmentType,
 } from "../service/TipoAdjuntoService.js";
 
-export const SetTipoAdjunto = async (req, res, next) => {
+export const createAttachmentTypeHandler = async (req, res, next) => {
   const { nombre } = req.body;
   try {
-    await AgregarTipoAdjunto(nombre);
+    await createAttachmentType(nombre);
     res.status(201).json({
       message: "Se agrego el TipoAdjunto con exito",
     });
@@ -17,11 +17,11 @@ export const SetTipoAdjunto = async (req, res, next) => {
   }
 };
 
-export const UpdateTipoAdjunto = async (req, res, next) => {
+export const updateAttachmentTypeHandler = async (req, res, next) => {
   const { nombre } = req.body;
   const tipoAdjunto = req.tipoAdjunto;
   try {
-    await ModificarTipoAdjunto(tipoAdjunto, nombre);
+    await updateAttachmentType(tipoAdjunto, nombre);
     res.status(204).json({
       message: "Se modifico el TipoAdjunto con exito",
     });
@@ -30,11 +30,11 @@ export const UpdateTipoAdjunto = async (req, res, next) => {
   }
 };
 
-export const DeleteTipoAdjunto = async (req, res, next) => {
+export const deleteAttachmentTypeHandler = async (req, res, next) => {
   const tipoAdjunto = req.tipoAdjunto;
 
   try {
-    await EliminarTipoAdjunto(tipoAdjunto);
+    await deleteAttachmentType(tipoAdjunto);
     res.status(204).json({
       message: "Se elimino el TipoAdjunto con exito",
     });
@@ -43,19 +43,19 @@ export const DeleteTipoAdjunto = async (req, res, next) => {
   }
 };
 
-export const ReadTiposAdjuntos = async (req, res, next) => {
+export const getAttachmentTypesHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const TiposAdjuntos = await ListarTipoAdjuntos(page, size);
+    const TiposAdjuntos = await getAttachmentTypes(page, size);
     res.status(200).json(TiposAdjuntos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoAdjunto = async (req, res, next) => {
+export const getAttachmentTypeHandler = async (req, res, next) => {
   const tipoAdjunto = req.tipoAdjunto;
   try {
     const tipoAd = tipoAdjunto;

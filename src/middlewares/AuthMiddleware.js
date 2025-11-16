@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import AppError from "../utils/AppError.js";
 
-export const verificarTokenOpcional = (req, res, next) => {
+export const verifyOptionalToken = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) return next();
   try {
@@ -17,7 +17,7 @@ export const verificarTokenOpcional = (req, res, next) => {
   next();
 };
 
-export const verificarTokenRequired = (req, res, next) => {
+export const verifyRequiredToken = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) throw new AppError("No se proporciono token", 401);
   try {
@@ -32,7 +32,7 @@ export const verificarTokenRequired = (req, res, next) => {
   }
 };
 
-export const validarDatos = (req, res, next) => {
+export const validateAuthData = (req, res, next) => {
   const { username, password } = req.body;
   if (!username || username.trim() === "" || username.length < 5) {
     throw new AppError("Username no válido para el usuario", 400);
@@ -45,7 +45,7 @@ export const validarDatos = (req, res, next) => {
   next();
 };
 
-export const verificarUsuario = (req, res, next) => {
+export const verifyUserOwnership = (req, res, next) => {
   const idUsuario =
     req.publicacion?.idUsuario ||
     req.observacion?.idUsuario ||

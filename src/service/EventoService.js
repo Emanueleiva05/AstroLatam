@@ -2,7 +2,7 @@ import Evento from "../models/Evento.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const AgregarEvento = async (
+export const createEvent = async (
   nombre,
   descripcion,
   horaInicio,
@@ -11,7 +11,7 @@ export const AgregarEvento = async (
   fechaFin,
   idTipoEvento
 ) => {
-  const nuevo = await Evento.create({
+  const newEvent = await Evento.create({
     nombre,
     horaInicio,
     descripcion,
@@ -23,11 +23,11 @@ export const AgregarEvento = async (
 
   await clientRedis.del("evento:listado:*");
 
-  return nuevo;
+  return newEvent;
 };
 
-export const ModificarEvento = async (
-  evento,
+export const updateEvent = async (
+  event,
   nombre,
   descripcion,
   horaInicio,
@@ -37,25 +37,25 @@ export const ModificarEvento = async (
   idTipoEvento
 ) => {
   await clientRedis.del("evento:listado:*");
-  await clientRedis.del(`evento:${evento.idEvento}`);
+  await clientRedis.del(`evento:${event.idEvento}`);
 
-  evento.nombre = nombre;
-  evento.descripcion = descripcion;
-  evento.horaInicio = horaInicio;
-  evento.horaFin = horaFin;
-  evento.fechaInicio = fechaInicio;
-  evento.fechaFin = fechaFin;
-  evento.idTipoEvento = idTipoEvento;
-  return await evento.save();
+  event.nombre = nombre;
+  event.descripcion = descripcion;
+  event.horaInicio = horaInicio;
+  event.horaFin = horaFin;
+  event.fechaInicio = fechaInicio;
+  event.fechaFin = fechaFin;
+  event.idTipoEvento = idTipoEvento;
+  return await event.save();
 };
 
-export const EliminarEvento = async (evento) => {
+export const deleteEvent = async (evento) => {
   await clientRedis.del("evento:listado:*");
   await clientRedis.del(`evento:${evento.idEvento}`);
   return await evento.destroy();
 };
 
-export const ListarEventos = async (page, size) => {
+export const getEvents = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
@@ -97,7 +97,7 @@ export const ListarEventos = async (page, size) => {
   return response;
 };
 
-export const ListarEvento = async (id) => {
+export const getEventById = async (id) => {
   const reply = await clientRedis.get(`evento:${id}`);
   if (reply) return JSON.parse(reply);
 
@@ -108,15 +108,15 @@ export const ListarEvento = async (id) => {
   return evento;
 };
 
-export const AgregarAdjunto = async (evento, adjunto) => {
+export const addAttachment = async (evento, adjunto) => {
   return await evento.addAdjunto(adjunto);
 };
 
-export const EliminarAdjunto = async (evento, adjunto) => {
+export const removeAttachment = async (evento, adjunto) => {
   return await evento.removeAdjunto(adjunto);
 };
 
-export const ListarAdjuntos = async (evento) => {
+export const getAttachments = async (evento) => {
   const reply = await clientRedis.get("evento:adjunto:listado");
   if (reply) return JSON.parse(reply);
 
@@ -129,7 +129,7 @@ export const ListarAdjuntos = async (evento) => {
   return adjuntos;
 };
 
-export const ListarAdjuntosEspecificoEvento = async (evento, idAdjunto) => {
+export const getEventAttachment = async (evento, idAdjunto) => {
   return await evento.getAdjuntos({
     where: {
       idAdjunto: idAdjunto,
@@ -137,15 +137,15 @@ export const ListarAdjuntosEspecificoEvento = async (evento, idAdjunto) => {
   });
 };
 
-export const AgregarPais = async (evento, pais) => {
+export const addCountry = async (evento, pais) => {
   return await evento.addPais(pais);
 };
 
-export const EliminarPais = async (evento, pais) => {
+export const removeCountry = async (evento, pais) => {
   return await evento.removePais(pais);
 };
 
-export const ListarPaises = async (evento) => {
+export const getCountries = async (evento) => {
   const reply = await clientRedis.get("evento:pais:listado");
   if (reply) return JSON.parse(reply);
 
@@ -158,7 +158,7 @@ export const ListarPaises = async (evento) => {
   return paises;
 };
 
-export const ListarPaisesEspecificoEvento = async (evento, idPais) => {
+export const getEventCountry = async (evento, idPais) => {
   return await evento.getPais({
     where: {
       idPais: idPais,
@@ -166,15 +166,15 @@ export const ListarPaisesEspecificoEvento = async (evento, idPais) => {
   });
 };
 
-export const AgregarObjeto = async (evento, objeto) => {
+export const addObject = async (evento, objeto) => {
   return await evento.addObjeto(objeto);
 };
 
-export const EliminarObjeto = async (evento, objeto) => {
+export const removeObject = async (evento, objeto) => {
   return await evento.removeObjeto(objeto);
 };
 
-export const ListarObjetos = async (evento) => {
+export const getObjects = async (evento) => {
   const reply = await clientRedis.get("evento:objeto:listado");
   if (reply) return JSON.parse(reply);
 
@@ -186,7 +186,7 @@ export const ListarObjetos = async (evento) => {
   return objetos;
 };
 
-export const ListarObjetoEspecificoEvento = async (evento, idObjeto) => {
+export const getEventObject = async (evento, idObjeto) => {
   return await evento.getObjetos({
     where: {
       idObjeto: idObjeto,

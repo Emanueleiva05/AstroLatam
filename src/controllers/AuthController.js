@@ -1,7 +1,7 @@
-import { RegistrarUsuario, login } from "../service/AuthService.js";
+import { registerUser, loginUser } from "../service/AuthService.js";
 import jwt from "jsonwebtoken";
 
-export const register = async (req, res, next) => {
+export const registerHandler = async (req, res, next) => {
   const {
     username,
     nombre,
@@ -14,7 +14,7 @@ export const register = async (req, res, next) => {
     idCiudad,
   } = req.body;
   try {
-    await RegistrarUsuario(
+    await registerUser(
       username,
       nombre,
       email,
@@ -32,10 +32,10 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const loginUser = async (req, res, next) => {
+export const loginHandler = async (req, res, next) => {
   const { username, password } = req.body;
   try {
-    const user = await login(username, password);
+    const user = await loginUser(username, password);
     const token = jwt.sign(
       { id: user.idUsuario, username: user.username, rol: user.rol },
       "La-palabra-secreta-debe-ser-muy-larga-nunca-corta",
@@ -53,16 +53,16 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const logout = (req, res, next) => {
+export const logoutHandler = (req, res, next) => {
   res.clearCookie("access_token").json({ message: "Sesion cerrada" });
 };
 
-export const render = (req, res, next) => {
+export const renderProfileHandler = (req, res, next) => {
   const { user } = req.user;
   res.render("index", user);
 };
 
-export const protegida = (req, res, next) => {
+export const protectedRouteHandler = (req, res, next) => {
   const { user } = req.user;
   if (!user) return res.status(403).send("Acceso no autorizado");
   res.render("protected", user);

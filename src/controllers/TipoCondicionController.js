@@ -1,14 +1,14 @@
 import {
-  AgregarTipoCondicion,
-  ListarTipoCondiciones,
-  EliminarTipoCondicion,
-  ModificarTipoCondicion,
+  createConditionType,
+  getConditionTypes,
+  deleteConditionType,
+  updateConditionType,
 } from "../service/TipoCondicionService.js";
 
-export const SetTipoCondicion = async (req, res, next) => {
+export const createAttachmentType = async (req, res, next) => {
   const { nombre } = req.body;
   try {
-    await AgregarTipoCondicion(nombre);
+    await createConditionType(nombre);
     res.status(201).json({
       message: "Se agrego el TipoCondicion con exito",
     });
@@ -17,11 +17,11 @@ export const SetTipoCondicion = async (req, res, next) => {
   }
 };
 
-export const UpdateTipoCondicion = async (req, res, next) => {
+export const updateAttachmentType = async (req, res, next) => {
   const { nombre } = req.body;
   const tipoCondicion = req.tipoCondicion;
   try {
-    await ModificarTipoCondicion(tipoCondicion, nombre);
+    await updateConditionType(tipoCondicion, nombre);
     res.status(204).json({
       message: "Se modifico el TipoCondicion con exito",
     });
@@ -30,10 +30,10 @@ export const UpdateTipoCondicion = async (req, res, next) => {
   }
 };
 
-export const DeleteTipoCondicion = async (req, res, next) => {
+export const deleteAttachmentType = async (req, res, next) => {
   const tipoCondicion = req.tipoCondicion;
   try {
-    await EliminarTipoCondicion(tipoCondicion);
+    await deleteConditionType(tipoCondicion);
     res.status(204).json({
       message: "Se elimino el TipoCondicion con exito",
     });
@@ -42,19 +42,19 @@ export const DeleteTipoCondicion = async (req, res, next) => {
   }
 };
 
-export const ReadTiposCondiciones = async (req, res, next) => {
+export const getAttachmentTypes = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const tiposCondiciones = await ListarTipoCondiciones(page, size);
+    const tiposCondiciones = await getConditionTypes(page, size);
     res.status(200).json(tiposCondiciones);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoCondicion = async (req, res, next) => {
+export const getAttachmentTypeById = async (req, res, next) => {
   const tipoCondicion = req.tipoCondicion;
   try {
     const tipoC = tipoCondicion;

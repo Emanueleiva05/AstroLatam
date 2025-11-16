@@ -7,7 +7,7 @@ import Provincia from "../models/Provincia.js";
 import AppError from "../utils/AppError.js";
 import Ubicacion from "../models/Ubicacion.js";
 
-export const AgregarObservacion = async (
+export const createObservation = async (
   titulo,
   descripcion,
   horaObservacion,
@@ -25,7 +25,7 @@ export const AgregarObservacion = async (
   });
 };
 
-export const ModificarObservacion = async (
+export const updateObservation = async (
   observacion,
   titulo,
   descripcion,
@@ -42,11 +42,11 @@ export const ModificarObservacion = async (
   return await observacion.save();
 };
 
-export const EliminarObservacion = async (observacion) => {
+export const deleteObservation = async (observacion) => {
   return await observacion.destroy();
 };
 
-export const ListarObservaciones = async (id) => {
+export const getObservations = async (id) => {
   const observaciones = await Observacion.findAll({
     where: { idUbicacion: id },
   });
@@ -56,51 +56,48 @@ export const ListarObservaciones = async (id) => {
   return observaciones;
 };
 
-export const ListarObservacionEspecifico = async (id) => {
+export const getObservationById = async (id) => {
   const observacion = await Observacion.findByPk(id);
   return observacion;
 };
 
-export const AgregarAdjunto = async (observacion, adjunto) => {
+export const addObservationAttachment = async (observacion, adjunto) => {
   await observacion.addAdjunto(adjunto);
 };
 
-export const EliminarAdjunto = async (observacion, adjunto) => {
+export const removeObservationAttachment = async (observacion, adjunto) => {
   await observacion.removeAdjunto(adjunto);
 };
 
-export const AgregarEvento = async (observacion, evento) => {
+export const addObservationEvent = async (observacion, evento) => {
   await observacion.addEvento(evento);
 };
 
-export const EliminarEvento = async (observacion, evento) => {
+export const removeObservationEvent = async (observacion, evento) => {
   await observacion.removeEvento(evento);
 };
 
-export const AgregarInstrumento = async (observacion, instrumento) => {
+export const addObservationInstrument = async (observacion, instrumento) => {
   await observacion.addInstrumento(instrumento);
 };
 
-export const EliminarInstrumento = async (observacion, instrumento) => {
+export const removeObservationInstrument = async (observacion, instrumento) => {
   await observacion.removeInstrumento(instrumento);
 };
 
-export const AgregarObjeto = async (observacion, objeto) => {
+export const addObservationObject = async (observacion, objeto) => {
   await observacion.addObjeto(objeto);
 };
 
-export const EliminarObjeto = async (observacion, objeto) => {
+export const removeObservationObject = async (observacion, objeto) => {
   await observacion.removeObjeto(objeto);
 };
 
-export const ListarAdjuntos = async (observacion) => {
+export const getObservationAttachments = async (observacion) => {
   return await observacion.getAdjuntos();
 };
 
-export const ListarAdjuntosEspecificoObservacion = async (
-  observacion,
-  idAdjunto
-) => {
+export const getObservationAttachmentById = async (observacion, idAdjunto) => {
   return await observacion.getAdjuntos({
     where: {
       idAdjunto: idAdjunto,
@@ -108,11 +105,11 @@ export const ListarAdjuntosEspecificoObservacion = async (
   });
 };
 
-export const ListarInstrumentos = async (observacion) => {
+export const getObservationInstruments = async (observacion) => {
   return await observacion.getInstrumentos();
 };
 
-export const ListarInstrumentoEspecificoObservacion = async (
+export const getObservationInstrumentById = async (
   observacion,
   idInstrumento
 ) => {
@@ -123,14 +120,11 @@ export const ListarInstrumentoEspecificoObservacion = async (
   });
 };
 
-export const ListarEventos = async (observacion) => {
+export const getObservationEvents = async (observacion) => {
   return await observacion.getEventos();
 };
 
-export const ListarEventoEspecificoObservacion = async (
-  observacion,
-  idEvento
-) => {
+export const getObservationEventById = async (observacion, idEvento) => {
   return await observacion.getEventos({
     where: {
       idEvento: idEvento,
@@ -138,14 +132,11 @@ export const ListarEventoEspecificoObservacion = async (
   });
 };
 
-export const ListarObjetos = async (observacion) => {
+export const getObservationObjects = async (observacion) => {
   return await observacion.getObjetos();
 };
 
-export const ListarObjetosEspecificoObservacion = async (
-  observacion,
-  idObjeto
-) => {
+export const getObservationObjectById = async (observacion, idObjeto) => {
   return await observacion.getObjetos({
     where: {
       idObjeto: idObjeto,
@@ -153,12 +144,12 @@ export const ListarObjetosEspecificoObservacion = async (
   });
 };
 
-export const VisibilidadObservacion = async (observacion, estado) => {
+export const updateObservationVisibility = async (observacion, estado) => {
   observacion.visibilidad = estado;
   return await observacion.save();
 };
 
-export const FiltrarObservacion = async (
+export const filterObservations = async (
   pais,
   provincia,
   ciudad,

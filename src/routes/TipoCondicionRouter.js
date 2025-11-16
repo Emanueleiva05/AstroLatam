@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-  SetTipoCondicion,
-  DeleteTipoCondicion,
-  UpdateTipoCondicion,
-  ReadTipoCondicion,
-  ReadTiposCondiciones,
+  createAttachmentType,
+  deleteAttachmentType,
+  updateAttachmentType,
+  getAttachmentTypeById,
+  getAttachmentTypes,
 } from "../controllers/TipoCondicionController.js";
 import {
-  ValidarDatosTiposCondicion,
-  EncontrarTipoCondicion,
+  validateConditionTypeData,
+  findConditionType,
 } from "../middlewares/TipoCondicionMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,34 +23,34 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosTiposCondicion,
-  SetTipoCondicion
+  validateConditionTypeData,
+  createAttachmentType
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoCondicion,
-  ValidarDatosTiposCondicion,
-  UpdateTipoCondicion
+  findConditionType,
+  validateConditionTypeData,
+  updateAttachmentType
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoCondicion,
-  DeleteTipoCondicion
+  findConditionType,
+  deleteAttachmentType
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadTiposCondiciones);
+router.get("/", verificarTokenOpcional, validarPageSize, getAttachmentTypes);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarTipoCondicion,
-  ReadTipoCondicion
+  findConditionType,
+  getAttachmentTypeById
 );
 
 export default router;

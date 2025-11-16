@@ -1,13 +1,13 @@
 import {
-  AgregarPublicacion,
-  EliminarPublicacion,
-  ModificarPublicacion,
-  ListarPublicaciones,
-  VisibilidadPublicacion,
+  createPublication,
+  deletePublication,
+  updatePublication,
+  getPublications,
+  updatePublicationVisibility,
 } from "../service/PublicacionService.js";
-import { CrearHistorial } from "../service/HistorialPublicacionService.js";
+import { createPublicationHistory } from "../service/HistorialPublicacionService.js";
 
-export const SetPublicacion = async (req, res, next) => {
+export const createPublicationHandler = async (req, res, next) => {
   const {
     titulo,
     descripcion,
@@ -16,7 +16,7 @@ export const SetPublicacion = async (req, res, next) => {
     idTipoPublicacion,
   } = req.body;
   try {
-    await AgregarPublicacion(
+    await createPublication(
       titulo,
       descripcion,
       idUsuario,
@@ -29,12 +29,12 @@ export const SetPublicacion = async (req, res, next) => {
   }
 };
 
-export const UpdatePublicacion = async (req, res, next) => {
+export const updatePublicationHandler = async (req, res, next) => {
   const publicacion = req.publicacion;
   const { titulo, descripcion } = req.body;
 
   try {
-    await CrearHistorial(
+    await createPublicationHistory(
       publicacion.idPublicacion,
       publicacion.titulo,
       publicacion.descripcion,
@@ -43,36 +43,36 @@ export const UpdatePublicacion = async (req, res, next) => {
       publicacion.idUsuario
     );
 
-    await ModificarPublicacion(publicacion, titulo, descripcion);
+    await updatePublication(publicacion, titulo, descripcion);
     res.status(204).json({ message: "Publicacion modificado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const DeletePublicacion = async (req, res) => {
+export const deletePublicationHandler = async (req, res) => {
   const publicacion = req.publicacion;
   try {
-    await EliminarPublicacion(publicacion);
+    await deletePublication(publicacion);
     res.status(204).json({ message: "Publicacion eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadPublicacion = async (req, res) => {
+export const getPublicationsHandler = async (req, res) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const publicaciones = await ListarPublicaciones(page, size);
+    const publicaciones = await getPublications(page, size);
     res.status(200).json(publicaciones);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadPublicacionEspecifico = async (req, res) => {
+export const getPublicationHandler = async (req, res) => {
   const publicacion = req.publicacion;
   try {
     const pub = publicacion;
@@ -82,9 +82,9 @@ export const ReadPublicacionEspecifico = async (req, res) => {
   }
 };
 
-export const ChangeVisibilidad = async (req, res, next) => {
+export const updatePublicationVisibilityHandler = async (req, res, next) => {
   try {
-    await VisibilidadPublicacion(req.publicacion, req.visibilidad);
+    await updatePublicationVisibility(req.publicacion, req.visibilidad);
     res.status(204).json({ meesage: "Se cambio el visibilidad con exito" });
   } catch (error) {
     next(error);

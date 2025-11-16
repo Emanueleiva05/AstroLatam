@@ -2,26 +2,26 @@ import Pais from "../models/Pais.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const AgregarPais = async (nombre) => {
+export const createCountry = async (nombre) => {
   const nuevo = await Pais.create({ nombre });
   await clientRedis.del("pais:listado");
   return nuevo;
 };
 
-export const ModificarPais = async (pais, nombre) => {
+export const updateCountry = async (pais, nombre) => {
   await clientRedis.del("pais:listado");
   await clientRedis.del(`pais:${pais.idPais}`);
   pais.nombre = nombre;
   return await pais.save();
 };
 
-export const EliminarPais = async (pais) => {
+export const deleteCountry = async (pais) => {
   await clientRedis.del("pais:listado");
   await clientRedis.del(`pais:${pais.idPais}`);
   return await pais.destroy();
 };
 
-export const ListarPaises = async (page, size) => {
+export const getCountries = async (page, size) => {
   const reply = await clientRedis.get("pais:listado");
   if (reply) return JSON.parse(reply);
 
@@ -36,7 +36,7 @@ export const ListarPaises = async (page, size) => {
   return rows;
 };
 
-export const ListarPaisEspecifico = async (id) => {
+export const getCountryById = async (id) => {
   const reply = await clientRedis.get(`pais:${id}`);
 
   if (reply) return JSON.parse(reply);

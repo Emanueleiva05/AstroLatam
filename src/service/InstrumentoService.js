@@ -2,7 +2,7 @@ import Instrumento from "../models/Instrumento.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const AgregarInstrumento = async (
+export const createInstrument = async (
   nombre,
   descripcion,
   apertura,
@@ -30,7 +30,7 @@ export const AgregarInstrumento = async (
   return nuevo;
 };
 
-export const ModificarInstrumento = async (
+export const updateInstrument = async (
   instrumento,
   nombre,
   descripcion,
@@ -56,13 +56,13 @@ export const ModificarInstrumento = async (
   return await instrumento.save();
 };
 
-export const EliminarInstrumento = async (instrumento) => {
+export const deleteInstrument = async (instrumento) => {
   await clientRedis.del("instrumento:listado");
   await clientRedis.del(`instrumento:${instrumento.idInstrumento}`);
   return await instrumento.destroy();
 };
 
-export const ListarInstrumentos = async () => {
+export const getInstruments = async () => {
   const reply = await clientRedis.get("instrumento:listado");
   if (reply) return JSON.parse(reply);
 
@@ -79,7 +79,7 @@ export const ListarInstrumentos = async () => {
   return rows;
 };
 
-export const ListarInstrumentoEspecifico = async (id) => {
+export const getInstrumentById = async (id) => {
   const reply = await clientRedis.get(`instrumento:${id}`);
   if (reply) return JSON.parse(reply);
 

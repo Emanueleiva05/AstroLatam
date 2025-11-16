@@ -1,27 +1,27 @@
 import { Router } from "express";
 import {
-  SetAccionUsuario,
-  UpdateAccionUsuario,
-  DeleteAccionUsuario,
-  ReadAccionUsuario,
-  ReadAccionUsuarioEspecifico,
-  ChangeEstado,
-  ReadReportes,
-  CountReportesTarget,
-  HideReportes,
+  createUserActionHandler,
+  updateUserActionHandler,
+  deleteUserActionHandler,
+  getUserActionsHandler,
+  getUserActionHandler,
+  updateReportStatusHandler,
+  getOpenReportsHandler,
+  countContentReportsHandler,
+  hideReportedContentHandler,
 } from "../controllers/AccionUsuarioController.js";
 import {
-  ValidarDatosAccionUsuario,
-  VerificarExistenciaUsuario,
-  EncontrarAccionUsuario,
-  ValidarTargetId,
-  VerificarEstado,
-  ValidarContenido,
+  validateUserActionData,
+  validateUserExists,
+  findUserAction,
+  validateTargetExists,
+  validateReportStatus,
+  validateContentRequired,
 } from "../middlewares/AccionUsuarioMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -29,76 +29,76 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
-  ValidarDatosAccionUsuario,
-  ValidarContenido,
-  ValidarTargetId,
-  VerificarExistenciaUsuario,
-  SetAccionUsuario
+  verifyRequiredToken,
+  validateUserActionData,
+  validateContentRequired,
+  validateTargetExists,
+  validateUserExists,
+  createUserActionHandler
 );
 
 router.put(
   "/:id",
-  verificarTokenRequired,
-  EncontrarAccionUsuario,
-  ValidarDatosAccionUsuario,
-  ValidarContenido,
-  VerificarExistenciaUsuario,
-  UpdateAccionUsuario
+  verifyRequiredToken,
+  findUserAction,
+  validateUserActionData,
+  validateContentRequired,
+  validateUserExists,
+  updateUserActionHandler
 );
 
 router.post(
   "/:id/estado",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
-  EncontrarAccionUsuario,
-  VerificarEstado,
-  ChangeEstado
+  findUserAction,
+  validateReportStatus,
+  updateReportStatusHandler
 );
 
 router.put(
   "/visible/:targetType/:targetId",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
-  HideReportes
+  hideReportedContentHandler
 );
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
-  EncontrarAccionUsuario,
-  DeleteAccionUsuario
+  findUserAction,
+  deleteUserActionHandler
 );
 
 router.get(
   "/reportes",
   tieneRol("administrador"),
-  verificarTokenRequired,
-  ReadReportes
+  verifyRequiredToken,
+  getOpenReportsHandler
 );
 
 router.get(
   "/reportes/:targetType",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador", "moderador"),
-  CountReportesTarget
+  countContentReportsHandler
 );
 
 router.get(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   validarPageSize,
-  ReadAccionUsuario
+  getUserActionsHandler
 );
 
 router.get(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
-  EncontrarAccionUsuario,
-  ReadAccionUsuarioEspecifico
+  findUserAction,
+  getUserActionHandler
 );
 
 export default router;

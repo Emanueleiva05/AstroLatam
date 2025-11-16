@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import Usuario from "../models/Usuario.js";
-import { ListarUsuarioUsernameEspecifico } from "../service/UsuarioService.js";
+import { getUserByUsername } from "../service/UsuarioService.js";
 import AppError from "../utils/AppError.js";
 
-export const RegistrarUsuario = async (
+export const registerUser = async (
   username,
   nombre,
   email,
@@ -28,8 +28,8 @@ export const RegistrarUsuario = async (
   });
 };
 
-export const login = async (username, password) => {
-  const user = await ListarUsuarioUsernameEspecifico(username);
+export const loginUser = async (username, password) => {
+  const user = await getUserByUsername(username);
   const isValid = await bcrypt.compare(password, user.password);
 
   if (!isValid) throw new AppError("Contrasena no valida");

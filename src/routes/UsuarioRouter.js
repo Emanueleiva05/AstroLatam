@@ -1,23 +1,23 @@
 import { Router } from "express";
 import {
-  SetUsuario,
-  UpdateUsuario,
-  DeleteUsuario,
-  ReadUsuario,
-  ReadUsuarioEspecifico,
-  SetInstrumento,
-  DeleteInstrumento,
-  ReadInstrumentos,
-  ReadInstrumentoEspecifico,
+  createUserHandler,
+  updateUserHandler,
+  deleteUserHandler,
+  getUsersHandler,
+  getUserHandler,
+  addUserInstrumentHandler,
+  removeUserInstrumentHandler,
+  getUserInstrumentsHandler,
+  getUserInstrumentHandler,
 } from "../controllers/UsuarioController.js";
 import {
-  ValidarDatosUsuario,
-  VerificarExistenciaAdjunto,
-  VerificarExistenciaCiudad,
-  EncontrarUsuario,
-  EncontrarInstrumento,
-  EncontrarInstrumentoUsuario,
-  ValidarDatosOpcionalesUsuario,
+  validateUserData,
+  validateAttachmentExists,
+  validateCityExists,
+  findUser,
+  findInstrument,
+  findUserInstrument,
+  validateOptionalUserData,
 } from "../middlewares/UsuarioMiddleware.js";
 import {
   verificarTokenOpcional,
@@ -31,73 +31,68 @@ const router = Router();
 router.post(
   "/",
   verificarTokenRequired,
-  ValidarDatosUsuario,
-  ValidarDatosOpcionalesUsuario,
-  VerificarExistenciaAdjunto,
-  VerificarExistenciaCiudad,
-  SetUsuario
+  validateUserData,
+  validateOptionalUserData,
+  validateAttachmentExists,
+  validateCityExists,
+  createUserHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarUsuario,
+  findUser,
   verificarUsuario,
-  ValidarDatosUsuario,
-  ValidarDatosOpcionalesUsuario,
-  VerificarExistenciaAdjunto,
-  VerificarExistenciaCiudad,
-  UpdateUsuario
+  validateUserData,
+  validateOptionalUserData,
+  validateAttachmentExists,
+  validateCityExists,
+  updateUserHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
-  EncontrarUsuario,
+  findUser,
   verificarUsuario,
-  DeleteUsuario
+  deleteUserHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadUsuario);
+router.get("/", verificarTokenOpcional, validarPageSize, getUsersHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  EncontrarUsuario,
-  ReadUsuarioEspecifico
-);
+router.get("/:id", verificarTokenOpcional, findUser, getUserHandler);
 
 router.post(
   "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
-  EncontrarUsuario,
+  findUser,
   verificarUsuario,
-  EncontrarInstrumento,
-  SetInstrumento
+  findInstrument,
+  addUserInstrumentHandler
 );
 
 router.delete(
   "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
-  EncontrarUsuario,
+  findUser,
   verificarUsuario,
-  EncontrarInstrumento,
-  DeleteInstrumento
+  findInstrument,
+  removeUserInstrumentHandler
 );
 
 router.get(
   "/:id/instrumentos",
   verificarTokenOpcional,
-  EncontrarUsuario,
-  ReadInstrumentos
+  findUser,
+  getUserInstrumentsHandler
 );
 
 router.get(
   "/:id/instrumentos/:idInstrumento",
   verificarTokenOpcional,
-  EncontrarUsuario,
-  EncontrarInstrumentoUsuario,
-  ReadInstrumentoEspecifico
+  findUser,
+  findUserInstrument,
+  getUserInstrumentHandler
 );
 
 export default router;

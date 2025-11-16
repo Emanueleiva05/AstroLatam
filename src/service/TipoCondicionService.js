@@ -2,26 +2,26 @@ import TipoCondicion from "../models/TipoCondicion.js";
 import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarTipoCondicion = async (nombre) => {
+export const createConditionType = async (nombre) => {
   const nuevo = await TipoCondicion.create({ nombre });
   await clientRedis.del(`tipoCondicion:listado`);
   return nuevo;
 };
 
-export const ModificarTipoCondicion = async (tipoCondicion, nombre) => {
+export const updateConditionType = async (tipoCondicion, nombre) => {
   await clientRedis.del(`tipoCondicion:listado`);
   await clientRedis.del(`tipoCondicion:${tipoCondicion.idTipoCondicion}`);
   tipoCondicion.nombre = nombre;
   return await tipoCondicion.save();
 };
 
-export const EliminarTipoCondicion = async (tipoCondicion) => {
+export const deleteConditionType = async (tipoCondicion) => {
   await clientRedis.del(`tipoCondicion:listado`);
   await clientRedis.del(`tipoCondicion:${tipoCondicion.idTipoCondicion}`);
   return await tipoCondicion.destroy();
 };
 
-export const ListarTipoCondiciones = async () => {
+export const getConditionTypes = async () => {
   const reply = await clientRedis.get(`tipoCondicion:listado`);
   if (reply) return JSON.parse(reply);
 
@@ -38,7 +38,7 @@ export const ListarTipoCondiciones = async () => {
   return rows;
 };
 
-export const ListarTipoCondicionEspecifico = async (id) => {
+export const getConditionTypeById = async (id) => {
   const reply = await clientRedis.get(`tipoCondicion:${id}`);
   if (reply) return JSON.parse(reply);
 

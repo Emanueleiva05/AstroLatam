@@ -2,26 +2,26 @@ import Ciudad from "../models/Ciudad.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const AgregarCiudad = async (nombre, idProvincia) => {
+export const createCity = async (nombre, idProvincia) => {
   const nuevo = await Ciudad.create({ nombre, idProvincia });
   await clientRedis.del("ciudad:listado");
   return nuevo;
 };
 
-export const ModificarCiudad = async (ciudad, nombre) => {
+export const updateCity = async (ciudad, nombre) => {
   await clientRedis.del("ciudad:listado");
   await clientRedis.del(`ciudad:${ciudad.idCiudad}`);
   ciudad.nombre = nombre;
   return await ciudad.save();
 };
 
-export const EliminarCiudad = async (ciudad) => {
+export const deleteCity = async (ciudad) => {
   await clientRedis.del("ciudad:listado");
   await clientRedis.del(`ciudad:${ciudad.idCiudad}`);
   return await ciudad.destroy();
 };
 
-export const ListarCiudades = async () => {
+export const getCities = async () => {
   const reply = await clientRedis.get("ciudad:listado");
   if (reply) return JSON.parse(reply);
 
@@ -38,7 +38,7 @@ export const ListarCiudades = async () => {
   return rows;
 };
 
-export const ListarCiudadEspecifico = async (id) => {
+export const getCityById = async (id) => {
   const reply = await clientRedis.get(`ciudad:${id}`);
 
   if (reply) return JSON.parse(reply);

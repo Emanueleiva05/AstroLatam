@@ -2,7 +2,7 @@ import TipoInstrumento from "../models/TipoInstrumento.js";
 import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarTipoInstrumento = async (nombre, descripcion) => {
+export const createInstrumentType = async (nombre, descripcion) => {
   const nuevo = await TipoInstrumento.create({
     nombre,
     descripcion,
@@ -13,7 +13,7 @@ export const AgregarTipoInstrumento = async (nombre, descripcion) => {
   return nuevo;
 };
 
-export const ModificarTipoInstrumento = async (
+export const updateInstrumentType = async (
   tipoInstrumento,
   nombre,
   descripcion
@@ -26,13 +26,13 @@ export const ModificarTipoInstrumento = async (
   return await tipoInstrumento.save();
 };
 
-export const EliminarTipoInstrumento = async (tipoInstrumento) => {
+export const deleteInstrumentType = async (tipoInstrumento) => {
   await clientRedis.del("tipoInstrumento:listado");
   await clientRedis.del(`tipoInstrumento:${tipoInstrumento.idTipoInstrumento}`);
   return await tipoInstrumento.destroy();
 };
 
-export const ListarTipoInstrumentos = async () => {
+export const getInstrumentTypes = async () => {
   const reply = await clientRedis.get("tipoInstrumento:listado");
   if (reply) return JSON.parse(reply);
 
@@ -49,7 +49,7 @@ export const ListarTipoInstrumentos = async () => {
   return rows;
 };
 
-export const ListarTipoInstrumentoEspecifico = async (id) => {
+export const getInstrumentTypeById = async (id) => {
   const reply = await clientRedis.get(`tipoInstrumento:${id}`);
   if (reply) return JSON.parse(reply);
 

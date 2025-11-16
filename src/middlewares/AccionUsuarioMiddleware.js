@@ -1,10 +1,10 @@
 import AppError from "../utils/AppError.js";
-import { ListarAccionUsuarioEspecifico } from "../service/AccionUsuarioService.js";
-import { ListarUsuarioEspecifico } from "../service/UsuarioService.js";
-import { ListarPublicacionEspecifico } from "../service/PublicacionService.js";
-import { ListarObservacionEspecifico } from "../service/ObservacionService.js";
+import { getUserActionById } from "../service/AccionUsuarioService.js";
+import { getUserById } from "../service/UsuarioService.js";
+import { getPublicationById } from "../service/PublicacionService.js";
+import { getObservationById } from "../service/ObservacionService.js";
 
-export const ValidarDatosAccionUsuario = (req, res, next) => {
+export const validateUserActionData = (req, res, next) => {
   const { tipo, targetType, targetId, fecha, idUsuario } = req.body;
 
   const tipoAccion = ["like", "comentario", "reporte"];
@@ -36,18 +36,18 @@ export const ValidarDatosAccionUsuario = (req, res, next) => {
   next();
 };
 
-export const ValidarTargetId = async (req, res, next) => {
+export const validateTargetExists = async (req, res, next) => {
   try {
     let target = null;
     const tipoContenido = req.body.targetType;
     const idTarget = req.body.targetId;
 
     if (tipoContenido === "publicacion") {
-      target = await ListarPublicacionEspecifico(idTarget);
+      target = await getPublicationById(idTarget);
     }
 
     if (tipoContenido === "observacion") {
-      target = await ListarObservacionEspecifico(idTarget);
+      target = await getObservationById(idTarget);
     }
 
     if (!target) {
@@ -61,10 +61,10 @@ export const ValidarTargetId = async (req, res, next) => {
   }
 };
 
-export const EncontrarAccionUsuario = async (req, res, next) => {
+export const findUserAction = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const accion = await ListarAccionUsuarioEspecifico(id);
+    const accion = await getUserActionById(id);
     if (!accion) {
       throw new AppError("No se encontró la accion especificado", 404);
     }
@@ -75,10 +75,10 @@ export const EncontrarAccionUsuario = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaUsuario = async (req, res, next) => {
+export const validateUserExists = async (req, res, next) => {
   try {
     const { idUsuario } = req.body;
-    const usuario = await ListarUsuarioEspecifico(idUsuario);
+    const usuario = await getUserById(idUsuario);
     if (!usuario) {
       throw new AppError("No se encontró el usuario especificado", 404);
     }
@@ -88,7 +88,7 @@ export const VerificarExistenciaUsuario = async (req, res, next) => {
   }
 };
 
-export const ValidarContenido = (req, res, next) => {
+export const validateContentRequired = (req, res, next) => {
   if (req.body.tipo === "comentario" || req.body.tipo === "reporte") {
     if (!req.body.contenido) {
       throw new AppError(
@@ -100,7 +100,7 @@ export const ValidarContenido = (req, res, next) => {
   next();
 };
 
-export const VerificarEstado = (req, res, next) => {
+export const validateReportStatus = (req, res, next) => {
   const estado = req.body.estado;
   const reporte = req.accion;
 

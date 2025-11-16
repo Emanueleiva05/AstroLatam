@@ -1,9 +1,9 @@
 import AppError from "../utils/AppError.js";
-import { ListarObservacionCondicionEspecifico } from "../service/ObservacionCondicionService.js";
-import { ListarObservacionEspecifico } from "../service/ObservacionService.js";
-import { ListarTipoCondicionEspecifico } from "../service/TipoCondicionService.js";
+import { getObservationConditionByI } from "../service/ObservacionCondicionService.js";
+import { getObservationById } from "../service/ObservacionService.js";
+import { getConditionTypeById } from "../service/TipoCondicionService.js";
 
-export const ValidarDatosObservacionCondicion = (req, res, next) => {
+export const validateObservationConditionData = (req, res, next) => {
   const { valor, idTipoCondicion, idObservacion } = req.body;
 
   if (!valor || valor.trim() === "") {
@@ -21,10 +21,10 @@ export const ValidarDatosObservacionCondicion = (req, res, next) => {
   next();
 };
 
-export const EncontrarCondicion = async (req, res, next) => {
+export const findObservationCondition = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const condicion = await ListarObservacionCondicionEspecifico(id);
+    const condicion = await getObservationConditionByI(id);
     if (!condicion) {
       throw new AppError("No se encontró la condicion especificado", 404);
     }
@@ -35,10 +35,10 @@ export const EncontrarCondicion = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaObservacion = async (req, res, next) => {
+export const validateObservationExists = async (req, res, next) => {
   try {
     const { idObservacion } = req.body;
-    const observacion = await ListarObservacionEspecifico(idObservacion);
+    const observacion = await getObservationById(idObservacion);
     if (!observacion) {
       throw new AppError("No se encontró la observacion especificado", 404);
     }
@@ -49,10 +49,10 @@ export const VerificarExistenciaObservacion = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaTipoCondicion = async (req, res, next) => {
+export const validateConditionTypeExists = async (req, res, next) => {
   try {
     const { idTipoCondicion } = req.body;
-    const tipoCondicion = await ListarTipoCondicionEspecifico(idTipoCondicion);
+    const tipoCondicion = await getConditionTypeById(idTipoCondicion);
     if (!tipoCondicion) {
       throw new AppError("No se encontró el tipo condicion especificado", 404);
     }

@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
-import { ListarTipoObjetoEspecifico } from "../service/TipoObjetoService.js";
+import { getObjectTypeById } from "../service/TipoObjetoService.js";
 
-export const ValidarDatosTiposObjeto = (req, res, next) => {
+export const validateObjectTypeData = (req, res, next) => {
   const { nombre, descripcion } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -15,11 +15,11 @@ export const ValidarDatosTiposObjeto = (req, res, next) => {
   next();
 };
 
-export const EncontrarTipoObjeto = async (req, res, next) => {
+export const findObjectType = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const tipoObjeto = await ListarTipoObjetoEspecifico(id);
+    const tipoObjeto = await getObjectTypeById(id);
 
     if (!tipoObjeto) {
       throw new AppError("No se encontro el tipoObjeto especifico", 404);

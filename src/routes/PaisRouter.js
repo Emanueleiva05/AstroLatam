@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-  SetPais,
-  UpdatePais,
-  DeletePais,
-  ReadPaisEspecifico,
-  ReadPaises,
+  createCountryHandler,
+  updateCountryHandler,
+  deleteCountryHandler,
+  getCountryHandler,
+  getCountriesHandler,
 } from "../controllers/PaisController.js";
 import {
-  ValidarDatosPais,
-  EncontrarPais,
+  validateCountryData,
+  findCountry,
 } from "../middlewares/PaisMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -19,27 +19,27 @@ import { validarPageSize } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
-router.post("/", ValidarDatosPais, SetPais);
+router.post("/", validateCountryData, createCountryHandler);
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarPais,
+  findCountry,
   tieneRol("administrador"),
-  ValidarDatosPais,
-  UpdatePais
+  validateCountryData,
+  updateCountryHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
-  EncontrarPais,
+  findCountry,
   tieneRol("administrador"),
-  DeletePais
+  deleteCountryHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadPaises);
+router.get("/", verificarTokenOpcional, validarPageSize, getCountriesHandler);
 
-router.get("/:id", verificarTokenOpcional, EncontrarPais, ReadPaisEspecifico);
+router.get("/:id", verificarTokenOpcional, findCountry, getCountryHandler);
 
 export default router;

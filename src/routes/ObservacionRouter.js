@@ -1,42 +1,42 @@
 import { Router } from "express";
 import {
-  DeleteObservacion,
-  SetObservacion,
-  UpdateObservacion,
-  ReadObservacion,
-  ReadObservacionEspecifico,
-  SetAdjunto,
-  RemoveAdjunto,
-  SetEvento,
-  RemoveEvento,
-  SetInstrumento,
-  RemoveInstrumento,
-  SetObjeto,
-  RemoveObjeto,
-  ReadAdjuntos,
-  ReadAdjuntoEspecifico,
-  ReadEvento,
-  ReadEventoEspecifico,
-  ReadInstrumento,
-  ReadInstrumentoEspecifico,
-  ReadObjeto,
-  ReadObjetoEspecifico,
-  ChangeVisibilidad,
+  deleteObservationHandler,
+  createObservationHandler,
+  updateObservationHandler,
+  getObservationsHandler,
+  getObservationHandler,
+  addObservationAttachmentHandler,
+  removeObservationAttachmentHandler,
+  addObservationEventHandler,
+  removeObservationEventHandler,
+  addObservationInstrumentHandler,
+  removeObservationInstrumentHandler,
+  addObservationObjectHandler,
+  removeObservationObjectHandler,
+  getObservationAttachmentsHandler,
+  getObservationAttachmentHandler,
+  getObservationEventsHandler,
+  getObservationEventHandler,
+  getObservationInstrumentsHandler,
+  getObservationInstrumentHandler,
+  getObservationObjectsHandler,
+  getObservationObjectHandler,
+  updateObservationVisibilityHandler,
 } from "../controllers/ObservacionController.js";
 import {
-  EncontrarObservacion,
-  ValidarDatosObservacion,
-  VerificarExistenciaUbicacion,
-  EncontrarAdjunto,
-  EncontrarEvento,
-  EncontrarInstrumento,
-  EncontrarObjeto,
-  EncontrarObservacionObjeto,
-  EncontrarObservacionEvento,
-  EncontrarObservacionAdjunto,
-  EncontrarObservacionInstrumento,
-  VerificarExistenciaUsuario,
-  instrumentoEnUsuario,
+  findObservation,
+  validateObservationData,
+  validateLocationExists,
+  findAttachment,
+  findEvent,
+  findInstrument,
+  findObject,
+  findObservationObject,
+  findObservationEvent,
+  findObservationAttachment,
+  findObservationInstrument,
+  validateUserExists,
+  validateUserInstrument,
 } from "../middlewares/ObservacionMiddleware.js";
 import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
 import {
@@ -49,179 +49,179 @@ const router = Router();
 
 router.post(
   "/",
-  ValidarDatosObservacion,
-  VerificarExistenciaUbicacion,
-  VerificarExistenciaUsuario,
-  SetObservacion
+  validateObservationData,
+  validateLocationExists,
+  validateUserExists,
+  createObservationHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  ValidarDatosObservacion,
-  VerificarExistenciaUbicacion,
-  UpdateObservacion
+  validateObservationData,
+  validateLocationExists,
+  updateObservationHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  DeleteObservacion
+  deleteObservationHandler
 );
 
-router.get("/", verificarTokenOpcional, ReadObservacion);
+router.get("/", verificarTokenOpcional, getObservationsHandler);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  ReadObservacionEspecifico
+  findObservation,
+  getObservationHandler
 );
 
 router.post(
   "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarAdjunto,
-  SetAdjunto
+  findAttachment,
+  addObservationAttachmentHandler
 );
 
 router.delete(
   "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarAdjunto,
-  RemoveAdjunto
+  findAttachment,
+  removeObservationAttachmentHandler
 );
 
 router.post(
   "/:id/objetos/:idObjeto",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarObjeto,
-  SetObjeto
+  findObject,
+  addObservationObjectHandler
 );
 
 router.delete(
   "/:id/objetos/:idObjeto",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarObjeto,
-  RemoveObjeto
+  findObject,
+  removeObservationObjectHandler
 );
 
 router.post(
   "/:id/eventos/:idEvento",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarEvento,
-  SetEvento
+  findEvent,
+  addObservationEventHandler
 );
 
 router.delete(
   "/:id/eventos/:idEvento",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarEvento,
-  RemoveEvento
+  findEvent,
+  removeObservationEventHandler
 );
 
 router.post(
   "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarInstrumento,
-  instrumentoEnUsuario,
-  SetInstrumento
+  findInstrument,
+  validateUserInstrument,
+  addObservationInstrumentHandler
 );
 
 router.delete(
   "/:id/instrumentos/:idInstrumento",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
-  EncontrarInstrumento,
-  RemoveInstrumento
+  findInstrument,
+  removeObservationInstrumentHandler
 );
 
 router.get(
   "/:id/objetos",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  ReadObjeto
+  findObservation,
+  getObservationObjectsHandler
 );
 
 router.get(
   "/:id/objetos/:idObjeto",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  EncontrarObservacionObjeto,
-  ReadObjetoEspecifico
+  findObservation,
+  findObservationObject,
+  getObservationObjectHandler
 );
 
 router.get(
   "/:id/eventos",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  ReadEvento
+  findObservation,
+  getObservationEventsHandler
 );
 
 router.get(
   "/:id/eventos/:idEvento",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  EncontrarObservacionEvento,
-  ReadEventoEspecifico
+  findObservation,
+  findObservationEvent,
+  getObservationEventHandler
 );
 
 router.get(
   "/:id/adjuntos",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  ReadAdjuntos
+  findObservation,
+  getObservationAttachmentsHandler
 );
 
 router.get(
   "/:id/adjuntos/:idAdjunto",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  EncontrarObservacionAdjunto,
-  ReadAdjuntoEspecifico
+  findObservation,
+  findObservationAttachment,
+  getObservationAttachmentHandler
 );
 
 router.get(
   "/:id/instrumentos",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  ReadInstrumento
+  findObservation,
+  getObservationInstrumentsHandler
 );
 
 router.get(
   "/:id/instrumentos/:idInstrumento",
   verificarTokenOpcional,
-  EncontrarObservacion,
-  EncontrarObservacionInstrumento,
-  ReadInstrumentoEspecifico
+  findObservation,
+  findObservationInstrument,
+  getObservationInstrumentHandler
 );
 
 router.put(
   "/visible/:id",
   verificarTokenRequired,
-  EncontrarObservacion,
+  findObservation,
   verificarUsuario,
   VerificarVisibilidad,
-  ChangeVisibilidad
+  updateObservationVisibilityHandler
 );
 
 export default router;

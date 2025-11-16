@@ -1,4 +1,5 @@
 import logger from "../utils/Logger.js";
+
 const RequestLogger = (req, res, next) => {
   const start = Date.now();
   const reqId = Math.random().toString(36).substring(2, 9);

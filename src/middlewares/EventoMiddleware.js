@@ -1,16 +1,16 @@
 import AppError from "../utils/AppError.js";
 import {
-  ListarEvento,
-  ListarAdjuntosEspecificoEvento,
-  ListarPaisesEspecificoEvento,
-  ListarObjetoEspecificoEvento,
+  getEventById,
+  getEventAttachment,
+  getEventCountry,
+  getEventObject,
 } from "../service/EventoService.js";
-import { ListarTipoEventoEspecifico } from "../service/TipoEventoService.js";
-import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
-import { ListarPaisEspecifico } from "../service/PaisService.js";
-import { ListarObjetoEspecifico } from "../service/ObjetoService.js";
+import { getEventTypeById } from "../service/TipoEventoService.js";
+import { getAttachmentById } from "../service/AdjuntoService.js";
+import { getCountryById } from "../service/PaisService.js";
+import { getObjectById } from "../service/ObjetoService.js";
 
-export const ValidarDatosEvento = (req, res, next) => {
+export const validateEventData = (req, res, next) => {
   const {
     nombre,
     descripcion,
@@ -52,11 +52,11 @@ export const ValidarDatosEvento = (req, res, next) => {
   next();
 };
 
-export const EncontrarEvento = async (req, res, next) => {
+export const findEvent = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const evento = await ListarEvento(id);
+    const evento = await getEventById(id);
     if (!evento) {
       throw new AppError("No se encontro el evento especifica", 404);
     }
@@ -68,11 +68,11 @@ export const EncontrarEvento = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaTipoEvento = async (req, res, next) => {
+export const validateEventTypeExists = async (req, res, next) => {
   try {
     const { idTipoEvento } = req.body;
 
-    const tipoEvento = await ListarTipoEventoEspecifico(idTipoEvento);
+    const tipoEvento = await getEventTypeById(idTipoEvento);
     if (!tipoEvento) {
       throw new AppError("No se encontro la tipoEvento especifico", 404);
     }
@@ -83,11 +83,11 @@ export const VerificarExistenciaTipoEvento = async (req, res, next) => {
   }
 };
 
-export const EncontrarAdjunto = async (req, res, next) => {
+export const findAttachment = async (req, res, next) => {
   try {
     const { idAdjunto } = req.params;
 
-    const adjunto = await ListarAdjuntoEspecifico(idAdjunto);
+    const adjunto = await getAttachmentById(idAdjunto);
     if (!adjunto) {
       throw new AppError("No se encontro el adjunto especifico", 404);
     }
@@ -99,11 +99,11 @@ export const EncontrarAdjunto = async (req, res, next) => {
   }
 };
 
-export const EncontrarPais = async (req, res, next) => {
+export const findCountry = async (req, res, next) => {
   try {
     const { idPais } = req.params;
 
-    const pais = await ListarPaisEspecifico(idPais);
+    const pais = await getCountryById(idPais);
     if (!pais) {
       throw new AppError("No se encontro el pais especifico", 404);
     }
@@ -115,11 +115,11 @@ export const EncontrarPais = async (req, res, next) => {
   }
 };
 
-export const EncontrarObjeto = async (req, res, next) => {
+export const findObject = async (req, res, next) => {
   try {
     const { idObjeto } = req.params;
 
-    const objeto = await ListarObjetoEspecifico(idObjeto);
+    const objeto = await getObjectById(idObjeto);
     if (!objeto) {
       throw new AppError("No se encontro el objeto especifico", 404);
     }
@@ -131,12 +131,9 @@ export const EncontrarObjeto = async (req, res, next) => {
   }
 };
 
-export const EncontrarAdjuntoEvento = async (req, res, next) => {
+export const findEventAttachment = async (req, res, next) => {
   try {
-    const adjunto = await ListarAdjuntosEspecificoEvento(
-      req.evento,
-      req.params.idAdjunto
-    );
+    const adjunto = await getEventAttachment(req.evento, req.params.idAdjunto);
     if (adjunto.length === 0) {
       throw new AppError("No se encontro el adjunto del evento");
     }
@@ -147,12 +144,9 @@ export const EncontrarAdjuntoEvento = async (req, res, next) => {
   }
 };
 
-export const EncontrarPaisEvento = async (req, res, next) => {
+export const findEventCountry = async (req, res, next) => {
   try {
-    const pais = await ListarPaisesEspecificoEvento(
-      req.evento,
-      req.params.idPais
-    );
+    const pais = await getEventCountry(req.evento, req.params.idPais);
     if (pais.length === 0) {
       throw new AppError("No se encontro el pais del evento");
     }
@@ -163,12 +157,9 @@ export const EncontrarPaisEvento = async (req, res, next) => {
   }
 };
 
-export const EncontrarObjetosEvento = async (req, res, next) => {
+export const findEventObject = async (req, res, next) => {
   try {
-    const objeto = await ListarObjetoEspecificoEvento(
-      req.evento,
-      req.params.idObjeto
-    );
+    const objeto = await getEventObject(req.evento, req.params.idObjeto);
     if (objeto.length === 0) {
       throw new AppError("No se encontro el objeto del evento");
     }

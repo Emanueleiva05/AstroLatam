@@ -1,7 +1,7 @@
 import ObservacionCondicion from "../models/ObservacionCondicion.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarObservacionCondicion = async (
+export const createObservationCondition = async (
   valor,
   idTipoCondicion,
   idObservacion
@@ -13,7 +13,7 @@ export const AgregarObservacionCondicion = async (
   });
 };
 
-export const ModificarObservacionCondicion = async (
+export const updateObservationCondition = async (
   observacionCondicion,
   valor,
   idTipoCondicion,
@@ -25,11 +25,11 @@ export const ModificarObservacionCondicion = async (
   return await observacionCondicion.save();
 };
 
-export const EliminarObservacionCondicion = async (observacionCondicion) => {
+export const deleteObservationCondition = async (observacionCondicion) => {
   return await observacionCondicion.destroy();
 };
 
-export const ListarObservacionCondiciones = async (page, size) => {
+export const getObservationConditions = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
@@ -56,7 +56,7 @@ export const ListarObservacionCondiciones = async (page, size) => {
   };
 };
 
-export const ListarObservacionCondicionEspecifico = async (id) => {
+export const getObservationConditionByI = async (id) => {
   const observacionCondicion = await ObservacionCondicion.findByPk(id);
   return observacionCondicion;
 };

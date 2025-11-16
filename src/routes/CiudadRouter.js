@@ -1,15 +1,15 @@
 import { Router } from "express";
 import {
-  SetCiudad,
-  UpdateCiudad,
-  DeleteCiudad,
-  ReadCiudadEspecifico,
-  ReadCiudades,
+  createCityHandler,
+  updateCityHandler,
+  deleteCityHandler,
+  getCityHandler,
+  getCitiesHandler,
 } from "../controllers/CiudadController.js";
 import {
-  ValidarDatosCiudad,
-  VerificarExistenciaProvincia,
-  EncontrarCiudad,
+  validateCityData,
+  validateProvinceExists,
+  findCity,
 } from "../middlewares/CiudadMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,36 +23,31 @@ const router = Router();
 router.post(
   "/",
   verificarTokenRequired,
-  ValidarDatosCiudad,
-  VerificarExistenciaProvincia,
-  SetCiudad
+  validateCityData,
+  validateProvinceExists,
+  createCityHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarCiudad,
+  findCity,
   tieneRol("administrador"),
-  ValidarDatosCiudad,
-  VerificarExistenciaProvincia,
-  UpdateCiudad
+  validateCityData,
+  validateProvinceExists,
+  updateCityHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
-  EncontrarCiudad,
+  findCity,
   tieneRol("administrador"),
-  DeleteCiudad
+  deleteCityHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadCiudades);
+router.get("/", verificarTokenOpcional, validarPageSize, getCitiesHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  EncontrarCiudad,
-  ReadCiudadEspecifico
-);
+router.get("/:id", verificarTokenOpcional, findCity, getCityHandler);
 
 export default router;

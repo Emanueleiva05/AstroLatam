@@ -1,33 +1,33 @@
 import { Router } from "express";
 import {
-  SetEvento,
-  DeleteEvento,
-  UpdateEvento,
-  ReadEvento,
-  ReadEventoEspecifico,
+  createEventHandler,
+  deleteEventHandler,
+  updateEventHandler,
+  getEventsHandler,
+  getEventHandler,
   SetAdjunto,
-  RemoveAdjunto,
-  SetObjeto,
-  RemoveObjeto,
-  SetPais,
-  RemovePais,
-  ReadAdjuntoEspecifico,
-  ReadAdjuntos,
-  ReadPaises,
-  ReadPaisEspecifico,
-  ReadObjetos,
-  ReadObjetoEspecifico,
+  removeAttachmentHandler,
+  addObjectHandler,
+  removeObjectHandler,
+  addCountryHandler,
+  removeCountryHandler,
+  getAttachmentHandler,
+  getAttachmentsHandler,
+  getCountriesHandler,
+  getCountryHandler,
+  getObjectsHandler,
+  getObjectHandler,
 } from "../controllers/EventoController.js";
 import {
-  EncontrarEvento,
-  EncontrarAdjunto,
-  ValidarDatosEvento,
-  VerificarExistenciaTipoEvento,
-  EncontrarObjeto,
-  EncontrarPais,
-  EncontrarAdjuntoEvento,
-  EncontrarPaisEvento,
-  EncontrarObjetosEvento,
+  findEvent,
+  findAttachment,
+  validateEventData,
+  validateEventTypeExists,
+  findObject,
+  findCountry,
+  findEventAttachment,
+  findEventCountry,
+  findEventObject,
 } from "../middlewares/EventoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -42,44 +42,39 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosEvento,
-  VerificarExistenciaTipoEvento,
-  SetEvento
+  validateEventData,
+  validateEventTypeExists,
+  createEventHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  ValidarDatosEvento,
-  VerificarExistenciaTipoEvento,
-  UpdateEvento
+  findEvent,
+  validateEventData,
+  validateEventTypeExists,
+  updateEventHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  DeleteEvento
+  findEvent,
+  deleteEventHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadEvento);
+router.get("/", verificarTokenOpcional, validarPageSize, getEventsHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  EncontrarEvento,
-  ReadEventoEspecifico
-);
+router.get("/:id", verificarTokenOpcional, findEvent, getEventHandler);
 
 router.post(
   "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  EncontrarAdjunto,
+  findEvent,
+  findAttachment,
   SetAdjunto
 );
 
@@ -87,86 +82,91 @@ router.delete(
   "/:id/adjuntos/:idAdjunto",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  EncontrarAdjunto,
-  RemoveAdjunto
+  findEvent,
+  findAttachment,
+  removeAttachmentHandler
 );
 
 router.post(
   "/:id/paises/:idPais",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  EncontrarPais,
-  SetPais
+  findEvent,
+  findCountry,
+  addCountryHandler
 );
 
 router.delete(
   "/:id/paises/:idPais",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  EncontrarPais,
-  RemovePais
+  findEvent,
+  findCountry,
+  removeCountryHandler
 );
 
 router.post(
   "/:id/objetos/:idObjeto",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  EncontrarObjeto,
-  SetObjeto
+  findEvent,
+  findObject,
+  addObjectHandler
 );
 
 router.delete(
   "/:id/objetos/:idObjeto",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarEvento,
-  EncontrarEvento,
-  EncontrarObjeto,
-  RemoveObjeto
+  findEvent,
+  findEvent,
+  findObject,
+  removeObjectHandler
 );
 
 router.get(
   "/:id/adjuntos",
   verificarTokenOpcional,
-  EncontrarEvento,
-  ReadAdjuntos
+  findEvent,
+  getAttachmentsHandler
 );
 
 router.get(
   "/:id/adjuntos/:idAdjunto",
   verificarTokenOpcional,
-  EncontrarEvento,
-  EncontrarAdjuntoEvento,
-  ReadAdjuntoEspecifico
+  findEvent,
+  findEventAttachment,
+  getAttachmentHandler
 );
 
-router.get("/:id/paises", verificarTokenOpcional, EncontrarEvento, ReadPaises);
+router.get(
+  "/:id/paises",
+  verificarTokenOpcional,
+  findEvent,
+  getCountriesHandler
+);
 
 router.get(
   "/:id/paises/:idPais",
   verificarTokenOpcional,
-  EncontrarEvento,
-  EncontrarPaisEvento,
-  ReadPaisEspecifico
+  findEvent,
+  findEventCountry,
+  getCountryHandler
 );
 
 router.get(
   "/:id/objetos",
   verificarTokenOpcional,
-  EncontrarEvento,
-  ReadObjetos
+  findEvent,
+  getObjectsHandler
 );
 
 router.get(
   "/:id/objetos/:idObjeto",
   verificarTokenOpcional,
-  EncontrarEvento,
-  EncontrarObjetosEvento,
-  ReadObjetoEspecifico
+  findEvent,
+  findEventObject,
+  getObjectHandler
 );
 
 export default router;

@@ -2,7 +2,7 @@ import Objeto from "../models/Objeto.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const AgregarObjeto = async (nombre, descripcion, idTipoObjeto) => {
+export const createObject = async (nombre, descripcion, idTipoObjeto) => {
   const nuevo = await Objeto.create({
     nombre,
     descripcion,
@@ -12,7 +12,7 @@ export const AgregarObjeto = async (nombre, descripcion, idTipoObjeto) => {
   return nuevo;
 };
 
-export const ModificarObjeto = async (
+export const updateObject = async (
   objeto,
   nombre,
   descripcion,
@@ -27,13 +27,13 @@ export const ModificarObjeto = async (
   return await objeto.save();
 };
 
-export const EliminarObjeto = async (objeto) => {
+export const deleteObject = async (objeto) => {
   await clientRedis.del("objeto:listado");
   await clientRedis.del(`objeto:${objeto.idObjeto}`);
   return await objeto.destroy();
 };
 
-export const ListarObjetos = async (page, size) => {
+export const getObjects = async (page, size) => {
   const reply = await clientRedis.get("objeto:listado");
   if (reply) return JSON.parse(reply);
 
@@ -50,7 +50,7 @@ export const ListarObjetos = async (page, size) => {
   return rows;
 };
 
-export const ListarObjetoEspecifico = async (id) => {
+export const getObjectById = async (id) => {
   const reply = await clientRedis.get(`objeto:${id}`);
   if (reply) return JSON.parse(reply);
 
@@ -61,15 +61,15 @@ export const ListarObjetoEspecifico = async (id) => {
   return objeto;
 };
 
-export const AgregarAdjunto = async (objeto, adjunto) => {
+export const addObjectAttachment = async (objeto, adjunto) => {
   return await objeto.addAdjunto(adjunto);
 };
 
-export const EliminarAdjunto = async (objeto, adjunto) => {
+export const removeObjectAttachment = async (objeto, adjunto) => {
   return await objeto.removeAdjunto(adjunto);
 };
 
-export const ListarAdjuntos = async (objeto) => {
+export const getObjectAttachments = async (objeto) => {
   const reply = await clientRedis.get(`objeto:adjunto:listado`);
   if (reply) return JSON.parse(reply);
 
@@ -82,7 +82,7 @@ export const ListarAdjuntos = async (objeto) => {
   return adjuntos;
 };
 
-export const ListarAdjuntosEspecificoObjeto = async (objeto, idAdjunto) => {
+export const getObjectAttachmentById = async (objeto, idAdjunto) => {
   const reply = await clientRedis.get(`objeto:adjunto:${idAdjunto}`);
   if (reply) return JSON.parse(reply);
 

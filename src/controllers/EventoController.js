@@ -1,20 +1,20 @@
 import {
-  AgregarEvento,
-  EliminarEvento,
-  ModificarEvento,
-  ListarEventos,
-  AgregarAdjunto,
-  EliminarAdjunto,
-  AgregarObjeto,
-  EliminarObjeto,
-  AgregarPais,
-  EliminarPais,
-  ListarAdjuntos,
-  ListarPaises,
-  ListarObjetos,
+  createEvent,
+  deleteEvent,
+  updateEvent,
+  getEvents,
+  addAttachment,
+  removeAttachment,
+  addObject,
+  removeObject,
+  addCountry,
+  removeCountry,
+  getAttachments,
+  getCountries,
+  getObjects,
 } from "../service/EventoService.js";
 
-export const SetEvento = async (req, res, next) => {
+export const createEventHandler = async (req, res, next) => {
   const {
     nombre,
     descripcion,
@@ -25,7 +25,7 @@ export const SetEvento = async (req, res, next) => {
     idTipoEvento,
   } = req.body;
   try {
-    await AgregarEvento(
+    await createEvent(
       nombre,
       descripcion,
       horaInicio,
@@ -40,7 +40,7 @@ export const SetEvento = async (req, res, next) => {
   }
 };
 
-export const UpdateEvento = async (req, res, next) => {
+export const updateEventHandler = async (req, res, next) => {
   const evento = req.evento;
   const {
     nombre,
@@ -53,7 +53,7 @@ export const UpdateEvento = async (req, res, next) => {
   } = req.body;
 
   try {
-    await ModificarEvento(
+    await updateEvent(
       evento,
       nombre,
       descripcion,
@@ -69,29 +69,29 @@ export const UpdateEvento = async (req, res, next) => {
   }
 };
 
-export const DeleteEvento = async (req, res, next) => {
+export const deleteEventHandler = async (req, res, next) => {
   const evento = req.evento;
   try {
-    await EliminarEvento(evento);
+    await deleteEvent(evento);
     res.status(204).json({ message: "Evento eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadEvento = async (req, res, next) => {
+export const getEventsHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const eventos = await ListarEventos(page, size);
+    const eventos = await getEvents(page, size);
     res.status(200).json(eventos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadEventoEspecifico = async (req, res, next) => {
+export const getEventHandler = async (req, res, next) => {
   const evento = req.evento;
   try {
     const eve = evento;
@@ -101,70 +101,70 @@ export const ReadEventoEspecifico = async (req, res, next) => {
   }
 };
 
-export const SetAdjunto = async (req, res, next) => {
+export const addAttachmentHandler = async (req, res, next) => {
   try {
-    await AgregarAdjunto(req.evento, req.adjunto);
+    await addAttachment(req.evento, req.adjunto);
     res.status(201).json({ message: "Se agrego el adjunto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const RemoveAdjunto = async (req, res, next) => {
+export const removeAttachmentHandler = async (req, res, next) => {
   try {
-    await EliminarAdjunto(req.evento, req.adjunto);
+    await removeAttachment(req.evento, req.adjunto);
     res.status(204).json({ message: "Se elimino el adjunto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const SetPais = async (req, res, next) => {
+export const addCountryHandler = async (req, res, next) => {
   try {
-    await AgregarPais(req.evento, req.pais);
+    await addCountry(req.evento, req.pais);
     res.status(201).json({ message: "Se agrego el pais con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const RemovePais = async (req, res, next) => {
+export const removeCountryHandler = async (req, res, next) => {
   try {
-    await EliminarPais(req.evento, req.pais);
+    await removeCountry(req.evento, req.pais);
     res.status(204).json({ message: "Se elimino el pais con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const SetObjeto = async (req, res, next) => {
+export const addObjectHandler = async (req, res, next) => {
   try {
-    await AgregarObjeto(req.evento, req.objeto);
+    await addObject(req.evento, req.objeto);
     res.status(201).json({ message: "Se agrego el objeto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const RemoveObjeto = async (req, res, next) => {
+export const removeObjectHandler = async (req, res, next) => {
   try {
-    await EliminarObjeto(req.evento, req.objeto);
+    await removeObject(req.evento, req.objeto);
     res.status(204).json({ message: "Se elimino el objeto con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadAdjuntos = async (req, res, next) => {
+export const getAttachmentsHandler = async (req, res, next) => {
   try {
-    const adjuntos = await ListarAdjuntos(req.evento);
+    const adjuntos = await getAttachments(req.evento);
     res.status(200).json(adjuntos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadAdjuntoEspecifico = async (req, res, next) => {
+export const getAttachmentHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.adjunto);
   } catch (error) {
@@ -172,16 +172,16 @@ export const ReadAdjuntoEspecifico = async (req, res, next) => {
   }
 };
 
-export const ReadPaises = async (req, res, next) => {
+export const getCountriesHandler = async (req, res, next) => {
   try {
-    const paises = await ListarPaises(req.evento);
+    const paises = await getCountries(req.evento);
     res.status(200).json(paises);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadPaisEspecifico = async (req, res, next) => {
+export const getCountryHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.pais);
   } catch (error) {
@@ -189,16 +189,16 @@ export const ReadPaisEspecifico = async (req, res, next) => {
   }
 };
 
-export const ReadObjetos = async (req, res, next) => {
+export const getObjectsHandler = async (req, res, next) => {
   try {
-    const objetos = await ListarObjetos(req.evento);
+    const objetos = await getObjects(req.evento);
     res.status(200).json(objetos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObjetoEspecifico = async (req, res, next) => {
+export const getObjectHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.objeto);
   } catch (error) {

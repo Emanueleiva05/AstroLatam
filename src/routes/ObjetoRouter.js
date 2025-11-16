@@ -1,25 +1,25 @@
 import { Router } from "express";
 import {
-  SetObjeto,
-  DeleteObjeto,
-  UpdateObjeto,
-  ReadObjeto,
-  ReadObjetoEspecifico,
-  SetAdjunto,
-  RemoveAdjunto,
-  ReadAdjuntos,
+  createObjectHandler,
+  deleteObjectHandler,
+  updateObjectHandler,
+  getObjectsHandler,
+  getObjectHandler,
+  addObjectAttachmentHandler,
+  removeObjectAttachmentHandler,
+  getObjectAttachmentsHandler,
 } from "../controllers/ObjetoController.js";
 import {
-  EncontrarObjeto,
-  EncontrarAdjunto,
-  ValidarDatosObjeto,
-  VerificarExistenciaTipoObjeto,
-  EncontrarAdjuntoObjeto,
+  findObject,
+  findAttachment,
+  validateObjectData,
+  validateObjectTypeExists,
+  findObjectAttachment,
 } from "../middlewares/ObjetoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -27,70 +27,65 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
-  ValidarDatosObjeto,
-  VerificarExistenciaTipoObjeto,
-  SetObjeto
+  verifyRequiredToken,
+  validateObjectData,
+  validateObjectTypeExists,
+  createObjectHandler
 );
 
 router.put(
   "/:id",
-  verificarTokenRequired,
-  EncontrarObjeto,
+  verifyRequiredToken,
+  findObject,
   tieneRol("administrador"),
-  ValidarDatosObjeto,
-  VerificarExistenciaTipoObjeto,
-  UpdateObjeto
+  validateObjectData,
+  validateObjectTypeExists,
+  updateObjectHandler
 );
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
-  EncontrarObjeto,
+  verifyRequiredToken,
+  findObject,
   tieneRol("administrador"),
-  DeleteObjeto
+  deleteObjectHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadObjeto);
+router.get("/", verifyOptionalToken, validarPageSize, getObjectsHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  EncontrarObjeto,
-  ReadObjetoEspecifico
-);
+router.get("/:id", verifyOptionalToken, findObject, getObjectHandler);
 
 router.post(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenRequired,
-  EncontrarObjeto,
+  verifyRequiredToken,
+  findObject,
   tieneRol("administrador"),
-  EncontrarAdjunto,
-  SetAdjunto
+  findAttachment,
+  addObjectAttachmentHandler
 );
 
 router.delete(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenRequired,
-  EncontrarObjeto,
+  verifyRequiredToken,
+  findObject,
   tieneRol("administrador"),
-  EncontrarAdjunto,
-  RemoveAdjunto
+  findAttachment,
+  removeObjectAttachmentHandler
 );
 
 router.get(
   "/:id/adjuntos",
-  verificarTokenOpcional,
-  EncontrarObjeto,
-  ReadAdjuntos
+  verifyOptionalToken,
+  findObject,
+  getObjectAttachmentsHandler
 );
 
 router.get(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenOpcional,
-  EncontrarObjeto,
-  EncontrarAdjuntoObjeto,
-  ReadObjetoEspecifico
+  verifyOptionalToken,
+  findObject,
+  findObjectAttachment,
+  getObjectHandler
 );
 
 export default router;

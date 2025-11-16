@@ -1,6 +1,6 @@
 import HistorialPublicacion from "../models/HistorialPublicacion.js";
 
-export const CrearHistorial = async (
+export const createPublicationHistory = async (
   idPublicacion,
   titulo,
   descripcion,
@@ -8,7 +8,7 @@ export const CrearHistorial = async (
   idTipoPublicacion,
   idUsuario
 ) => {
-  const versionActual = await buscarHistorial(idPublicacion);
+  const versionActual = await findLatestHistoryVersion(idPublicacion);
   const version = versionActual + 1;
 
   await HistorialPublicacion.create({
@@ -22,7 +22,7 @@ export const CrearHistorial = async (
   });
 };
 
-const buscarHistorial = async (idPublicacion) => {
+const findLatestHistoryVersion = async (idPublicacion) => {
   const historialPublicaciones = await HistorialPublicacion.findAll({
     attributes: ["version"],
     where: { idPublicacion: idPublicacion },

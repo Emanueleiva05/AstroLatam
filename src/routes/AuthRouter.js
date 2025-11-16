@@ -1,33 +1,33 @@
 import { Router } from "express";
 import {
-  register,
-  render,
-  loginUser,
-  logout,
-  protegida,
+  registerHandler,
+  renderProfileHandler,
+  loginHandler,
+  logoutHandler,
+  protectedRouteHandler,
 } from "../controllers/AuthController.js";
 import {
-  verificarTokenOpcional,
-  validarDatos,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  validateAuthData,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import {
-  ValidarDatosUsuario,
-  ValidarDatosOpcionalesUsuario,
+  validateUserData,
+  validateOptionalUserData,
 } from "../middlewares/UsuarioMiddleware.js";
 
 const router = Router();
 
-router.get("/", render);
-router.post("/login", validarDatos, verificarTokenOpcional, loginUser);
+router.get("/", renderProfileHandler);
+router.post("/login", validateAuthData, verifyOptionalToken, loginHandler);
 router.post(
   "/register",
-  verificarTokenOpcional,
-  ValidarDatosUsuario,
-  ValidarDatosOpcionalesUsuario,
-  register
+  verifyOptionalToken,
+  validateUserData,
+  validateOptionalUserData,
+  registerHandler
 );
-router.post("/logout", verificarTokenRequired, logout);
-router.get("/protected", verificarTokenRequired, protegida);
+router.post("/logout", verifyRequiredToken, logoutHandler);
+router.get("/protected", verifyRequiredToken, protectedRouteHandler);
 
 export default router;

@@ -1,7 +1,7 @@
 import Adjunto from "../models/Adjunto.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarAdjunto = async (
+export const createAttachment = async (
   link_archivo,
   descripcion,
   idTipoAdjunto
@@ -13,7 +13,7 @@ export const AgregarAdjunto = async (
   });
 };
 
-export const ModificarAdjunto = async (
+export const updateAttachment = async (
   adjunto,
   link_archivo,
   descripcion,
@@ -25,11 +25,11 @@ export const ModificarAdjunto = async (
   return await adjunto.save();
 };
 
-export const EliminarAdjunto = async (adjunto) => {
+export const deleteAttachment = async (adjunto) => {
   return await adjunto.destroy();
 };
 
-export const ListarAdjunto = async (page, size) => {
+export const getAttachments = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
@@ -56,7 +56,7 @@ export const ListarAdjunto = async (page, size) => {
   };
 };
 
-export const ListarAdjuntoEspecifico = async (id) => {
+export const getAttachmentById = async (id) => {
   const adjunto = await Adjunto.findByPk(id);
   return adjunto;
 };

@@ -1,14 +1,14 @@
 import {
-  AgregarObservacionCondicion,
-  EliminarObservacionCondicion,
-  ModificarObservacionCondicion,
-  ListarObservacionCondiciones,
+  createObservationCondition,
+  deleteObservationCondition,
+  updateObservationCondition,
+  getObservationConditions,
 } from "../service/ObservacionCondicionService.js";
 
-export const SetObservacionCondiciones = async (req, res, next) => {
+export const createObservationConditionHandler = async (req, res, next) => {
   const { valor, idTipoCondicion, idObservacion } = req.body;
   try {
-    await AgregarObservacionCondicion(valor, idTipoCondicion, idObservacion);
+    await createObservationCondition(valor, idTipoCondicion, idObservacion);
     res
       .status(201)
       .json({ message: "ObservacionCondiciones creado con exito" });
@@ -17,12 +17,12 @@ export const SetObservacionCondiciones = async (req, res, next) => {
   }
 };
 
-export const UpdateObservacionCondiciones = async (req, res, next) => {
+export const updateObservationConditionHandler = async (req, res, next) => {
   const condicion = req.condicion;
   const { valor, idTipoCondicion, idObservacion } = req.body;
 
   try {
-    await ModificarObservacionCondicion(
+    await updateObservationCondition(
       condicion,
       valor,
       idTipoCondicion,
@@ -36,10 +36,10 @@ export const UpdateObservacionCondiciones = async (req, res, next) => {
   }
 };
 
-export const DeleteObservacionCondiciones = async (req, res, next) => {
+export const deleteObservationConditionHandler = async (req, res, next) => {
   const condicion = req.condicion;
   try {
-    await EliminarObservacionCondicion(condicion);
+    await deleteObservationCondition(condicion);
     res
       .status(204)
       .json({ message: "ObservacionCondiciones eliminado con exito" });
@@ -48,19 +48,19 @@ export const DeleteObservacionCondiciones = async (req, res, next) => {
   }
 };
 
-export const ReadObservacionCondiciones = async (req, res, next) => {
+export const getObservationConditionsHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const condiciones = await ListarObservacionCondiciones(page, size);
+    const condiciones = await getObservationConditions(page, size);
     res.status(200).json(condiciones);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObservacionCondicionesEspecifico = async (req, res, next) => {
+export const getObservationConditionHan = async (req, res, next) => {
   const condicion = req.condicion;
   try {
     const cond = condicion;

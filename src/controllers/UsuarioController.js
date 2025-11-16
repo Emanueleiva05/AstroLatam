@@ -1,14 +1,14 @@
 import {
-  EliminarUsuario,
-  ModificarUsuario,
-  ListarUsuario,
-  AgregarInstrumento,
-  ELiminarInstrumento,
-  ListarInstrumentos,
+  deleteUser,
+  updateUser,
+  getUsers,
+  addUserInstrument,
+  removeUserInstrument,
+  getUserInstruments,
 } from "../service/UsuarioService.js";
-import { RegistrarUsuario } from "../service/AuthService.js";
+import { registerUser } from "../service/AuthService.js";
 
-export const SetUsuario = async (req, res, next) => {
+export const createUserHandler = async (req, res, next) => {
   const {
     username,
     nombre,
@@ -21,7 +21,7 @@ export const SetUsuario = async (req, res, next) => {
     idCiudad,
   } = req.body;
   try {
-    await RegistrarUsuario(
+    await registerUser(
       username,
       nombre,
       email,
@@ -38,7 +38,7 @@ export const SetUsuario = async (req, res, next) => {
   }
 };
 
-export const UpdateUsuario = async (req, res, next) => {
+export const updateUserHandler = async (req, res, next) => {
   const usuario = req.usuario;
   const {
     username,
@@ -53,7 +53,7 @@ export const UpdateUsuario = async (req, res, next) => {
   } = req.body;
 
   try {
-    await ModificarUsuario(
+    await updateUser(
       usuario,
       username,
       nombre,
@@ -71,29 +71,29 @@ export const UpdateUsuario = async (req, res, next) => {
   }
 };
 
-export const DeleteUsuario = async (req, res, next) => {
+export const deleteUserHandler = async (req, res, next) => {
   const usuario = req.usuario;
   try {
-    await EliminarUsuario(usuario);
+    await deleteUser(usuario);
     res.status(204).json({ message: "Usuario eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadUsuario = async (req, res, next) => {
+export const getUsersHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const usuarios = await ListarUsuario(page, size);
+    const usuarios = await getUsers(page, size);
     res.status(200).json(usuarios);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadUsuarioEspecifico = async (req, res, next) => {
+export const getUserHandler = async (req, res, next) => {
   const usuario = req.usuario;
   try {
     const usu = usuario;
@@ -103,34 +103,34 @@ export const ReadUsuarioEspecifico = async (req, res, next) => {
   }
 };
 
-export const SetInstrumento = async (req, res, next) => {
+export const addUserInstrumentHandler = async (req, res, next) => {
   try {
-    await AgregarInstrumento(req.usuario, req.instrumento);
+    await addUserInstrument(req.usuario, req.instrumento);
     res.status(201).json({ message: "Se agrego el instrumento con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const DeleteInstrumento = async (req, res, next) => {
+export const removeUserInstrumentHandler = async (req, res, next) => {
   try {
-    await ELiminarInstrumento(req.usuario, req.instrumento);
+    await removeUserInstrument(req.usuario, req.instrumento);
     res.status(204).json({ message: "Se elimino el instrumento con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadInstrumentos = async (req, res, next) => {
+export const getUserInstrumentsHandler = async (req, res, next) => {
   try {
-    const instrumentos = await ListarInstrumentos(req.usuario);
+    const instrumentos = await getUserInstruments(req.usuario);
     res.status(200).json(instrumentos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadInstrumentoEspecifico = async (req, res, next) => {
+export const getUserInstrumentHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.instrumento);
   } catch (error) {

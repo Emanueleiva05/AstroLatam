@@ -1,8 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarInstrumentoEspecifico } from "../service/InstrumentoService.js";
-import { ListarTipoInstrumentoEspecifico } from "../service/TipoInstrumentoService.js";
+import { getInstrumentById } from "../service/InstrumentoService.js";
+import { getInstrumentTypeById } from "../service/TipoInstrumentoService.js";
 
-export const ValidarDatosInstrumento = (req, res, next) => {
+export const validateInstrumentData = (req, res, next) => {
   const {
     nombre,
     descripcion,
@@ -57,10 +57,10 @@ export const ValidarDatosInstrumento = (req, res, next) => {
   next();
 };
 
-export const EncontrarInstrumento = async (req, res, next) => {
+export const findInstrument = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const instrumento = await ListarInstrumentoEspecifico(id);
+    const instrumento = await getInstrumentById(id);
     if (!instrumento) {
       throw new AppError("No se encontró el instrumento especificado", 404);
     }
@@ -71,12 +71,10 @@ export const EncontrarInstrumento = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaTipoInstrumento = async (req, res, next) => {
+export const validateInstrumentTypeExists = async (req, res, next) => {
   try {
     const { idTipoInstrumento } = req.body;
-    const tipoInstrumento = await ListarTipoInstrumentoEspecifico(
-      idTipoInstrumento
-    );
+    const tipoInstrumento = await getInstrumentTypeById(idTipoInstrumento);
     if (!tipoInstrumento) {
       throw new AppError(
         "No se encontró el tipo de instrumento especificado",

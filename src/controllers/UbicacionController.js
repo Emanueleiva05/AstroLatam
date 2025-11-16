@@ -1,15 +1,15 @@
 import {
-  AgregarUbicacion,
-  ListarUbicaciones,
-  ModificarUbicacion,
-  EliminarUbicacion,
+  createLocation,
+  getLocations,
+  updateLocation,
+  deleteLocation,
 } from "../service/UbicacionService.js";
 
-export const SetUbicacion = async (req, res, next) => {
+export const createLocationHandler = async (req, res, next) => {
   const { latitud, longitud, tz_original, timestamp_utc, geohash, idCiudad } =
     req.body;
   try {
-    await AgregarUbicacion(
+    await createLocation(
       latitud,
       longitud,
       tz_original,
@@ -25,12 +25,12 @@ export const SetUbicacion = async (req, res, next) => {
   }
 };
 
-export const UpdateUbicacion = async (req, res, next) => {
+export const updateLocationHandler = async (req, res, next) => {
   const ubicacion = req.ubicacion;
   const { latitud, longitud, tz_original, timestamp_utc, geohash, idCiudad } =
     req.body;
   try {
-    await ModificarUbicacion(
+    await updateLocation(
       ubicacion,
       latitud,
       longitud,
@@ -47,10 +47,10 @@ export const UpdateUbicacion = async (req, res, next) => {
   }
 };
 
-export const DeleteUbicacion = async (req, res, next) => {
+export const deleteLocationHandler = async (req, res, next) => {
   const ubicacion = req.ubicacion;
   try {
-    await EliminarUbicacion(ubicacion);
+    await deleteLocation(ubicacion);
     res.status(204).json({
       message: "Se elimino el Ubicacion con exito",
     });
@@ -59,19 +59,19 @@ export const DeleteUbicacion = async (req, res, next) => {
   }
 };
 
-export const ReadUbicacion = async (req, res, next) => {
+export const getLocationsHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const ubicaciones = await ListarUbicaciones(page, size);
+    const ubicaciones = await getLocations(page, size);
     res.status(200).json(ubicaciones);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadUbicacionEspecifico = async (req, res, next) => {
+export const getLocationHandler = async (req, res, next) => {
   const ubicacion = req.ubicacion;
   try {
     const ubi = ubicacion;

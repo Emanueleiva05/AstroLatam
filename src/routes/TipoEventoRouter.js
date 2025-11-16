@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-  SetTipoEvento,
-  DeleteTipoEvento,
-  UpdateTipoEvento,
-  ReadTipoEvento,
-  ReadTiposEvento,
+  createEventTypeHandler,
+  deleteEventTypeHandler,
+  updateEventTypeHandler,
+  getEventTypeHandler,
+  getEventTypesHandler,
 } from "../controllers/TipoEventoController.js";
 import {
-  ValidarDatosTiposEvento,
-  EncontrarTipoEvento,
+  validateEventTypeData,
+  findEventType,
 } from "../middlewares/TipoEventoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,29 +23,29 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosTiposEvento,
-  SetTipoEvento
+  validateEventTypeData,
+  createEventTypeHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoEvento,
-  ValidarDatosTiposEvento,
-  UpdateTipoEvento
+  findEventType,
+  validateEventTypeData,
+  updateEventTypeHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoEvento,
-  DeleteTipoEvento
+  findEventType,
+  deleteEventTypeHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadTiposEvento);
+router.get("/", verificarTokenOpcional, validarPageSize, getEventTypesHandler);
 
-router.get("/:id", verificarTokenOpcional, EncontrarTipoEvento, ReadTipoEvento);
+router.get("/:id", verificarTokenOpcional, findEventType, getEventTypeHandler);
 
 export default router;

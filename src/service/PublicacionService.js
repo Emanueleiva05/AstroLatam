@@ -2,7 +2,7 @@ import Publicacion from "../models/Publicacion.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const AgregarPublicacion = async (
+export const createPublication = async (
   titulo,
   descripcion,
   idUsuario,
@@ -18,21 +18,17 @@ export const AgregarPublicacion = async (
   });
 };
 
-export const ModificarPublicacion = async (
-  publicacion,
-  titulo,
-  descripcion
-) => {
+export const updatePublication = async (publicacion, titulo, descripcion) => {
   publicacion.titulo = titulo;
   publicacion.descripcion = descripcion;
   return await publicacion.save();
 };
 
-export const EliminarPublicacion = async (publicacion) => {
+export const deletePublication = async (publicacion) => {
   return await publicacion.destroy();
 };
 
-export const ListarPublicaciones = async (page, size) => {
+export const getPublications = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
@@ -74,12 +70,12 @@ export const ListarPublicaciones = async (page, size) => {
   return response;
 };
 
-export const ListarPublicacionEspecifico = async (id) => {
+export const getPublicationById = async (id) => {
   const publicacion = await Publicacion.findByPk(id);
   return publicacion;
 };
 
-export const VisibilidadPublicacion = async (publicacion, estado) => {
+export const updatePublicationVisibility = async (publicacion, estado) => {
   publicacion.visibilidad = estado;
   return await publicacion.save();
 };

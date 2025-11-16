@@ -1,16 +1,16 @@
 import { Router } from "express";
 import {
-  SetProvincia,
-  UpdateProvincia,
-  DeleteProvincia,
-  ReadProvinciaEspecifico,
-  ReadProvincias,
+  createProvinceHandler,
+  updateProvinceHandler,
+  deleteProvinceHandler,
+  getProvinceHandler,
+  getProvincesHandler,
 } from "../controllers/ProvinciaController.js";
 
 import {
-  EncontrarProvincia,
-  ValidarDatosProvincia,
-  VerificarExistenciaPais,
+  findProvince,
+  validateProvinceData,
+  validateCountryExists,
 } from "../middlewares/ProvinciaMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -21,33 +21,33 @@ import { validarPageSize } from "../utils/GeneralValidation.js";
 
 const router = Router();
 
-router.post("/", ValidarDatosProvincia, VerificarExistenciaPais, SetProvincia);
+router.post(
+  "/",
+  validateProvinceData,
+  validateCountryExists,
+  createProvinceHandler
+);
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarProvincia,
+  findProvince,
   tieneRol("administrador"),
-  ValidarDatosProvincia,
-  VerificarExistenciaPais,
-  UpdateProvincia
+  validateProvinceData,
+  validateCountryExists,
+  updateProvinceHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
-  EncontrarProvincia,
+  findProvince,
   tieneRol("administrador"),
-  DeleteProvincia
+  deleteProvinceHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadProvincias);
+router.get("/", verificarTokenOpcional, validarPageSize, getProvincesHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  EncontrarProvincia,
-  ReadProvinciaEspecifico
-);
+router.get("/:id", verificarTokenOpcional, findProvince, getProvinceHandler);
 
 export default router;

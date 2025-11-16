@@ -4,7 +4,7 @@ import AppError from "../utils/AppError.js";
 import Publicacion from "../models/Publicacion.js";
 import Observacion from "../models/Observacion.js";
 
-export const AgregarAccionUsuario = async (
+export const createUserAction = async (
   tipo,
   contenido,
   targetType,
@@ -22,7 +22,7 @@ export const AgregarAccionUsuario = async (
   });
 };
 
-export const ModificarAccionUsuario = async (
+export const updateUserAction = async (
   accionUsuario,
   tipo,
   contenido,
@@ -40,11 +40,11 @@ export const ModificarAccionUsuario = async (
   return await accionUsuario.save();
 };
 
-export const EliminarAccionUsuario = async (accionUsuario) => {
+export const deleteUserAction = async (accionUsuario) => {
   return await accionUsuario.destroy();
 };
 
-export const ListarAccionUsuarios = async (page, size) => {
+export const getUserActions = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
@@ -71,18 +71,18 @@ export const ListarAccionUsuarios = async (page, size) => {
   };
 };
 
-export const ListarAccionUsuarioEspecifico = async (id) => {
+export const getUserActionById = async (id) => {
   const accion = await AccionUsuario.findByPk(id);
   return accion;
 };
 
-export const CambiarEstadoReporte = async (accionUsuario, nota, estado) => {
+export const updateReportStatus = async (accionUsuario, nota, estado) => {
   accionUsuario.nota = nota;
   accionUsuario.estado = estado;
   return await accionUsuario.save();
 };
 
-export const ListarReportesNoCerrados = async () => {
+export const getOpenReports = async () => {
   const acciones = await AccionUsuario.findAll({
     where: {
       tipo: "reporte",
@@ -95,7 +95,7 @@ export const ListarReportesNoCerrados = async () => {
   return acciones;
 };
 
-export const ContarReportesDeUnContenido = async (targetType) => {
+export const countContentReports = async (targetType) => {
   const acciones = await AccionUsuario.count({
     where: {
       tipo: "reporte",
@@ -106,7 +106,7 @@ export const ContarReportesDeUnContenido = async (targetType) => {
   return acciones;
 };
 
-export const OcultarContenido = async (targetType, targetId) => {
+export const hideReportedContent = async (targetType, targetId) => {
   const cantidadReportes = await AccionUsuario.count({
     where: {
       tipo: "reporte",

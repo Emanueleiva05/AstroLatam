@@ -2,7 +2,7 @@ import Usuario from "../models/Usuario.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const ModificarUsuario = async (
+export const updateUser = async (
   usuario,
   username,
   nombre,
@@ -26,11 +26,11 @@ export const ModificarUsuario = async (
   return await usuario.save();
 };
 
-export const EliminarUsuario = async (usuario) => {
+export const deleteUser = async (usuario) => {
   return await usuario.destroy();
 };
 
-export const ListarUsuario = async (page, size) => {
+export const getUsers = async (page, size) => {
   if (!page) page = 0;
   if (!size) size = 5;
 
@@ -72,33 +72,30 @@ export const ListarUsuario = async (page, size) => {
   return response;
 };
 
-export const ListarUsuarioEspecifico = async (id) => {
+export const getUserById = async (id) => {
   const usuario = await Usuario.findByPk(id);
   return usuario;
 };
 
-export const ListarUsuarioUsernameEspecifico = async (username) => {
+export const getUserByUsername = async (username) => {
   const usuario = await Usuario.findOne({ where: { username: username } });
   if (!usuario) throw new AppError("No se encontro el usuario", 401);
   return usuario.toJSON();
 };
 
-export const AgregarInstrumento = async (usuario, instrumento) => {
+export const addUserInstrument = async (usuario, instrumento) => {
   return await usuario.addInstrumento(instrumento);
 };
 
-export const ELiminarInstrumento = async (usuario, instrumento) => {
+export const removeUserInstrument = async (usuario, instrumento) => {
   return await usuario.removeInstrumento(instrumento);
 };
 
-export const ListarInstrumentos = async (usuario) => {
+export const getUserInstruments = async (usuario) => {
   return await usuario.getInstrumentos();
 };
 
-export const ListarInstrumentosEspecificoUsuario = async (
-  usuario,
-  idInstrumento
-) => {
+export const getUserInstrumentById = async (usuario, idInstrumento) => {
   return await usuario.getInstrumentos({
     where: {
       idInstrumento: idInstrumento,

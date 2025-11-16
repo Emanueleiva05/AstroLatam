@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-  SetTipoPublicacion,
-  UpdateTipoPublicacion,
-  ReadTipoPublicacion,
-  ReadTipoPublicacionEspecifico,
-  DeleteTipoPublicacion,
+  createPublicationTypeHandler,
+  updatePublicationTypeHandler,
+  getPublicationTypesHandler,
+  getPublicationTypeHandler,
+  deletePublicationTypeHandler,
 } from "../controllers/TipoPublicacioController.js";
 import {
-  EncontrarTipoPublicacion,
-  ValidarDatosTiposPublicacion,
+  findPublicationType,
+  validatePublicationTypeData,
 } from "../middlewares/TipoPublicacionMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,34 +23,39 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosTiposPublicacion,
-  SetTipoPublicacion
+  validatePublicationTypeData,
+  createPublicationTypeHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoPublicacion,
-  ValidarDatosTiposPublicacion,
-  UpdateTipoPublicacion
+  findPublicationType,
+  validatePublicationTypeData,
+  updatePublicationTypeHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoPublicacion,
-  DeleteTipoPublicacion
+  findPublicationType,
+  deletePublicationTypeHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadTipoPublicacion);
+router.get(
+  "/",
+  verificarTokenOpcional,
+  validarPageSize,
+  getPublicationTypesHandler
+);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarTipoPublicacion,
-  ReadTipoPublicacionEspecifico
+  findPublicationType,
+  getPublicationTypeHandler
 );
 
 export default router;

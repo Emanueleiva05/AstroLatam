@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-  SetTipoObjeto,
-  UpdateTipoObjeto,
-  DeleteTipoObjeto,
-  ReadTipoObjeto,
-  ReadTipoObjetoEspecifico,
+  createObjectTypeHandler,
+  updateObjectTypeHandler,
+  deleteObjectTypeHandler,
+  getObjectTypesHandler,
+  getObjectTypeHandler,
 } from "../controllers/TipoObjetoController.js";
 import {
-  EncontrarTipoObjeto,
-  ValidarDatosTiposObjeto,
+  findObjectType,
+  validateObjectTypeData,
 } from "../middlewares/TipoObjetoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,34 +23,34 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosTiposObjeto,
-  SetTipoObjeto
+  validateObjectTypeData,
+  createObjectTypeHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoObjeto,
-  ValidarDatosTiposObjeto,
-  UpdateTipoObjeto
+  findObjectType,
+  validateObjectTypeData,
+  updateObjectTypeHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoObjeto,
-  DeleteTipoObjeto
+  findObjectType,
+  deleteObjectTypeHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadTipoObjeto);
+router.get("/", verificarTokenOpcional, validarPageSize, getObjectTypesHandler);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarTipoObjeto,
-  ReadTipoObjetoEspecifico
+  findObjectType,
+  getObjectTypeHandler
 );
 
 export default router;

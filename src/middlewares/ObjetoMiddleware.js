@@ -1,12 +1,12 @@
 import AppError from "../utils/AppError.js";
 import {
-  ListarObjetoEspecifico,
-  ListarAdjuntosEspecificoObjeto,
+  getObjectById,
+  getObjectAttachmentById,
 } from "../service/ObjetoService.js";
-import { ListarTipoObjetoEspecifico } from "../service/TipoObjetoService.js";
-import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
+import { getObjectTypeById } from "../service/TipoObjetoService.js";
+import { getAttachmentById } from "../service/AdjuntoService.js";
 
-export const ValidarDatosObjeto = (req, res, next) => {
+export const validateObjectData = (req, res, next) => {
   const { nombre, descripcion, idTipoObjeto } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -24,11 +24,11 @@ export const ValidarDatosObjeto = (req, res, next) => {
   next();
 };
 
-export const VerificarExistenciaTipoObjeto = async (req, res, next) => {
+export const validateObjectTypeExists = async (req, res, next) => {
   try {
     const { idTipoObjeto } = req.body;
 
-    const tipoObjeto = await ListarTipoObjetoEspecifico(idTipoObjeto);
+    const tipoObjeto = await getObjectTypeById(idTipoObjeto);
     if (!tipoObjeto) {
       throw new AppError("No se encontro el tipo objeto especifico", 404);
     }
@@ -39,10 +39,10 @@ export const VerificarExistenciaTipoObjeto = async (req, res, next) => {
   }
 };
 
-export const EncontrarObjeto = async (req, res, next) => {
+export const findObject = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const objeto = await ListarObjetoEspecifico(id);
+    const objeto = await getObjectById(id);
     if (!objeto) {
       throw new AppError("No se encontro el objeto especifico", 404);
     }
@@ -53,11 +53,11 @@ export const EncontrarObjeto = async (req, res, next) => {
   }
 };
 
-export const EncontrarAdjunto = async (req, res, next) => {
+export const findAttachment = async (req, res, next) => {
   try {
     const { idAdjunto } = req.params;
 
-    const adjunto = await ListarAdjuntoEspecifico(idAdjunto);
+    const adjunto = await getAttachmentById(idAdjunto);
     if (!adjunto) {
       throw new AppError("No se encontro el adjunto especifico", 404);
     }
@@ -69,9 +69,9 @@ export const EncontrarAdjunto = async (req, res, next) => {
   }
 };
 
-export const EncontrarAdjuntoObjeto = async (req, res, next) => {
+export const findObjectAttachment = async (req, res, next) => {
   try {
-    const adjunto = await ListarAdjuntosEspecificoObjeto(
+    const adjunto = await getObjectAttachmentById(
       req.objeto,
       req.params.idAdjunto
     );

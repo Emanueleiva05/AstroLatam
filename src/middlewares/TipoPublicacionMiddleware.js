@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
-import { ListarTipoPublicacionEspecifico } from "../service/TipoPublicacionService.js";
+import { getPublicationTypeById } from "../service/TipoPublicacionService.js";
 
-export const ValidarDatosTiposPublicacion = (req, res, next) => {
+export const validatePublicationTypeData = (req, res, next) => {
   const { nombre, descripcion } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -15,11 +15,11 @@ export const ValidarDatosTiposPublicacion = (req, res, next) => {
   next();
 };
 
-export const EncontrarTipoPublicacion = async (req, res, next) => {
+export const findPublicationType = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const tipoPublicacion = await ListarTipoPublicacionEspecifico(id);
+    const tipoPublicacion = await getPublicationTypeById(id);
 
     if (!tipoPublicacion) {
       throw new AppError("No se encontro el tipoPublicacion especifico", 404);

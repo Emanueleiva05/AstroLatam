@@ -1,15 +1,15 @@
 import { Router } from "express";
 import {
-  SetUbicacion,
-  UpdateUbicacion,
-  DeleteUbicacion,
-  ReadUbicacion,
-  ReadUbicacionEspecifico,
+  createLocationHandler,
+  updateLocationHandler,
+  deleteLocationHandler,
+  getLocationsHandler,
+  getLocationHandler,
 } from "../controllers/UbicacionController.js";
 import {
-  EncontrarUbicacion,
-  ValidarDatosUbicacion,
-  VerificarExistenciaCiudad,
+  findLocation,
+  validateLocationData,
+  validateCityExists,
 } from "../middlewares/UbicacionMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,36 +23,31 @@ const router = Router();
 
 router.post(
   "/",
-  ValidarDatosUbicacion,
-  VerificarExistenciaCiudad,
-  SetUbicacion
+  validateLocationData,
+  validateCityExists,
+  createLocationHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarUbicacion,
+  findLocation,
   verificarUsuario,
-  ValidarDatosUbicacion,
-  VerificarExistenciaCiudad,
-  UpdateUbicacion
+  validateLocationData,
+  validateCityExists,
+  updateLocationHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   verificarUsuario,
-  EncontrarUbicacion,
-  DeleteUbicacion
+  findLocation,
+  deleteLocationHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadUbicacion);
+router.get("/", verificarTokenOpcional, validarPageSize, getLocationsHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  EncontrarUbicacion,
-  ReadUbicacionEspecifico
-);
+router.get("/:id", verificarTokenOpcional, findLocation, getLocationHandler);
 
 export default router;

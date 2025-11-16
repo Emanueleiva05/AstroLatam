@@ -1,11 +1,11 @@
 import {
-  AgregarInstrumento,
-  ListarInstrumentos,
-  EliminarInstrumento,
-  ModificarInstrumento,
+  createInstrument,
+  getInstruments,
+  deleteInstrument,
+  updateInstrument,
 } from "../service/InstrumentoService.js";
 
-export const SetInstrumento = async (req, res, next) => {
+export const createInstrumentHandler = async (req, res, next) => {
   const {
     nombre,
     descripcion,
@@ -18,7 +18,7 @@ export const SetInstrumento = async (req, res, next) => {
     idTipoInstrumento,
   } = req.body;
   try {
-    await AgregarInstrumento(
+    await createInstrument(
       nombre,
       descripcion,
       apertura,
@@ -35,7 +35,7 @@ export const SetInstrumento = async (req, res, next) => {
   }
 };
 
-export const UpdateInstrumento = async (req, res, next) => {
+export const updateInstrumentHandler = async (req, res, next) => {
   const instrumento = req.instrumento;
   const {
     nombre,
@@ -50,7 +50,7 @@ export const UpdateInstrumento = async (req, res, next) => {
   } = req.body;
 
   try {
-    await ModificarInstrumento(
+    await updateInstrument(
       instrumento,
       nombre,
       descripcion,
@@ -68,29 +68,29 @@ export const UpdateInstrumento = async (req, res, next) => {
   }
 };
 
-export const DeleteInstrumento = async (req, res, next) => {
+export const deleteInstrumentHandler = async (req, res, next) => {
   const instrumento = req.instrumento;
   try {
-    await EliminarInstrumento(instrumento);
+    await deleteInstrument(instrumento);
     res.status(204).json({ message: "Instrumento eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadInstrumento = async (req, res, next) => {
+export const getInstrumentsHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const instrumentos = await ListarInstrumentos(page, size);
+    const instrumentos = await getInstruments(page, size);
     res.status(200).json(instrumentos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadInstrumentoEspecifico = async (req, res, next) => {
+export const getInstrumentHandler = async (req, res, next) => {
   const instrumento = req.instrumento;
   try {
     const ins = instrumento;

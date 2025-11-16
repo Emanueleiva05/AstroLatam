@@ -1,16 +1,16 @@
 import { Router } from "express";
 import {
-  SetObservacionCondiciones,
-  UpdateObservacionCondiciones,
-  DeleteObservacionCondiciones,
-  ReadObservacionCondiciones,
-  ReadObservacionCondicionesEspecifico,
+  createObservationConditionHandler,
+  updateObservationConditionHandler,
+  deleteObservationConditionHandler,
+  getObservationConditionsHandler,
+  getObservationConditionHan,
 } from "../controllers/ObservacionCondicionController.js";
 import {
-  EncontrarCondicion,
-  ValidarDatosObservacionCondicion,
-  VerificarExistenciaObservacion,
-  VerificarExistenciaTipoCondicion,
+  findObservationCondition,
+  validateObservationConditionData,
+  validateObservationExists,
+  validateConditionTypeExists,
 } from "../middlewares/ObservacionCondicionMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,25 +23,29 @@ const router = Router();
 
 router.post(
   "/",
-  ValidarDatosObservacionCondicion,
-  VerificarExistenciaObservacion,
-  VerificarExistenciaTipoCondicion,
-  SetObservacionCondiciones
+  validateObservationConditionData,
+  validateObservationExists,
+  validateConditionTypeExists,
+  createObservationConditionHandler
 );
 
 router.put(
   "/:id",
-  EncontrarCondicion,
-  ValidarDatosObservacionCondicion,
-  VerificarExistenciaObservacion,
-  VerificarExistenciaTipoCondicion,
-  UpdateObservacionCondiciones
+  findObservationCondition,
+  validateObservationConditionData,
+  validateObservationExists,
+  validateConditionTypeExists,
+  updateObservationConditionHandler
 );
 
-router.delete("/:id", EncontrarCondicion, DeleteObservacionCondiciones);
+router.delete(
+  "/:id",
+  findObservationCondition,
+  deleteObservationConditionHandler
+);
 
-router.get("/", validarPageSize, ReadObservacionCondiciones);
+router.get("/", validarPageSize, getObservationConditionsHandler);
 
-router.get("/:id", EncontrarCondicion, ReadObservacionCondicionesEspecifico);
+router.get("/:id", findObservationCondition, getObservationConditionHan);
 
 export default router;

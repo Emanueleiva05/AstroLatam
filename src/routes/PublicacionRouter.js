@@ -1,16 +1,16 @@
 import { Router } from "express";
 import {
-  DeletePublicacion,
-  SetPublicacion,
-  UpdatePublicacion,
-  ReadPublicacion,
-  ReadPublicacionEspecifico,
-  ChangeVisibilidad,
+  deletePublicationHandler,
+  createPublicationHandler,
+  updatePublicationHandler,
+  getPublicationsHandler,
+  getPublicationHandler,
+  updatePublicationVisibilityHandler,
 } from "../controllers/PublicacionController.js";
 import {
-  EncontrarPublicacion,
-  ValidarDatosPublicacion,
-  VerificarExistenciaTipoPublicacion,
+  findPublication,
+  validatePublicationData,
+  validatePublicationTypeExist,
 } from "../middlewares/PublicacionMiddleware.js";
 import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
 import {
@@ -24,43 +24,48 @@ const router = Router();
 
 router.post(
   "/",
-  ValidarDatosPublicacion,
-  VerificarExistenciaTipoPublicacion,
-  SetPublicacion
+  validatePublicationData,
+  validatePublicationTypeExist,
+  createPublicationHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarPublicacion,
+  findPublication,
   verificarUsuario,
-  UpdatePublicacion
+  updatePublicationHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
-  EncontrarPublicacion,
+  findPublication,
   verificarUsuario,
-  DeletePublicacion
+  deletePublicationHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadPublicacion);
+router.get(
+  "/",
+  verificarTokenOpcional,
+  validarPageSize,
+  getPublicationsHandler
+);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarPublicacion,
-  ReadPublicacionEspecifico
+  findPublication,
+  getPublicationHandler
 );
 
 router.put(
   "/visible/:id",
   verificarTokenRequired,
-  EncontrarPublicacion,
+  findPublication,
   verificarUsuario,
   VerificarVisibilidad,
-  ChangeVisibilidad
+  updatePublicationVisibilityHandler
 );
 
 export default router;

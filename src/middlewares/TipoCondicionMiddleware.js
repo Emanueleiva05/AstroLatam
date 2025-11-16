@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
-import { ListarTipoCondicionEspecifico } from "../service/TipoCondicionService.js";
+import { getConditionTypeById } from "../service/TipoCondicionService.js";
 
-export const ValidarDatosTiposCondicion = (req, res, next) => {
+export const validateConditionTypeData = (req, res, next) => {
   const { nombre } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -11,11 +11,11 @@ export const ValidarDatosTiposCondicion = (req, res, next) => {
   next();
 };
 
-export const EncontrarTipoCondicion = async (req, res, next) => {
+export const findConditionType = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const tipoCondicion = await ListarTipoCondicionEspecifico(id);
+    const tipoCondicion = await getConditionTypeById(id);
 
     if (!tipoCondicion) {
       throw new AppError("No se encontro el tipoCondicion especifico", 404);

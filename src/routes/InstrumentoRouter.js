@@ -1,15 +1,15 @@
 import { Router } from "express";
 import {
-  SetInstrumento,
-  UpdateInstrumento,
-  DeleteInstrumento,
-  ReadInstrumento,
-  ReadInstrumentoEspecifico,
+  createInstrumentHandler,
+  updateInstrumentHandler,
+  deleteInstrumentHandler,
+  getInstrumentsHandler,
+  getInstrumentHandler,
 } from "../controllers/InstrumentoController.js";
 import {
-  ValidarDatosInstrumento,
-  VerificarExistenciaTipoInstrumento,
-  EncontrarInstrumento,
+  validateInstrumentData,
+  validateInstrumentTypeExists,
+  findInstrument,
 } from "../middlewares/InstrumentoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -24,36 +24,36 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosInstrumento,
-  VerificarExistenciaTipoInstrumento,
-  SetInstrumento
+  validateInstrumentData,
+  validateInstrumentTypeExists,
+  createInstrumentHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  ValidarDatosInstrumento,
-  VerificarExistenciaTipoInstrumento,
-  EncontrarInstrumento,
+  validateInstrumentData,
+  validateInstrumentTypeExists,
+  findInstrument,
   tieneRol("administrador"),
-  UpdateInstrumento
+  updateInstrumentHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
-  EncontrarInstrumento,
+  findInstrument,
   tieneRol("administrador"),
-  DeleteInstrumento
+  deleteInstrumentHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadInstrumento);
+router.get("/", verificarTokenOpcional, validarPageSize, getInstrumentsHandler);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarInstrumento,
-  ReadInstrumentoEspecifico
+  findInstrument,
+  getInstrumentHandler
 );
 
 export default router;

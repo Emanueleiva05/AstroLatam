@@ -1,8 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarAdjuntoEspecifico } from "../service/AdjuntoService.js";
-import { ListarTipoAdjuntoEspecifico } from "../service/TipoAdjuntoService.js";
+import { getAttachmentById } from "../service/AdjuntoService.js";
+import { getAttachmentTypeById } from "../service/TipoAdjuntoService.js";
 
-export const ValidarDatosAdjunto = (req, res, next) => {
+export const validateAttachmentData = (req, res, next) => {
   const { link_archivo, descripcion, idTipoAdjunto } = req.body;
 
   if (!link_archivo || link_archivo.trim() === "") {
@@ -20,11 +20,11 @@ export const ValidarDatosAdjunto = (req, res, next) => {
   next();
 };
 
-export const EncontrarAdjunto = async (req, res, next) => {
+export const findAttachment = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const adjunto = await ListarAdjuntoEspecifico(id);
+    const adjunto = await getAttachmentById(id);
     if (!adjunto) {
       throw new AppError("No se encontro el adjunto especifico", 404);
     }
@@ -36,11 +36,11 @@ export const EncontrarAdjunto = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaTipoAdjunto = async (req, res, next) => {
+export const validateAttachmentTypeExists = async (req, res, next) => {
   try {
     const { idTipoAdjunto } = req.body;
 
-    const tipoAdjunto = await ListarTipoAdjuntoEspecifico(idTipoAdjunto);
+    const tipoAdjunto = await getAttachmentTypeById(idTipoAdjunto);
     if (!tipoAdjunto) {
       throw new AppError("No se encontro el tipo adjunto especifico", 404);
     }

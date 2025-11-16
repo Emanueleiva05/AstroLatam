@@ -1,15 +1,15 @@
 import { Router } from "express";
 import {
-  SetAdjunto,
-  DeleteAdjunto,
-  UpdateAdjunto,
-  ReadAdjuntoEspecifico,
-  ReadAdjuntos,
+  createAttachmentHandler,
+  deleteAttachmentHandler,
+  updateAttachmentHandler,
+  getAttachmentHandler,
+  getAttachmentsHandler,
 } from "../controllers/AdjuntoController.js";
 import {
-  ValidarDatosAdjunto,
-  VerificarExistenciaTipoAdjunto,
-  EncontrarAdjunto,
+  validateAttachmentData,
+  validateAttachmentTypeExists,
+  findAttachment,
 } from "../middlewares/AdjuntoMiddleware.js";
 import {
   verificarTokenOpcional,
@@ -22,29 +22,34 @@ const router = Router();
 router.post(
   "/",
   verificarTokenRequired,
-  ValidarDatosAdjunto,
-  VerificarExistenciaTipoAdjunto,
-  SetAdjunto
+  validateAttachmentData,
+  validateAttachmentTypeExists,
+  createAttachmentHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
-  EncontrarAdjunto,
-  ValidarDatosAdjunto,
-  VerificarExistenciaTipoAdjunto,
-  UpdateAdjunto
+  findAttachment,
+  validateAttachmentData,
+  validateAttachmentTypeExists,
+  updateAttachmentHandler
 );
 
-router.delete("/:id", verificarTokenRequired, EncontrarAdjunto, DeleteAdjunto);
+router.delete(
+  "/:id",
+  verificarTokenRequired,
+  findAttachment,
+  deleteAttachmentHandler
+);
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadAdjuntos);
+router.get("/", verificarTokenOpcional, validarPageSize, getAttachmentsHandler);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarAdjunto,
-  ReadAdjuntoEspecifico
+  findAttachment,
+  getAttachmentHandler
 );
 
 export default router;

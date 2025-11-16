@@ -2,26 +2,26 @@ import TipoAdjunto from "../models/TipoAdjunto.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
 
-export const AgregarTipoAdjunto = async (nombre) => {
+export const createAttachmentType = async (nombre) => {
   const nuevo = await TipoAdjunto.create({ nombre });
   await clientRedis.del("tipoAdjunto:listado");
   return nuevo;
 };
 
-export const ModificarTipoAdjunto = async (tipoAdjunto, nombre) => {
+export const updateAttachmentType = async (tipoAdjunto, nombre) => {
   await clientRedis.del("tipoAdjunto:listado");
   await clientRedis.del(`tipoAdjunto${tipoAdjunto.idTipoAdjunto}`);
   tipoAdjunto.nombre = nombre;
   return await tipoAdjunto.save();
 };
 
-export const EliminarTipoAdjunto = async (tipoAdjunto) => {
+export const deleteAttachmentType = async (tipoAdjunto) => {
   await clientRedis.del("tipoAdjunto:listado");
   await clientRedis.del(`tipoAdjunto${tipoAdjunto.idTipoAdjunto}`);
   return await tipoAdjunto.destroy();
 };
 
-export const ListarTipoAdjuntos = async () => {
+export const getAttachmentTypes = async () => {
   const reply = await clientRedis.get("tipoAdjunto:listado");
   if (reply) return JSON.parse(reply);
 
@@ -38,7 +38,7 @@ export const ListarTipoAdjuntos = async () => {
   return rows;
 };
 
-export const ListarTipoAdjuntoEspecifico = async (id) => {
+export const getAttachmentTypeById = async (id) => {
   const reply = await clientRedis.get(`tipoAdjunto${id}`);
   if (reply) return JSON.parse(reply);
 

@@ -1,25 +1,25 @@
 import {
-  AgregarObservacion,
-  EliminarObservacion,
-  ModificarObservacion,
-  AgregarAdjunto,
-  AgregarEvento,
-  AgregarInstrumento,
-  AgregarObjeto,
-  EliminarAdjunto,
-  EliminarEvento,
-  EliminarInstrumento,
-  EliminarObjeto,
-  ListarAdjuntos,
-  ListarEventos,
-  ListarObjetos,
-  ListarInstrumentos,
-  VisibilidadObservacion,
-  FiltrarObservacion,
+  createObservation,
+  deleteObservation,
+  updateObservation,
+  addObservationAttachment,
+  addObservationEvent,
+  addObservationInstrument,
+  addObservationObject,
+  removeObservationAttachment,
+  removeObservationEvent,
+  removeObservationInstrument,
+  removeObservationObject,
+  getObservationAttachments,
+  getObservationEvents,
+  getObservationObjects,
+  getObservationInstruments,
+  updateObservationVisibility,
+  filterObservations,
 } from "../service/ObservacionService.js";
 import AppError from "../utils/AppError.js";
 
-export const SetObservacion = async (req, res, next) => {
+export const createObservationHandler = async (req, res, next) => {
   const {
     titulo,
     descripcion,
@@ -29,7 +29,7 @@ export const SetObservacion = async (req, res, next) => {
     idUsuario,
   } = req.body;
   try {
-    await AgregarObservacion(
+    await createObservation(
       titulo,
       descripcion,
       horaObservacion,
@@ -43,7 +43,7 @@ export const SetObservacion = async (req, res, next) => {
   }
 };
 
-export const UpdateObservacion = async (req, res, next) => {
+export const updateObservationHandler = async (req, res, next) => {
   const observacion = req.observacion;
   const {
     titulo,
@@ -54,7 +54,7 @@ export const UpdateObservacion = async (req, res, next) => {
   } = req.body;
 
   try {
-    await ModificarObservacion(
+    await updateObservation(
       observacion,
       titulo,
       descripcion,
@@ -68,20 +68,20 @@ export const UpdateObservacion = async (req, res, next) => {
   }
 };
 
-export const DeleteObservacion = async (req, res, next) => {
+export const deleteObservationHandler = async (req, res, next) => {
   const observacion = req.observacion;
   try {
-    await EliminarObservacion(observacion);
+    await deleteObservation(observacion);
     res.status(204).json({ message: "Observacion eliminado con exito" });
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObservacion = async (req, res, next) => {
+export const getObservationsHandler = async (req, res, next) => {
   const { pais, provincia, ciudad, instrumento, rol } = req.query;
   try {
-    const observaciones = await FiltrarObservacion(
+    const observaciones = await filterObservations(
       pais,
       provincia,
       ciudad,
@@ -99,7 +99,7 @@ export const ReadObservacion = async (req, res, next) => {
   }
 };
 
-export const ReadObservacionEspecifico = async (req, res, next) => {
+export const getObservationHandler = async (req, res, next) => {
   const observacion = req.observacion;
   try {
     const obs = observacion;
@@ -109,18 +109,18 @@ export const ReadObservacionEspecifico = async (req, res, next) => {
   }
 };
 
-export const SetAdjunto = async (req, res, next) => {
+export const addObservationAttachmentHandler = async (req, res, next) => {
   try {
-    await AgregarAdjunto(req.observacion, req.adjunto);
+    await addObservationAttachment(req.observacion, req.adjunto);
     res.status(201).json({ message: "Se agrego un adjunto en la observacion" });
   } catch (error) {
     next(error);
   }
 };
 
-export const RemoveAdjunto = async (req, res, next) => {
+export const removeObservationAttachmentHandler = async (req, res, next) => {
   try {
-    await EliminarAdjunto(req.observacion, req.adjunto);
+    await removeObservationAttachment(req.observacion, req.adjunto);
     res
       .status(204)
       .json({ message: "Se elimino un adjunto en la observacion" });
@@ -129,45 +129,45 @@ export const RemoveAdjunto = async (req, res, next) => {
   }
 };
 
-export const SetEvento = async (req, res, next) => {
+export const addObservationEventHandler = async (req, res, next) => {
   try {
-    await AgregarEvento(req.observacion, req.evento);
+    await addObservationEvent(req.observacion, req.evento);
     res.status(201).json({ message: "Se agrego un evento en la observacion" });
   } catch (error) {
     next(error);
   }
 };
 
-export const RemoveEvento = async (req, res, next) => {
+export const removeObservationEventHandler = async (req, res, next) => {
   try {
-    await EliminarEvento(req.observacion, req.evento);
+    await removeObservationEvent(req.observacion, req.evento);
     res.status(204).json({ message: "Se elimino un evento en la observacion" });
   } catch (error) {
     next(error);
   }
 };
 
-export const SetObjeto = async (req, res, next) => {
+export const addObservationObjectHandler = async (req, res, next) => {
   try {
-    await AgregarObjeto(req.observacion, req.objeto);
+    await addObservationObject(req.observacion, req.objeto);
     res.status(201).json({ message: "Se agrego un objeto en la observacion" });
   } catch (error) {
     next(error);
   }
 };
 
-export const RemoveObjeto = async (req, res, next) => {
+export const removeObservationObjectHandler = async (req, res, next) => {
   try {
-    await EliminarObjeto(req.observacion, req.objeto);
+    await removeObservationObject(req.observacion, req.objeto);
     res.status(204).json({ message: "Se elimino un objeto en la observacion" });
   } catch (error) {
     next(error);
   }
 };
 
-export const SetInstrumento = async (req, res, next) => {
+export const addObservationInstrumentHandler = async (req, res, next) => {
   try {
-    await AgregarInstrumento(req.observacion, req.instrumento);
+    await addObservationInstrument(req.observacion, req.instrumento);
     res
       .status(201)
       .json({ message: "Se agrego un instrumento en la observacion" });
@@ -176,9 +176,9 @@ export const SetInstrumento = async (req, res, next) => {
   }
 };
 
-export const RemoveInstrumento = async (req, res, next) => {
+export const removeObservationInstrumentHandler = async (req, res, next) => {
   try {
-    await EliminarInstrumento(req.observacion, req.instrumento);
+    await removeObservationInstrument(req.observacion, req.instrumento);
     res
       .status(204)
       .json({ message: "Se elimino un instrumento en la observacion" });
@@ -187,16 +187,16 @@ export const RemoveInstrumento = async (req, res, next) => {
   }
 };
 
-export const ReadAdjuntos = async (req, res, next) => {
+export const getObservationAttachmentsHandler = async (req, res, next) => {
   try {
-    const adjuntos = await ListarAdjuntos(req.observacion);
+    const adjuntos = await getObservationAttachments(req.observacion);
     res.status(200).json(adjuntos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadAdjuntoEspecifico = async (req, res, next) => {
+export const getObservationAttachmentHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.adjunto);
   } catch (error) {
@@ -204,16 +204,16 @@ export const ReadAdjuntoEspecifico = async (req, res, next) => {
   }
 };
 
-export const ReadObjeto = async (req, res, next) => {
+export const getObservationObjectsHandler = async (req, res, next) => {
   try {
-    const objetos = await ListarObjetos(req.observacion);
+    const objetos = await getObservationObjects(req.observacion);
     res.status(200).json(objetos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadObjetoEspecifico = async (req, res, next) => {
+export const getObservationObjectHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.objeto);
   } catch (error) {
@@ -221,16 +221,16 @@ export const ReadObjetoEspecifico = async (req, res, next) => {
   }
 };
 
-export const ReadInstrumento = async (req, res, next) => {
+export const getObservationInstrumentsHandler = async (req, res, next) => {
   try {
-    const instrumentos = await ListarInstrumentos(req.observacion);
+    const instrumentos = await getObservationInstruments(req.observacion);
     res.status(200).json(instrumentos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadInstrumentoEspecifico = async (req, res, next) => {
+export const getObservationInstrumentHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.instrumento);
   } catch (error) {
@@ -238,16 +238,16 @@ export const ReadInstrumentoEspecifico = async (req, res, next) => {
   }
 };
 
-export const ReadEvento = async (req, res, next) => {
+export const getObservationEventsHandler = async (req, res, next) => {
   try {
-    const eventos = await ListarEventos(req.observacion);
+    const eventos = await getObservationEvents(req.observacion);
     res.status(200).json(eventos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadEventoEspecifico = async (req, res, next) => {
+export const getObservationEventHandler = async (req, res, next) => {
   try {
     res.status(200).json(req.evento);
   } catch (error) {
@@ -255,9 +255,9 @@ export const ReadEventoEspecifico = async (req, res, next) => {
   }
 };
 
-export const ChangeVisibilidad = async (req, res, next) => {
+export const updateObservationVisibilityHandler = async (req, res, next) => {
   try {
-    await VisibilidadObservacion(req.observacion, req.visibilidad);
+    await updateObservationVisibility(req.observacion, req.visibilidad);
     res.status(204).json({ meesage: "Se cambio el visibilidad con exito" });
   } catch (error) {
     next(error);

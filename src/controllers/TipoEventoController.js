@@ -1,14 +1,14 @@
 import {
-  AgregarTipoEvento,
-  ListarTipoEventos,
-  ModificarTipoEvento,
-  EliminarTipoEvento,
+  createEventType,
+  getEventTypes,
+  updateEventType,
+  deleteEventType,
 } from "../service/TipoEventoService.js";
 
-export const SetTipoEvento = async (req, res, next) => {
+export const createEventTypeHandler = async (req, res, next) => {
   const { nombre } = req.body;
   try {
-    await AgregarTipoEvento(nombre);
+    await createEventType(nombre);
     res.status(201).json({
       message: "Se agrego el TipoEvento con exito",
     });
@@ -17,11 +17,11 @@ export const SetTipoEvento = async (req, res, next) => {
   }
 };
 
-export const UpdateTipoEvento = async (req, res, next) => {
+export const updateEventTypeHandler = async (req, res, next) => {
   const { nombre } = req.body;
   const tipoEvento = req.evento;
   try {
-    await ModificarTipoEvento(tipoEvento, nombre);
+    await updateEventType(tipoEvento, nombre);
     res.status(204).json({
       message: "Se modifico el TipoEvento con exito",
     });
@@ -30,10 +30,10 @@ export const UpdateTipoEvento = async (req, res, next) => {
   }
 };
 
-export const DeleteTipoEvento = async (req, res, next) => {
+export const deleteEventTypeHandler = async (req, res, next) => {
   const tipoEvento = req.evento;
   try {
-    await EliminarTipoEvento(tipoEvento);
+    await deleteEventType(tipoEvento);
     res.status(204).json({
       message: "Se elimino el TipoEvento con exito",
     });
@@ -42,19 +42,19 @@ export const DeleteTipoEvento = async (req, res, next) => {
   }
 };
 
-export const ReadTiposEvento = async (req, res, next) => {
+export const getEventTypesHandler = async (req, res, next) => {
   try {
     const page = req.query.page;
     const size = req.query.size;
 
-    const tiposEventos = await ListarTipoEventos(page, size);
+    const tiposEventos = await getEventTypes(page, size);
     res.status(200).json(tiposEventos);
   } catch (error) {
     next(error);
   }
 };
 
-export const ReadTipoEvento = async (req, res, next) => {
+export const getEventTypeHandler = async (req, res, next) => {
   const tipoEvento = req.evento;
   try {
     const TipoE = tipoEvento;

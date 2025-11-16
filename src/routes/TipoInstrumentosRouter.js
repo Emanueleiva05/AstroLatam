@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
-  SetTipoInstrumento,
-  DeleteTipoInstrumento,
-  UpdateTipoInstrumento,
-  ReadTipoInstrumento,
-  ReadTipoInstrumentoEspecifico,
+  createInstrumentTypeHandler,
+  deleteInstrumentTypeHandler,
+  updateInstrumentTypeHandler,
+  getInstrumentTypesHandler,
+  getInstrumentTypeHandler,
 } from "../controllers/TipoInstrumentoController.js";
 import {
-  EncontrarTipoInstrumento,
-  ValidarDatosTiposInstrumento,
+  findInstrumentType,
+  validateInstrumentTypeData,
 } from "../middlewares/TipoInstrumentoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
@@ -23,34 +23,39 @@ router.post(
   "/",
   verificarTokenRequired,
   tieneRol("administrador"),
-  ValidarDatosTiposInstrumento,
-  SetTipoInstrumento
+  validateInstrumentTypeData,
+  createInstrumentTypeHandler
 );
 
 router.put(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoInstrumento,
-  ValidarDatosTiposInstrumento,
-  UpdateTipoInstrumento
+  findInstrumentType,
+  validateInstrumentTypeData,
+  updateInstrumentTypeHandler
 );
 
 router.delete(
   "/:id",
   verificarTokenRequired,
   tieneRol("administrador"),
-  EncontrarTipoInstrumento,
-  DeleteTipoInstrumento
+  findInstrumentType,
+  deleteInstrumentTypeHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, ReadTipoInstrumento);
+router.get(
+  "/",
+  verificarTokenOpcional,
+  validarPageSize,
+  getInstrumentTypesHandler
+);
 
 router.get(
   "/:id",
   verificarTokenOpcional,
-  EncontrarTipoInstrumento,
-  ReadTipoInstrumentoEspecifico
+  findInstrumentType,
+  getInstrumentTypeHandler
 );
 
 export default router;

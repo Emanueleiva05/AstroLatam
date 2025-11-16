@@ -2,26 +2,26 @@ import TipoEvento from "../models/TipoEvento.js";
 import clientRedis from "../settings/redis.js";
 import AppError from "../utils/AppError.js";
 
-export const AgregarTipoEvento = async (nombre) => {
+export const createEventType = async (nombre) => {
   const nuevo = await TipoEvento.create({ nombre });
   await clientRedis.del("tipoEventos:listado");
   return nuevo;
 };
 
-export const ModificarTipoEvento = async (tipoEvento, nombre) => {
+export const updateEventType = async (tipoEvento, nombre) => {
   await clientRedis.del("tipoEventos:listado");
   await clientRedis.del(`tipoEvento:${tipoEvento.idTipoEvento}`);
   tipoEvento.nombre = nombre;
   return await tipoEvento.save();
 };
 
-export const EliminarTipoEvento = async (tipoEvento) => {
+export const deleteEventType = async (tipoEvento) => {
   await clientRedis.del("tipoEventos:listado");
   await clientRedis.del(`tipoEvento:${tipoEvento.idTipoEvento}`);
   return await tipoEvento.destroy();
 };
 
-export const ListarTipoEventos = async () => {
+export const getEventTypes = async () => {
   const reply = await clientRedis.get("tipoEventos:listado");
   if (reply) return JSON.parse(reply);
 
@@ -38,7 +38,7 @@ export const ListarTipoEventos = async () => {
   return rows;
 };
 
-export const ListarTipoEventoEspecifico = async (id) => {
+export const getEventTypeById = async (id) => {
   const reply = await clientRedis.get(`tipoEvento:${id}`);
   if (reply) return JSON.parse(reply);
 

@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
-import { ListarTipoEventoEspecifico } from "../service/TipoEventoService.js";
+import { getEventTypeById } from "../service/TipoEventoService.js";
 
-export const ValidarDatosTiposEvento = (req, res, next) => {
+export const validateEventTypeData = (req, res, next) => {
   const { nombre } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -11,11 +11,11 @@ export const ValidarDatosTiposEvento = (req, res, next) => {
   next();
 };
 
-export const EncontrarTipoEvento = async (req, res, next) => {
+export const findEventType = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const tipoEvento = await ListarTipoEventoEspecifico(id);
+    const tipoEvento = await getEventTypeById(id);
 
     if (!tipoEvento) {
       throw new AppError("No se encontro el tipoEvento especifico", 404);

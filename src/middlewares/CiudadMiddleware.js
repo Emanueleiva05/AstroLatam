@@ -1,8 +1,8 @@
 import AppError from "../utils/AppError.js";
-import { ListarCiudadEspecifico } from "../service/CiudadService.js";
-import { ListarProvinciaEspecifico } from "../service/ProvinciaService.js";
+import { getCityById } from "../service/CiudadService.js";
+import { getProvincieById } from "../service/ProvinciaService.js";
 
-export const ValidarDatosCiudad = (req, res, next) => {
+export const validateCityData = (req, res, next) => {
   const { nombre, idProvincia } = req.body;
 
   if (!nombre || nombre.trim() === "") {
@@ -16,11 +16,11 @@ export const ValidarDatosCiudad = (req, res, next) => {
   next();
 };
 
-export const EncontrarCiudad = async (req, res, next) => {
+export const findCity = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const ciudad = await ListarCiudadEspecifico(id);
+    const ciudad = await getCityById(id);
     if (!ciudad) {
       throw new AppError("No se encontro la ciudad especifica", 404);
     }
@@ -32,11 +32,11 @@ export const EncontrarCiudad = async (req, res, next) => {
   }
 };
 
-export const VerificarExistenciaProvincia = async (req, res, next) => {
+export const validateProvinceExists = async (req, res, next) => {
   try {
     const { idProvincia } = req.body;
 
-    const provincia = await ListarProvinciaEspecifico(idProvincia);
+    const provincia = await getProvincieById(idProvincia);
     if (!provincia) {
       throw new AppError("No se encontro la provincia especifica", 404);
     }
