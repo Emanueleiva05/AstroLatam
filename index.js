@@ -25,6 +25,7 @@ import HandleError from "./src/middlewares/HandleError.js";
 import RequestLogger from "./src/middlewares/RequestLogger.js";
 import cookieParser from "cookie-parser";
 import clientRedis from "./src/settings/redis.js";
+import { swaggerDocs } from "./src/settings/swagger.js";
 
 env.config();
 
@@ -56,8 +57,8 @@ app.use("/api/objeto", ObjetoRouter);
 app.use("/api/auth", AuthRouter);
 
 app.use(HandleError);
-
 clientRedis.connect();
+swaggerDocs(app, PORT);
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en ${PORT}`);

@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
 import {
   getObservationById,
-  getObservationAttachmentByI,
+  getObservationAttachmentById,
   getObservationEventById,
   getObservationInstrumentById,
   getObservationObjectById,
@@ -216,7 +216,7 @@ export const findObservationObject = async (req, res, next) => {
 
 export const findObservationAttachment = async (req, res, next) => {
   try {
-    const adjunto = await getObservationAttachmentByI(
+    const adjunto = await getObservationAttachmentById(
       req.observacion,
       req.params.idAdjunto
     );

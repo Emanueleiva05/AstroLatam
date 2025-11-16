@@ -321,3 +321,12 @@
 [2025-11-14 16:40:17] info: [cb9y1f0] GET /api/evento/listarPaises/1 500 - 6ms
 [2025-11-14 16:40:31] error: [Code: 500]: evento.getPais is not a function
 [2025-11-14 16:40:31] info: [p0vuydq] GET /api/evento/listarPaises/1 500 - 6ms
+[2025-11-16 16:22:17] info: [ow9y8fq] GET /api/docs 301 - 2ms
+[2025-11-16 16:22:17] info: [87jhnbh] GET /api/docs/ 200 - 2ms
+[2025-11-16 16:22:24] info: [6jzeo8v] GET /api/docs 301 - 1ms
+[2025-11-16 16:22:24] info: [beu8e2g] GET /api/docs/ 200 - 1ms
+[2025-11-16 16:22:24] info: [v4cgajx] GET /api/docs/swagger-ui-init.js 200 - 0ms
+[2025-11-16 16:22:24] info: [jsohc20] GET /api/docs/swagger-ui.css 200 - 5ms
+[2025-11-16 16:22:24] info: [vytu7q7] GET /api/docs/swagger-ui-standalone-preset.js 200 - 4ms
+[2025-11-16 16:22:24] info: [hgjuhx0] GET /api/docs/swagger-ui-bundle.js 200 - 7ms
+[2025-11-16 16:22:24] info: [hphzi5o] GET /api/docs/favicon-32x32.png 200 - 1ms
