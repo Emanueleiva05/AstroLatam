@@ -12,8 +12,8 @@ import {
 } from "../middlewares/TipoPublicacionMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -21,7 +21,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   validatePublicationTypeData,
   createPublicationTypeHandler
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findPublicationType,
   validatePublicationTypeData,
@@ -38,7 +38,7 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findPublicationType,
   deletePublicationTypeHandler
@@ -46,14 +46,14 @@ router.delete(
 
 router.get(
   "/",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   validarPageSize,
   getPublicationTypesHandler
 );
 
 router.get(
   "/:id",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findPublicationType,
   getPublicationTypeHandler
 );

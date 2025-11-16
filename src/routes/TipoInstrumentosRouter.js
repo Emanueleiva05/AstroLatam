@@ -12,8 +12,8 @@ import {
 } from "../middlewares/TipoInstrumentoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -21,7 +21,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   validateInstrumentTypeData,
   createInstrumentTypeHandler
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findInstrumentType,
   validateInstrumentTypeData,
@@ -38,7 +38,7 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findInstrumentType,
   deleteInstrumentTypeHandler
@@ -46,14 +46,14 @@ router.delete(
 
 router.get(
   "/",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   validarPageSize,
   getInstrumentTypesHandler
 );
 
 router.get(
   "/:id",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findInstrumentType,
   getInstrumentTypeHandler
 );

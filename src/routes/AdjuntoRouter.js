@@ -12,8 +12,8 @@ import {
   findAttachment,
 } from "../middlewares/AdjuntoMiddleware.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -21,7 +21,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   validateAttachmentData,
   validateAttachmentTypeExists,
   createAttachmentHandler
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findAttachment,
   validateAttachmentData,
   validateAttachmentTypeExists,
@@ -38,18 +38,13 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findAttachment,
   deleteAttachmentHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getAttachmentsHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getAttachmentsHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  findAttachment,
-  getAttachmentHandler
-);
+router.get("/:id", verifyOptionalToken, findAttachment, getAttachmentHandler);
 
 export default router;

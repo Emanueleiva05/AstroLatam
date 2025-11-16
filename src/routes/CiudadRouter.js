@@ -13,8 +13,8 @@ import {
 } from "../middlewares/CiudadMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -22,7 +22,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   validateCityData,
   validateProvinceExists,
   createCityHandler
@@ -30,7 +30,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findCity,
   tieneRol("administrador"),
   validateCityData,
@@ -40,14 +40,14 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findCity,
   tieneRol("administrador"),
   deleteCityHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getCitiesHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getCitiesHandler);
 
-router.get("/:id", verificarTokenOpcional, findCity, getCityHandler);
+router.get("/:id", verifyOptionalToken, findCity, getCityHandler);
 
 export default router;

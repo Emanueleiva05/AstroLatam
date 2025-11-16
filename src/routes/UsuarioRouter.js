@@ -20,9 +20,9 @@ import {
   validateOptionalUserData,
 } from "../middlewares/UsuarioMiddleware.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
-  verificarUsuario,
+  verifyOptionalToken,
+  verifyRequiredToken,
+  verifyUserOwnership,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -30,7 +30,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   validateUserData,
   validateOptionalUserData,
   validateAttachmentExists,
@@ -40,9 +40,9 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findUser,
-  verificarUsuario,
+  verifyUserOwnership,
   validateUserData,
   validateOptionalUserData,
   validateAttachmentExists,
@@ -52,44 +52,44 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findUser,
-  verificarUsuario,
+  verifyUserOwnership,
   deleteUserHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getUsersHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getUsersHandler);
 
-router.get("/:id", verificarTokenOpcional, findUser, getUserHandler);
+router.get("/:id", verifyOptionalToken, findUser, getUserHandler);
 
 router.post(
   "/:id/instrumentos/:idInstrumento",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findUser,
-  verificarUsuario,
+  verifyUserOwnership,
   findInstrument,
   addUserInstrumentHandler
 );
 
 router.delete(
   "/:id/instrumentos/:idInstrumento",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findUser,
-  verificarUsuario,
+  verifyUserOwnership,
   findInstrument,
   removeUserInstrumentHandler
 );
 
 router.get(
   "/:id/instrumentos",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findUser,
   getUserInstrumentsHandler
 );
 
 router.get(
   "/:id/instrumentos/:idInstrumento",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findUser,
   findUserInstrument,
   getUserInstrumentHandler

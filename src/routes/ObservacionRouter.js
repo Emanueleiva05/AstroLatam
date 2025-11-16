@@ -40,9 +40,9 @@ import {
 } from "../middlewares/ObservacionMiddleware.js";
 import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
-  verificarUsuario,
+  verifyOptionalToken,
+  verifyRequiredToken,
+  verifyUserOwnership,
 } from "../middlewares/AuthMiddleware.js";
 
 const router = Router();
@@ -57,9 +57,9 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   validateObservationData,
   validateLocationExists,
   updateObservationHandler
@@ -67,80 +67,75 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   deleteObservationHandler
 );
 
-router.get("/", verificarTokenOpcional, getObservationsHandler);
+router.get("/", verifyOptionalToken, getObservationsHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  findObservation,
-  getObservationHandler
-);
+router.get("/:id", verifyOptionalToken, findObservation, getObservationHandler);
 
 router.post(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findAttachment,
   addObservationAttachmentHandler
 );
 
 router.delete(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findAttachment,
   removeObservationAttachmentHandler
 );
 
 router.post(
   "/:id/objetos/:idObjeto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findObject,
   addObservationObjectHandler
 );
 
 router.delete(
   "/:id/objetos/:idObjeto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findObject,
   removeObservationObjectHandler
 );
 
 router.post(
   "/:id/eventos/:idEvento",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findEvent,
   addObservationEventHandler
 );
 
 router.delete(
   "/:id/eventos/:idEvento",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findEvent,
   removeObservationEventHandler
 );
 
 router.post(
   "/:id/instrumentos/:idInstrumento",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findInstrument,
   validateUserInstrument,
   addObservationInstrumentHandler
@@ -148,23 +143,23 @@ router.post(
 
 router.delete(
   "/:id/instrumentos/:idInstrumento",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   findInstrument,
   removeObservationInstrumentHandler
 );
 
 router.get(
   "/:id/objetos",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   getObservationObjectsHandler
 );
 
 router.get(
   "/:id/objetos/:idObjeto",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   findObservationObject,
   getObservationObjectHandler
@@ -172,14 +167,14 @@ router.get(
 
 router.get(
   "/:id/eventos",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   getObservationEventsHandler
 );
 
 router.get(
   "/:id/eventos/:idEvento",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   findObservationEvent,
   getObservationEventHandler
@@ -187,14 +182,14 @@ router.get(
 
 router.get(
   "/:id/adjuntos",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   getObservationAttachmentsHandler
 );
 
 router.get(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   findObservationAttachment,
   getObservationAttachmentHandler
@@ -202,14 +197,14 @@ router.get(
 
 router.get(
   "/:id/instrumentos",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   getObservationInstrumentsHandler
 );
 
 router.get(
   "/:id/instrumentos/:idInstrumento",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findObservation,
   findObservationInstrument,
   getObservationInstrumentHandler
@@ -217,9 +212,9 @@ router.get(
 
 router.put(
   "/visible/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findObservation,
-  verificarUsuario,
+  verifyUserOwnership,
   VerificarVisibilidad,
   updateObservationVisibilityHandler
 );

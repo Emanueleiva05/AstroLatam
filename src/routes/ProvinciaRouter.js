@@ -14,8 +14,8 @@ import {
 } from "../middlewares/ProvinciaMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -30,7 +30,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findProvince,
   tieneRol("administrador"),
   validateProvinceData,
@@ -40,14 +40,14 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findProvince,
   tieneRol("administrador"),
   deleteProvinceHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getProvincesHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getProvincesHandler);
 
-router.get("/:id", verificarTokenOpcional, findProvince, getProvinceHandler);
+router.get("/:id", verifyOptionalToken, findProvince, getProvinceHandler);
 
 export default router;

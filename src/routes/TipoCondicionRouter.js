@@ -12,8 +12,8 @@ import {
 } from "../middlewares/TipoCondicionMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -21,7 +21,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   validateConditionTypeData,
   createAttachmentType
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findConditionType,
   validateConditionTypeData,
@@ -38,17 +38,17 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findConditionType,
   deleteAttachmentType
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getAttachmentTypes);
+router.get("/", verifyOptionalToken, validarPageSize, getAttachmentTypes);
 
 router.get(
   "/:id",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findConditionType,
   getAttachmentTypeById
 );

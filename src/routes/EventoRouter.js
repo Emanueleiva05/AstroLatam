@@ -31,8 +31,8 @@ import {
 } from "../middlewares/EventoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -40,7 +40,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   validateEventData,
   validateEventTypeExists,
@@ -49,7 +49,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   validateEventData,
@@ -59,19 +59,19 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   deleteEventHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getEventsHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getEventsHandler);
 
-router.get("/:id", verificarTokenOpcional, findEvent, getEventHandler);
+router.get("/:id", verifyOptionalToken, findEvent, getEventHandler);
 
 router.post(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   findAttachment,
@@ -80,7 +80,7 @@ router.post(
 
 router.delete(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   findAttachment,
@@ -89,7 +89,7 @@ router.delete(
 
 router.post(
   "/:id/paises/:idPais",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   findCountry,
@@ -98,7 +98,7 @@ router.post(
 
 router.delete(
   "/:id/paises/:idPais",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   findCountry,
@@ -107,7 +107,7 @@ router.delete(
 
 router.post(
   "/:id/objetos/:idObjeto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   findObject,
@@ -116,7 +116,7 @@ router.post(
 
 router.delete(
   "/:id/objetos/:idObjeto",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEvent,
   findEvent,
@@ -126,44 +126,34 @@ router.delete(
 
 router.get(
   "/:id/adjuntos",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findEvent,
   getAttachmentsHandler
 );
 
 router.get(
   "/:id/adjuntos/:idAdjunto",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findEvent,
   findEventAttachment,
   getAttachmentHandler
 );
 
-router.get(
-  "/:id/paises",
-  verificarTokenOpcional,
-  findEvent,
-  getCountriesHandler
-);
+router.get("/:id/paises", verifyOptionalToken, findEvent, getCountriesHandler);
 
 router.get(
   "/:id/paises/:idPais",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findEvent,
   findEventCountry,
   getCountryHandler
 );
 
-router.get(
-  "/:id/objetos",
-  verificarTokenOpcional,
-  findEvent,
-  getObjectsHandler
-);
+router.get("/:id/objetos", verifyOptionalToken, findEvent, getObjectsHandler);
 
 router.get(
   "/:id/objetos/:idObjeto",
-  verificarTokenOpcional,
+  verifyOptionalToken,
   findEvent,
   findEventObject,
   getObjectHandler

@@ -12,8 +12,8 @@ import {
 } from "../middlewares/TipoEventoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -21,7 +21,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   validateEventTypeData,
   createEventTypeHandler
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEventType,
   validateEventTypeData,
@@ -38,14 +38,14 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findEventType,
   deleteEventTypeHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getEventTypesHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getEventTypesHandler);
 
-router.get("/:id", verificarTokenOpcional, findEventType, getEventTypeHandler);
+router.get("/:id", verifyOptionalToken, findEventType, getEventTypeHandler);
 
 export default router;

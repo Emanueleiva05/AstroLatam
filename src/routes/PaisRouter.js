@@ -12,8 +12,8 @@ import {
 } from "../middlewares/PaisMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -23,7 +23,7 @@ router.post("/", validateCountryData, createCountryHandler);
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findCountry,
   tieneRol("administrador"),
   validateCountryData,
@@ -32,14 +32,14 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findCountry,
   tieneRol("administrador"),
   deleteCountryHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getCountriesHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getCountriesHandler);
 
-router.get("/:id", verificarTokenOpcional, findCountry, getCountryHandler);
+router.get("/:id", verifyOptionalToken, findCountry, getCountryHandler);
 
 export default router;

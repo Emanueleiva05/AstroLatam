@@ -12,8 +12,8 @@ import {
 } from "../middlewares/TipoObjetoMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
+  verifyOptionalToken,
+  verifyRequiredToken,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -21,7 +21,7 @@ const router = Router();
 
 router.post(
   "/",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   validateObjectTypeData,
   createObjectTypeHandler
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findObjectType,
   validateObjectTypeData,
@@ -38,19 +38,14 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   tieneRol("administrador"),
   findObjectType,
   deleteObjectTypeHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getObjectTypesHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getObjectTypesHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  findObjectType,
-  getObjectTypeHandler
-);
+router.get("/:id", verifyOptionalToken, findObjectType, getObjectTypeHandler);
 
 export default router;

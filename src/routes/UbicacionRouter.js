@@ -13,9 +13,9 @@ import {
 } from "../middlewares/UbicacionMiddleware.js";
 import { tieneRol } from "../middlewares/RoleUser.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
-  verificarUsuario,
+  verifyOptionalToken,
+  verifyRequiredToken,
+  verifyUserOwnership,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -30,9 +30,9 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findLocation,
-  verificarUsuario,
+  verifyUserOwnership,
   validateLocationData,
   validateCityExists,
   updateLocationHandler
@@ -40,14 +40,14 @@ router.put(
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
-  verificarUsuario,
+  verifyRequiredToken,
+  verifyUserOwnership,
   findLocation,
   deleteLocationHandler
 );
 
-router.get("/", verificarTokenOpcional, validarPageSize, getLocationsHandler);
+router.get("/", verifyOptionalToken, validarPageSize, getLocationsHandler);
 
-router.get("/:id", verificarTokenOpcional, findLocation, getLocationHandler);
+router.get("/:id", verifyOptionalToken, findLocation, getLocationHandler);
 
 export default router;

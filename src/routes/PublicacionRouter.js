@@ -14,9 +14,9 @@ import {
 } from "../middlewares/PublicacionMiddleware.js";
 import { VerificarVisibilidad } from "../utils/GeneralValidation.js";
 import {
-  verificarTokenOpcional,
-  verificarTokenRequired,
-  verificarUsuario,
+  verifyOptionalToken,
+  verifyRequiredToken,
+  verifyUserOwnership,
 } from "../middlewares/AuthMiddleware.js";
 import { validarPageSize } from "../utils/GeneralValidation.js";
 
@@ -31,39 +31,29 @@ router.post(
 
 router.put(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findPublication,
-  verificarUsuario,
+  verifyUserOwnership,
   updatePublicationHandler
 );
 
 router.delete(
   "/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findPublication,
-  verificarUsuario,
+  verifyUserOwnership,
   deletePublicationHandler
 );
 
-router.get(
-  "/",
-  verificarTokenOpcional,
-  validarPageSize,
-  getPublicationsHandler
-);
+router.get("/", verifyOptionalToken, validarPageSize, getPublicationsHandler);
 
-router.get(
-  "/:id",
-  verificarTokenOpcional,
-  findPublication,
-  getPublicationHandler
-);
+router.get("/:id", verifyOptionalToken, findPublication, getPublicationHandler);
 
 router.put(
   "/visible/:id",
-  verificarTokenRequired,
+  verifyRequiredToken,
   findPublication,
-  verificarUsuario,
+  verifyUserOwnership,
   VerificarVisibilidad,
   updatePublicationVisibilityHandler
 );
