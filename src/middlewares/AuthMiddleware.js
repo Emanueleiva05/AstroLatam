@@ -1,14 +1,14 @@
 import jwt from "jsonwebtoken";
 import AppError from "../utils/AppError.js";
+import env from "dotenv";
+
+env.config();
 
 export const verifyOptionalToken = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) return next();
   try {
-    const data = jwt.verify(
-      token,
-      "La-palabra-secreta-debe-ser-muy-larga-nunca-corta"
-    );
+    const data = jwt.verify(token, process.env.JWT_SECRET);
     req.user = data;
   } catch (error) {
     throw new AppError("Token invalido o expirado", 403);
@@ -21,10 +21,7 @@ export const verifyRequiredToken = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) throw new AppError("No se proporciono token", 401);
   try {
-    const data = jwt.verify(
-      token,
-      "La-palabra-secreta-debe-ser-muy-larga-nunca-corta"
-    );
+    const data = jwt.verify(token, process.env.JWT_SECRET);
     req.user = data;
     next();
   } catch (error) {

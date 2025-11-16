@@ -1,5 +1,8 @@
 import { registerUser, loginUser } from "../service/AuthService.js";
 import jwt from "jsonwebtoken";
+import env from "dotenv";
+
+env.config();
 
 export const registerHandler = async (req, res, next) => {
   const {
@@ -38,7 +41,7 @@ export const loginHandler = async (req, res, next) => {
     const user = await loginUser(username, password);
     const token = jwt.sign(
       { id: user.idUsuario, username: user.username, rol: user.rol },
-      "La-palabra-secreta-debe-ser-muy-larga-nunca-corta",
+      process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
     res
