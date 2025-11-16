@@ -330,3 +330,9 @@
 [2025-11-16 16:22:24] info: [vytu7q7] GET /api/docs/swagger-ui-standalone-preset.js 200 - 4ms
 [2025-11-16 16:22:24] info: [hgjuhx0] GET /api/docs/swagger-ui-bundle.js 200 - 7ms
 [2025-11-16 16:22:24] info: [hphzi5o] GET /api/docs/favicon-32x32.png 200 - 1ms
+[2025-11-16 16:24:48] info: [bwrgk6q] GET /api/docs/ 200 - 3ms
+[2025-11-16 16:24:48] info: [e8wbn54] GET /api/docs/swagger-ui-init.js 200 - 0ms
+[2025-11-16 16:24:48] info: [n6jf60w] GET /api/docs/swagger-ui.css 200 - 8ms
+[2025-11-16 16:24:48] info: [jim1i5f] GET /api/docs/swagger-ui-standalone-preset.js 200 - 7ms
+[2025-11-16 16:24:48] info: [b48n6wo] GET /api/docs/swagger-ui-bundle.js 200 - 10ms
+[2025-11-16 16:24:48] info: [wj2mzxd] GET /api/docs/favicon-32x32.png 200 - 2ms
