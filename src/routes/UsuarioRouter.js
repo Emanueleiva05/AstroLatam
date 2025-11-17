@@ -96,3 +96,124 @@ router.get(
 );
 
 export default router;
+
+/**
+ * @swagger
+ * tags:
+ *   name: Usuario
+ *   description: Gestión de usuarios
+ */
+
+/**
+ * @swagger
+ * /usuario:
+ *   post:
+ *     summary: Crear usuario (requiere token)
+ *     tags: [Usuario]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - nombre
+ *               - email
+ *               - password
+ *               - idCiudad
+ *               - rol
+ *             properties:
+ *               username:
+ *                 type: string
+ *               nombre:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               descripcion:
+ *                 type: string
+ *               numero:
+ *                 type: string
+ *               rol:
+ *                 type: string
+ *                 enum: [administrador, moderador, astronomo, aficionado]
+ *               idCiudad:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Usuario creado
+ */
+
+/**
+ * @swagger
+ * /usuario/{id}:
+ *   put:
+ *     summary: Actualizar usuario propio
+ *     tags: [Usuario]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado
+ */
+
+/**
+ * @swagger
+ * /usuario/{id}:
+ *   delete:
+ *     summary: Eliminar usuario propio
+ *     tags: [Usuario]
+ */
+
+/**
+ * @swagger
+ * /usuario:
+ *   get:
+ *     summary: Listar usuarios con paginación
+ *     tags: [Usuario]
+ */
+
+/**
+ * @swagger
+ * /usuario/{id}:
+ *   get:
+ *     summary: Obtener un usuario por ID
+ *     tags: [Usuario]
+ */
+
+/**
+ * @swagger
+ * /usuario/{id}/instrumentos/{idInstrumento}:
+ *   post:
+ *     summary: Agregar instrumento a usuario
+ *     tags: [Usuario]
+ */
+
+/**
+ * @swagger
+ * /usuario/{id}/instrumentos/{idInstrumento}:
+ *   delete:
+ *     summary: Quitar instrumento a usuario
+ *     tags: [Usuario]
+ */
+
+/**
+ * @swagger
+ * /usuario/{id}/instrumentos:
+ *   get:
+ *     summary: Obtener todos los instrumentos del usuario
+ *     tags: [Usuario]
+ */
+
+/**
+ * @swagger
+ * /usuario/{id}/instrumentos/{idInstrumento}:
+ *   get:
+ *     summary: Obtener instrumento específico del usuario
+ *     tags: [Usuario]
+ */
