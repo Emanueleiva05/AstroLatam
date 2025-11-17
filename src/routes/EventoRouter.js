@@ -5,7 +5,7 @@ import {
   updateEventHandler,
   getEventsHandler,
   getEventHandler,
-  SetAdjunto,
+  addAttachmentHandler,
   removeAttachmentHandler,
   addObjectHandler,
   removeObjectHandler,
@@ -75,7 +75,7 @@ router.post(
   tieneRol("administrador"),
   findEvent,
   findAttachment,
-  SetAdjunto
+  addAttachmentHandler
 );
 
 router.delete(

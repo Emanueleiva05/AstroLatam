@@ -1,14 +1,14 @@
 import {
-  AgregarTipoPublicacion,
-  EliminarTipoPublicacion,
-  ModificarTipoPublicacion,
-  ListarTipoPublicaciones,
+  createPublicationType,
+  deletePublicationType,
+  updatePublicationType,
+  getPublicationTypes,
 } from "../service/TipoPublicacionService.js";
 
 export const createPublicationTypeHandler = async (req, res, next) => {
   const { nombre, descripcion } = req.body;
   try {
-    await AgregarTipoPublicacion(nombre, descripcion);
+    await createPublicationType(nombre, descripcion);
     res.status(201).json({ message: "Se creo el Tipo Publicacion con exito" });
   } catch (error) {
     next(error);
@@ -19,7 +19,7 @@ export const updatePublicationTypeHandler = async (req, res, next) => {
   const tipoPublicacion = req.tipoPublicacion;
   const { nombre, descripcion } = req.body;
   try {
-    await ModificarTipoPublicacion(tipoPublicacion, nombre, descripcion);
+    await updatePublicationType(tipoPublicacion, nombre, descripcion);
     res
       .status(204)
       .json({ message: "Se modifico el Tipo Publicacion con exito" });
@@ -31,7 +31,7 @@ export const updatePublicationTypeHandler = async (req, res, next) => {
 export const deletePublicationTypeHandler = async (req, res, next) => {
   const tipoPublicacion = req.tipoPublicacion;
   try {
-    await EliminarTipoPublicacion(tipoPublicacion);
+    await deletePublicationType(tipoPublicacion);
     res
       .status(204)
       .json({ message: "Se elimino el Tipo Publicacion con exito" });
@@ -55,7 +55,7 @@ export const getPublicationTypesHandler = async (req, res, next) => {
     const page = req.query.page;
     const size = req.query.size;
 
-    const tipoPublicaciones = await ListarTipoPublicaciones(page, size);
+    const tipoPublicaciones = await getPublicationTypes(page, size);
     res.status(200).json(tipoPublicaciones);
   } catch (error) {
     next(error);
