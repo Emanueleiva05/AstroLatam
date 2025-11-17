@@ -1,13 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc"; //Transforma los archivos YAML en documentación Swagger
 import swaggerUi from "swagger-ui-express"; //Permite mostar ese JSON en una interfaz web
-import path from "path"; //Estos dos importes nos ayudan a resolver rutas de archivos
-import { fileURLToPath } from "url";
-
-const _dirname = path.dirname(fileURLToPath(import.meta.url));
-
-//fileURLToPath(import.meta.url) nos da la ruta completa del archivo actual
-//path.dirname(...) nos da el directorio que contiene ese archivo
-
 //Configuración de Swagger
 
 const swaggerSpec = swaggerJSDoc({
@@ -28,11 +20,7 @@ const swaggerSpec = swaggerJSDoc({
       },
     ],
   },
-  apis: [
-    //Rutas a los archivos YAML que contienen la documentación de la API
-    path.join(_dirname, "../docs/schemas/*.yaml"), //Esquemas de datos
-    path.join(_dirname, "../docs/paths/*.yaml"), //Rutas de la API
-  ],
+  apis: ["./src/routes/*.js"], //Rutas donde se encuentran los archivos con anotaciones Swagger,
 });
 
 export const swaggerDocs = (app, port) => {
