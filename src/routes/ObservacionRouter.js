@@ -220,3 +220,349 @@ router.put(
 );
 
 export default router;
+
+/**
+ * @swagger
+ * tags:
+ *   name: Observacion
+ *   description: Gestión de observaciones astronómicas creadas por usuarios
+ */
+
+/**
+ * @swagger
+ * /observacion:
+ *   post:
+ *     summary: Crear una observación
+ *     description: Cualquier usuario autenticado puede crear una observación.
+ *     tags: [Observacion]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - titulo
+ *               - descripcion
+ *               - idUbicacion
+ *               - idUsuario
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *               descripcion:
+ *                 type: string
+ *               idUbicacion:
+ *                 type: integer
+ *               idUsuario:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Observación creada exitosamente
+ *       400:
+ *         description: Datos inválidos
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}:
+ *   put:
+ *     summary: Actualizar una observación
+ *     description: Solo el dueño de la observación puede actualizarla.
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *               descripcion:
+ *                 type: string
+ *               idUbicacion:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Observación actualizada
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: Observación no encontrada
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}:
+ *   delete:
+ *     summary: Eliminar una observación
+ *     description: Solo el dueño puede eliminarla.
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Observación eliminada
+ *       403:
+ *         description: No autorizado
+ *       404:
+ *         description: No encontrada
+ */
+
+/**
+ * @swagger
+ * /observacion:
+ *   get:
+ *     summary: Listar observaciones
+ *     tags: [Observacion]
+ *     parameters:
+ *       - name: page
+ *         in: query
+ *         schema: { type: integer }
+ *       - name: size
+ *         in: query
+ *         schema: { type: integer }
+ *     responses:
+ *       200:
+ *         description: Lista de observaciones
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}:
+ *   get:
+ *     summary: Obtener una observación por ID
+ *     tags: [Observacion]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         schema: { type: integer }
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Observación encontrada
+ *       404:
+ *         description: No encontrada
+ */
+
+/* ----------  RELACIÓN: ADJUNTOS  ---------- */
+
+/**
+ * @swagger
+ * /observacion/{id}/adjuntos/{idAdjunto}:
+ *   post:
+ *     summary: Agregar un adjunto a una observación
+ *     description: Solo el creador de la observación puede agregar adjuntos.
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id, required: true, schema: { type: integer } }
+ *       - { in: path, name: idAdjunto, required: true, schema: { type: integer } }
+ *     responses:
+ *       201:
+ *         description: Adjunto agregado
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/adjuntos/{idAdjunto}:
+ *   delete:
+ *     summary: Quitar un adjunto de una observación
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id, required: true, schema: { type: integer } }
+ *       - { in: path, name: idAdjunto, required: true, schema: { type: integer } }
+ *     responses:
+ *       200:
+ *         description: Adjunto removido
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/adjuntos:
+ *   get:
+ *     summary: Listar adjuntos de una observación
+ *     tags: [Observacion]
+ *     parameters:
+ *       - { in: path, name: id, required: true, schema: { type: integer } }
+ *     responses:
+ *       200:
+ *         description: Lista de adjuntos
+ */
+
+/* ----------  RELACIÓN: OBJETOS ---------- */
+
+/**
+ * @swagger
+ * /observacion/{id}/objetos/{idObjeto}:
+ *   post:
+ *     summary: Vincular un objeto astronómico a una observación
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id, required: true }
+ *       - { in: path, name: idObjeto, required: true }
+ *     responses:
+ *       201:
+ *         description: Objeto agregado
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/objetos/{idObjeto}:
+ *   delete:
+ *     summary: Desvincular un objeto de una observación
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id, required: true }
+ *       - { in: path, name: idObjeto, required: true }
+ *     responses:
+ *       200:
+ *         description: Objeto removido
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/objetos:
+ *   get:
+ *     summary: Listar objetos asociados a una observación
+ *     tags: [Observacion]
+ *     parameters:
+ *       - { in: path, name: id, required: true }
+ *     responses:
+ *       200:
+ *         description: Lista de objetos
+ */
+
+/* ----------  RELACIÓN: EVENTOS  ---------- */
+
+/**
+ * @swagger
+ * /observacion/{id}/eventos/{idEvento}:
+ *   post:
+ *     summary: Asociar un evento astronómico a una observación
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id }
+ *       - { in: path, name: idEvento }
+ *     responses:
+ *       201:
+ *         description: Evento asociado
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/eventos/{idEvento}:
+ *   delete:
+ *     summary: Remover un evento asociado
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id }
+ *       - { in: path, name: idEvento }
+ *     responses:
+ *       200:
+ *         description: Evento removido
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/eventos:
+ *   get:
+ *     summary: Listar eventos asociados a una observación
+ *     tags: [Observacion]
+ *     parameters:
+ *       - { in: path, name: id }
+ *     responses:
+ *       200:
+ *         description: Lista de eventos
+ */
+
+/* ----------  RELACIÓN: INSTRUMENTOS  ---------- */
+
+/**
+ * @swagger
+ * /observacion/{id}/instrumentos/{idInstrumento}:
+ *   post:
+ *     summary: Asociar un instrumento a una observación
+ *     description: Solo válido si el usuario dueño posee ese instrumento.
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id }
+ *       - { in: path, name: idInstrumento }
+ *     responses:
+ *       201:
+ *         description: Instrumento asociado
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/instrumentos/{idInstrumento}:
+ *   delete:
+ *     summary: Remover un instrumento asociado
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id }
+ *       - { in: path, name: idInstrumento }
+ *     responses:
+ *       200:
+ *         description: Instrumento removido
+ */
+
+/**
+ * @swagger
+ * /observacion/{id}/instrumentos:
+ *   get:
+ *     summary: Listar instrumentos asociados a una observación
+ *     tags: [Observacion]
+ *     parameters:
+ *       - { in: path, name: id }
+ *     responses:
+ *       200:
+ *         description: Lista de instrumentos
+ */
+
+/* ---------- VISIBILIDAD ---------- */
+
+/**
+ * @swagger
+ * /observacion/visible/{id}:
+ *   put:
+ *     summary: Cambiar la visibilidad de una observación
+ *     description: Solo dueño.
+ *     tags: [Observacion]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - { in: path, name: id, required: true, schema: { type: integer } }
+ *     responses:
+ *       200:
+ *         description: Visibilidad actualizada
+ */
