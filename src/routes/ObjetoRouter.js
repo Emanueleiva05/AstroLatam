@@ -8,6 +8,7 @@ import {
   addObjectAttachmentHandler,
   removeObjectAttachmentHandler,
   getObjectAttachmentsHandler,
+  getObjectAttachmentHandler,
 } from "../controllers/ObjetoController.js";
 import {
   findObject,
@@ -85,7 +86,7 @@ router.get(
   verifyOptionalToken,
   findObject,
   findObjectAttachment,
-  getObjectHandler
+  getObjectAttachmentHandler
 );
 
 export default router;

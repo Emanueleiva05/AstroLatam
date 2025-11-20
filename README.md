@@ -114,9 +114,24 @@ GET /auth/protected
 
 ---
 
-🔎 Documentación de API
+## 🔎 Documentación de API
 
-> Próximamente: Documentación formal con Swagger/OpenAPI
+La API esta completamente documentada utilizando Swagger / OpenAPI 3.0
+Podes acceder a la interfaz interactiva en:
+
+```
+GET /api/docs
+```
+
+La documentacion incluye:
+
+- Rutas completas de todos los modulos del sistema
+- Ejemplos de request/response
+- Autenticacion y seguridad (JWT + Roles)
+- Esquema de datos
+- Relaciones entre entidades
+- Codigos de error
+- Paginacion + filstros
 
 ---
 
@@ -128,15 +143,6 @@ GET /auth/protected
 - Estado: Pendiente
 - Impacto: Devuelve todas las observaciones aunque se pase ?pais= o ?ciudad=
 - Plan: Rehacer el filtrado con raw query optimizada o include con required anidados.
-
----
-
-### 🔧 2. Cache + paginación con Redis
-
-- Problema: Cada página necesita su propia clave cacheada.
-- Ej: "tipoAdjunto:listado:page=0:size=5"
-- Issue: Falta invalidar todas las páginas en operaciones CRUD.
-- Estado: En análisis.
 
 ---
 
@@ -169,24 +175,6 @@ GET /auth/protected
 - Problema: Cookie no se limpia automáticamente.
 - Estado: Pendiente
 - Plan: En logout, setear cookie expirando inmediatamente.
-
----
-
-### 🔧 7. Indices y optimización SQL
-
-- Problema: Falta definir índices sobre columnas consultadas frecuentemente.
-- Estado: Pendiente
-- Plan: Agregar:
-  - Index en idCiudad, idProvincia, idPais
-  - Index en titulo o fechaObservacion para búsquedas
-  - Unique donde corresponda.
-
----
-
-### 🔧 8. Falta documentación Swagger
-
-- Estado: Aún no iniciado
-- Plan: Autogenerar docs con swagger-jsdoc + swagger-ui-express.
 
 ---
 
@@ -223,11 +211,6 @@ GET /auth/protected
 - Plan: Reescribir seeds creando dependencias explícitas.
 
 ---
-
-### 🔧 13. Historial de publicaciones
-
-- Problema: Implementado pero falta testear versión incremental + integridad.
-- Estado: En evaluación.
 
 # 🤝 Contribuciones
 

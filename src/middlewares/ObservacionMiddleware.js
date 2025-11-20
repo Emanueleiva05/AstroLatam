@@ -1,6 +1,5 @@
 import AppError from "../utils/AppError.js";
 import {
-  getObservationById,
   getObservationAttachmentById,
   getObservationEventById,
   getObservationInstrumentById,
@@ -15,6 +14,7 @@ import {
   getUserById,
   getUserInstrumentById,
 } from "../service/UsuarioService.js";
+import Observacion from "../models/Observacion.js";
 
 export const validateObservationData = (req, res, next) => {
   const {
@@ -86,7 +86,7 @@ export const findObservation = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const observacion = await getObservationById(id);
+    const observacion = await Observacion.findByPk(id);
     if (!observacion) {
       throw new AppError("No se encontro la observacion especifica", 404);
     }

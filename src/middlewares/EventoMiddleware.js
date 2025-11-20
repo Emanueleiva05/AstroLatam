@@ -1,6 +1,5 @@
 import AppError from "../utils/AppError.js";
 import {
-  getEventById,
   getEventAttachment,
   getEventCountry,
   getEventObject,
@@ -9,6 +8,7 @@ import { getEventTypeById } from "../service/TipoEventoService.js";
 import { getAttachmentById } from "../service/AdjuntoService.js";
 import { getCountryById } from "../service/PaisService.js";
 import { getObjectById } from "../service/ObjetoService.js";
+import Evento from "../models/Evento.js";
 
 export const validateEventData = (req, res, next) => {
   const {
@@ -56,7 +56,7 @@ export const findEvent = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const evento = await getEventById(id);
+    const evento = await Evento.findByPk(id);
     if (!evento) {
       throw new AppError("No se encontro el evento especifica", 404);
     }

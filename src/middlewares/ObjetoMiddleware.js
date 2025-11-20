@@ -1,10 +1,8 @@
 import AppError from "../utils/AppError.js";
-import {
-  getObjectById,
-  getObjectAttachmentById,
-} from "../service/ObjetoService.js";
+import { getObjectAttachmentById } from "../service/ObjetoService.js";
 import { getObjectTypeById } from "../service/TipoObjetoService.js";
 import { getAttachmentById } from "../service/AdjuntoService.js";
+import Objeto from "../models/Objeto.js";
 
 export const validateObjectData = (req, res, next) => {
   const { nombre, descripcion, idTipoObjeto } = req.body;
@@ -42,7 +40,7 @@ export const validateObjectTypeExists = async (req, res, next) => {
 export const findObject = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const objeto = await getObjectById(id);
+    const objeto = await Objeto.findByPk(id);
     if (!objeto) {
       throw new AppError("No se encontro el objeto especifico", 404);
     }

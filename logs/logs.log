@@ -360,3 +360,83 @@
 [2025-11-17 15:56:22] info: [vlesedo] GET /api/docs/swagger-ui-bundle.js 200 - 21ms
 [2025-11-17 15:56:23] info: [sbyx45l] GET /api/docs/favicon-32x32.png 200 - 2ms
 [2025-11-17 15:56:41] info: [fwhrlt2] GET /api/observacion 200 - 55ms
+[2025-11-19 22:54:43] info: [abivylr] GET /api/adjuntos 404 - 4ms
+[2025-11-19 22:54:49] info: [18ihcf6] GET /api/adjunto 200 - 18ms
+[2025-11-19 22:54:58] info: [drwboyk] GET /api/adjunto/1 200 - 8ms
+[2025-11-19 22:55:43] info: [ob9myhv] GET /api/objetos/1/adjunto/1 404 - 1ms
+[2025-11-19 22:55:53] info: [tumjtxx] GET /api/objetos/1/adjuntos 404 - 1ms
+[2025-11-19 22:56:01] info: [rxd4bgl] GET /api/objeto/1/adjuntos 200 - 33ms
+[2025-11-19 22:56:07] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 22:56:07] info: [kxoy76e] GET /api/objeto/1/adjuntos/1 500 - 4ms
+[2025-11-19 22:58:06] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 22:58:06] info: [872hjrl] GET /api/objeto/1/adjuntos/1 500 - 14ms
+[2025-11-19 22:58:15] info: [dmdu0p9] GET /api/objeto/1/adjuntos 200 - 4ms
+[2025-11-19 22:59:10] info: [ognf7lm] GET /api/objeto/1/adjuntos 200 - 14ms
+[2025-11-19 22:59:19] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 22:59:19] info: [ps4jnd0] GET /api/objeto/1/adjuntos/1 500 - 6ms
+[2025-11-19 23:00:19] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:00:19] info: [m2o47pr] GET /api/objeto/1/adjuntos/1 500 - 13ms
+[2025-11-19 23:01:10] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:01:10] info: [kukt1dv] GET /api/objeto/1/adjuntos/1 500 - 9ms
+[2025-11-19 23:09:40] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:09:40] info: [fqiiib9] GET /api/objeto/1/adjuntos/1 500 - 13ms
+[2025-11-19 23:09:43] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:09:43] info: [2gnysyt] GET /api/objeto/1/adjuntos/1 500 - 5ms
+[2025-11-19 23:10:34] error: [Code: 500]: objeto.getAdjunto is not a function
+[2025-11-19 23:10:34] info: [8ucv664] GET /api/objeto/1/adjuntos/1 500 - 12ms
+[2025-11-19 23:10:40] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:10:40] info: [1u5d4ts] GET /api/objeto/1/adjuntos/1 500 - 14ms
+[2025-11-19 23:13:04] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:13:04] info: [4qydqj1] GET /api/objeto/1/adjuntos/1 500 - 13ms
+[2025-11-19 23:13:39] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:13:39] info: [dc8rcar] GET /api/objeto/1/adjuntos/1 500 - 6ms
+[2025-11-19 23:13:41] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:13:41] info: [58h1ips] GET /api/objeto/1/adjuntos/1 500 - 4ms
+[2025-11-19 23:13:42] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:13:42] info: [5mdqp5z] GET /api/objeto/1/adjuntos/1 500 - 2ms
+[2025-11-19 23:13:57] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:13:57] info: [cjwl4p8] GET /api/objeto/1/adjuntos/1 500 - 12ms
+[2025-11-19 23:17:06] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:17:06] info: [yrg4lyj] GET /api/objeto/1/adjuntos/1 500 - 14ms
+[2025-11-19 23:17:29] error: [Code: 500]: objeto.getAdjuntos is not a function
+[2025-11-19 23:17:29] info: [cm46nwv] GET /api/objeto/1/adjuntos/1 500 - 5ms
+[2025-11-19 23:18:10] info: [pn400ne] GET /api/objeto/1/adjuntos/1 200 - 16ms
+[2025-11-19 23:18:12] info: [clx0joa] GET /api/objeto/1/adjuntos/1 200 - 8ms
+[2025-11-19 23:18:13] info: [xxer6yr] GET /api/objeto/1/adjuntos/1 200 - 4ms
+[2025-11-19 23:18:14] info: [jrpby1x] GET /api/objeto/1/adjuntos/1 200 - 5ms
+[2025-11-19 23:18:15] info: [pgjkp0m] GET /api/objeto/1/adjuntos/1 200 - 3ms
+[2025-11-19 23:19:30] info: [y1mcjde] GET /api/objeto/1/adjuntos/1 200 - 19ms
+[2025-11-19 23:19:31] info: [9004x7j] GET /api/objeto/1/adjuntos/1 200 - 3ms
+[2025-11-19 23:19:34] info: [h1a1t11] GET /api/objeto/1/adjuntos/2 200 - 17ms
+[2025-11-19 23:19:36] info: [jmbplfi] GET /api/objeto/1/adjuntos/2 200 - 6ms
+[2025-11-19 23:19:37] info: [9zfhbvo] GET /api/objeto/1/adjuntos/2 200 - 4ms
+[2025-11-19 23:20:39] info: [a4tnrdq] GET /api/usuario/ 200 - 35ms
+[2025-11-19 23:20:51] info: [thlh2gw] GET /api/usuario/1/instrumentos 200 - 32ms
+[2025-11-19 23:20:56] info: [s9cf58r] GET /api/usuario/1/instrumentos/2 200 - 10ms
+[2025-11-19 23:22:03] info: [bw9p9aw] GET /api/objeto/1/instrumentos 404 - 5ms
+[2025-11-19 23:22:07] info: [8k9ary0] GET /api/objetos/1/instrumentos 404 - 1ms
+[2025-11-19 23:22:14] info: [r0p6r5h] GET /api/objetos 404 - 1ms
+[2025-11-19 23:22:27] info: [doai4bv] GET /api/observacion 200 - 47ms
+[2025-11-19 23:22:42] info: [eom4ujy] GET /api/observacion/4/instrumentos 200 - 21ms
+[2025-11-19 23:22:48] info: [gcl5gaw] GET /api/observacion/4/instrumentos/2 200 - 11ms
+[2025-11-19 23:22:50] info: [f0p9g9r] GET /api/observacion/4/instrumentos/2 200 - 8ms
+[2025-11-19 23:22:58] info: [2c7kpc6] GET /api/observacion/4/adjuntos/ 200 - 12ms
+[2025-11-19 23:23:02] info: [0omk3gx] GET /api/observacion/4/adjuntos/1 200 - 8ms
+[2025-11-19 23:23:12] info: [oyn2aqj] GET /api/observacion/4/eventos/1 200 - 16ms
+[2025-11-19 23:23:15] info: [544017r] GET /api/observacion/4/eventos/ 200 - 7ms
+[2025-11-19 23:23:21] info: [3zqd06m] GET /api/observacion/5/eventos/ 200 - 5ms
+[2025-11-19 23:23:32] info: [cam3guo] GET /api/observacion/5/objetos/ 200 - 9ms
+[2025-11-19 23:23:44] info: [qn3hxk1] GET /api/observacion/5/instrumentos/ 200 - 11ms
+[2025-11-19 23:23:50] info: [90t4ik6] GET /api/observacion/6/instrumentos/ 200 - 4ms
+[2025-11-19 23:23:55] info: [p4ymvcs] GET /api/observacion/5/instrumentos/2 200 - 7ms
+[2025-11-19 23:24:58] info: [mq390ao] GET /api/evento/ 200 - 30ms
+[2025-11-19 23:25:05] info: [7lvafpz] GET /api/evento/1/pais 404 - 3ms
+[2025-11-19 23:25:22] error: [Code: 404]: No se encontro el evento especifica
+[2025-11-19 23:25:22] info: [8ajbijh] GET /api/evento/1/paises 404 - 15ms
+[2025-11-19 23:25:34] info: [6r6c3rw] GET /api/evento/ 200 - 2ms
+[2025-11-19 23:25:38] error: [Code: 404]: No se encontro el evento especifica
+[2025-11-19 23:25:38] info: [na4w2b1] GET /api/evento/1 404 - 9ms
+[2025-11-19 23:25:58] info: [712p973] GET /api/evento/ 200 - 2ms
+[2025-11-19 23:26:19] info: [o8tfmak] GET /api/evento/ 200 - 9ms
+[2025-11-19 23:26:25] info: [hqhsd4f] GET /api/evento/1/paises 200 - 33ms
+[2025-11-19 23:26:30] info: [1w88b0k] GET /api/evento/1/paises/29 200 - 10ms

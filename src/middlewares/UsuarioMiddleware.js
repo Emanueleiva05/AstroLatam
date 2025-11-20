@@ -1,11 +1,9 @@
 import AppError from "../utils/AppError.js";
-import {
-  getUserById,
-  getUserInstrumentById,
-} from "../service/UsuarioService.js";
+import { getUserInstrumentById } from "../service/UsuarioService.js";
 import { getAttachmentById } from "../service/AdjuntoService.js";
 import { getCityById } from "../service/CiudadService.js";
 import { getInstrumentById } from "../service/InstrumentoService.js";
+import Usuario from "../models/Usuario.js";
 
 export const validateUserData = (req, res, next) => {
   const { nombre, username, email, password, rol, idCiudad } = req.body;
@@ -104,7 +102,7 @@ export const validateCityExists = async (req, res, next) => {
 export const findUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const usuario = await getUserById(id);
+    const usuario = await Usuario.findByPk(id);
     if (!usuario) {
       throw new AppError("No se encontró el usuario especificado", 404);
     }

@@ -1,6 +1,7 @@
 import Objeto from "../models/Objeto.js";
 import AppError from "../utils/AppError.js";
 import clientRedis from "../settings/redis.js";
+import { where } from "sequelize";
 
 export const createObject = async (nombre, descripcion, idTipoObjeto) => {
   const nuevo = await Objeto.create({
@@ -70,34 +71,37 @@ export const removeObjectAttachment = async (objeto, adjunto) => {
 };
 
 export const getObjectAttachments = async (objeto) => {
-  const reply = await clientRedis.get(`objeto:adjunto:listado`);
+  const reply = await clientRedis.get(
+    `objeto:${objeto.idObjeto}:adjunto:listado`
+  );
   if (reply) return JSON.parse(reply);
 
   const adjuntos = await objeto.getAdjuntos();
 
-  await clientRedis.set(`objeto:adjunto:listado`, JSON.stringify(adjuntos), {
-    EX: 3600,
-  });
+  await clientRedis.set(
+    `objeto:${objeto.idObjeto}:adjunto:listado`,
+    JSON.stringify(adjuntos),
+    {
+      EX: 3600,
+    }
+  );
 
   return adjuntos;
 };
 
 export const getObjectAttachmentById = async (objeto, idAdjunto) => {
-  const reply = await clientRedis.get(`objeto:adjunto:${idAdjunto}`);
+  const reply = await clientRedis.get(
+    `objeto:${objeto.idObjeto}:adjunto:${idAdjunto}`
+  );
   if (reply) return JSON.parse(reply);
-
-  const adjunto = await objeto.getAdjuntos({
-    where: {
-      idAdjunto: idAdjunto,
-    },
-  });
+  const adjunto = await objeto.getAdjuntos({ where: { idAdjunto } });
   await clientRedis.set(
-    `objeto:adjunto:${idAdjunto}`,
+    `objeto:${objeto.idObjeto}:adjunto:${idAdjunto}`,
     JSON.stringify(adjunto),
     {
       EX: 3600,
     }
   );
 
-  return adjunto;
+  return adjunto[0];
 };
