@@ -11,7 +11,7 @@ module.exports = {
         horaFin: "23:59:00",
         fechaInicio: new Date("2025-05-15T22:30:00Z"),
         fechaFin: new Date("2025-05-15T23:59:00Z"),
-        idTipoEvento: 25, // por ejemplo: "Astronómico"
+        idTipoEvento: 1, // por ejemplo: "Astronómico"
       },
       {
         nombre: "Lluvia de Meteoros Perseidas",
@@ -21,7 +21,7 @@ module.exports = {
         horaFin: "05:00:00",
         fechaInicio: new Date("2025-08-12T02:00:00Z"),
         fechaFin: new Date("2025-08-12T05:00:00Z"),
-        idTipoEvento: 27, // por ejemplo: "Meteoritos"
+        idTipoEvento: 2, // por ejemplo: "Meteoritos"
       },
       {
         nombre: "Conjunción Venus-Júpiter",
@@ -31,7 +31,7 @@ module.exports = {
         horaFin: "21:00:00",
         fechaInicio: new Date("2025-06-02T19:45:00Z"),
         fechaFin: new Date("2025-06-02T21:00:00Z"),
-        idTipoEvento: 26, // por ejemplo: "Conjunción"
+        idTipoEvento: 3, // por ejemplo: "Conjunción"
       },
     ]);
   },

@@ -13,7 +13,7 @@ module.exports = {
         aumento: 0,
         diametro: 0,
         tipo_prisma: null,
-        idTipoInstrumento: 28,
+        idTipoInstrumento: 1,
       },
       {
         nombre: "Binocular",
@@ -24,7 +24,7 @@ module.exports = {
         aumento: 100,
         diametro: 100,
         tipo_prisma: "Compactos",
-        idTipoInstrumento: 29,
+        idTipoInstrumento: 2,
       },
     ]);
   },

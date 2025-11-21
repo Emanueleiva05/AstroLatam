@@ -146,14 +146,6 @@ La documentacion incluye:
 
 ---
 
-### 🔧 3. Relación Objeto–Adjunto
-
-- Problema: objeto.getAdjuntos() fallaba por venir objeto como null por orden incorrecto de middlewares.
-- Estado: En progreso
-- Plan: Validar existencia de modelos antes de llamar métodos mágicos.
-
----
-
 ### 🔧 4. Validación de adjuntos
 
 - Problema: Acepta tipos sin control estricto.
@@ -175,17 +167,6 @@ La documentacion incluye:
 - Problema: Cookie no se limpia automáticamente.
 - Estado: Pendiente
 - Plan: En logout, setear cookie expirando inmediatamente.
-
----
-
-### 🔧 9. Dockerización incompleta
-
-- Problema: ENTRYPOINT, build context y migraciones no están implementadas.
-- Estado: Pendiente
-- Plan:
-  - Usar docker-compose
-  - Agregar script de migraciones en entrypoint
-  - Configurar redes entre MySQL/Redis/API.
 
 ---
 

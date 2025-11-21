@@ -7,17 +7,17 @@ module.exports = {
       {
         link_archivo: "URL/Imagen.png",
         descripcion: "Imagen de algo",
-        idTipoAdjunto: 31,
+        idTipoAdjunto: 1,
       },
       {
         link_archivo: "URL/Video.mp4",
         descripcion: "Video de algo",
-        idTipoAdjunto: 33,
+        idTipoAdjunto: 2,
       },
       {
         link_archivo: "URL/Archivo.pdf",
         descripcion: "Archivo de algo",
-        idTipoAdjunto: 32,
+        idTipoAdjunto: 3,
       },
     ]);
   },

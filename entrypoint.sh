@@ -1,10 +1,14 @@
 #!/bin/sh
+set -e
 
-echo "Running Sequelize migrations..."
+echo "Esperando a que MySQL este listo"
+sleep 10
+
+echo "Corriendo Sequelize migrations..."
 npx sequelize-cli db:migrate
 
-echo "Running Sequelize seeds..."
+echo "Corriendo Sequelize seeds..."
 npx sequelize-cli db:seed:all
 
-echo "Starting Node.js application..."
-exec npm start 
+echo "Empezando aplicacion Node.js..."
+exec npm run dev 

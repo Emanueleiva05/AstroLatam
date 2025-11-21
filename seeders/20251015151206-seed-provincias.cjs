@@ -6,19 +6,19 @@ module.exports = {
     await queryInterface.bulkInsert("Provincias", [
       {
         nombre: "Buenos Aires",
-        idPais: 29,
+        idPais: 1,
       },
       {
         nombre: "New York",
-        idPais: 30,
+        idPais: 2,
       },
       {
         nombre: "Tokyo",
-        idPais: 32,
+        idPais: 3,
       },
       {
         nombre: "Kyoto",
-        idPais: 32,
+        idPais: 4,
       },
     ]);
   },
