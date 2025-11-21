@@ -57,7 +57,9 @@ app.use("/api/objeto", ObjetoRouter);
 app.use("/api/auth", AuthRouter);
 
 app.use(HandleError);
-clientRedis.connect();
+clientRedis
+  .connect()
+  .catch((err) => console.error("No se pudo conectar a Redis", err));
 swaggerDocs(app, PORT);
 
 app.listen(PORT, () => {
