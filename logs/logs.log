@@ -336,3 +336,12 @@
 [2025-11-16 16:24:48] info: [jim1i5f] GET /api/docs/swagger-ui-standalone-preset.js 200 - 7ms
 [2025-11-16 16:24:48] info: [b48n6wo] GET /api/docs/swagger-ui-bundle.js 200 - 10ms
 [2025-11-16 16:24:48] info: [wj2mzxd] GET /api/docs/favicon-32x32.png 200 - 2ms
+[2025-11-21 20:32:13] info: [c4wngwp] GET /api/pais 200 - 51ms
+[2025-11-21 20:32:34] info: [7xlr1fz] GET /api/pais 200 - 10ms
+[2025-11-21 20:34:29] info: [mo793yr] GET /api/pais 200 - 14ms
+[2025-11-21 20:44:47] info: [aqkgk8l] GET /api/tipoAdjunto/ 200 - 10ms
+[2025-11-21 20:44:53] info: [n371hk2] GET /api/pais/ 200 - 1ms
+[2025-11-21 20:45:06] error: [Code: 500]: The client is closed
+[2025-11-21 20:45:06] info: [70qrm8i] GET /api/pais 500 - 8ms
+[2025-11-21 20:48:45] info: [cqn2mpu] GET /api/pais 200 - 43ms
+[2025-11-21 20:48:53] info: [mo27dz0] GET /api/pais 200 - 39ms

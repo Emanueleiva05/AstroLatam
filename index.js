@@ -1,6 +1,7 @@
 import express, { json } from "express";
-import env from "dotenv";
-import "./src/models/index.js";
+import cookieParser from "cookie-parser";
+import RequestLogger from "./src/middlewares/RequestLogger.js";
+import HandleError from "./src/middlewares/HandleError.js";
 import TipoAdjuntoRouter from "./src/routes/TipoAdjuntoRouter.js";
 import TipoPublicacionRouter from "./src/routes/TipoPublicacionRouter.js";
 import TipoCondicionRouter from "./src/routes/TipoCondicionRouter.js";
@@ -21,20 +22,14 @@ import ObservacionRouter from "./src/routes/ObservacionRouter.js";
 import ObservacionCondicionRouter from "./src/routes/ObservacionCondicionRouter.js";
 import EventoRouter from "./src/routes/EventoRouter.js";
 import AuthRouter from "./src/routes/AuthRouter.js";
-import HandleError from "./src/middlewares/HandleError.js";
-import RequestLogger from "./src/middlewares/RequestLogger.js";
-import cookieParser from "cookie-parser";
-import clientRedis from "./src/settings/redis.js";
-import { swaggerDocs } from "./src/settings/swagger.js";
-
-env.config();
 
 const app = express();
-const PORT = process.env.PORT;
+
 app.use(json());
 app.use(cookieParser());
 app.use(RequestLogger);
 
+// Rutas
 app.use("/api/tipoAdjunto", TipoAdjuntoRouter);
 app.use("/api/tipoPublicacion", TipoPublicacionRouter);
 app.use("/api/tipoCondicion", TipoCondicionRouter);
@@ -57,9 +52,5 @@ app.use("/api/objeto", ObjetoRouter);
 app.use("/api/auth", AuthRouter);
 
 app.use(HandleError);
-clientRedis.connect();
-swaggerDocs(app, PORT);
 
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en ${PORT}`);
-});
+export default app;
